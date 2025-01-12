@@ -951,12 +951,12 @@ button {
     </style>
 </head>
 <body>
-    <div id="loginSection" style="display: block; text-align: center; margin-top: 30px;">
+ <div id="loginSection" style="display: block; text-align: center; margin-top: 30px;">
  <div class="logo">
         <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" class="logo-img">
     </div>
    <h1>RASM School Management System</h1>
-<p style="color: red; font-weight: bold;"> Wamere Junior School   </p>
+<p style="color: red; font-weight: bold;">Nachu Junior School </p>
     <form id="loginForm">
         <input type="text" id="username" placeholder="Username" required><br><br>
         <input type="password" id="password" placeholder="Password" required><br><br>
@@ -992,7 +992,7 @@ button {
         <h1>Welcome To Rasm School Automation Management System</h1>
 <p style="color: red; font-weight: bold;">Your Gateway To Smooth And Efficient School Management </p>
     </div>
-<p style="color: red; font-weight: bold;"> Wamere Junior School   </p>
+<p style="color: red; font-weight: bold;">Nachu Junior  School </p>
 </header>
 <button class="btn-yellow" onclick="toggleSection('registerLearnerSection')">
         <span class="material-icons">person_add</span> Register Learner
@@ -1031,14 +1031,32 @@ button {
 <!-- Collapsible Menu Actions --> 
 <div id="menuActions" style="display: none;">
   <div class="menu-container">
-    <button class="menu-button" aria-label="Registration Options" onclick="toggleRegistrationMenu()">Registration Options</button>
-    <div class="dropdown" id="registrationMenu">
-      <button onclick="toggleSection('parentRegistrationSection')" class="neon-button" style="width: 90px; padding: 10px;">Register Parent</button>
-      <button onclick="toggleSection('staffRegistrationSection')" class="neon-button" style="width: 90px; padding: 10px;">Register Staff</button>
-      <button onclick="toggleRegisterSupportStaff()" class="neon-button">Register Support Staff</button>
-      <button onclick="toggleSection('registeredParentsSection')" class="neon-button" style="width: 90px; padding: 10px;">View Parents</button>
-      <button onclick="toggleSection('registeredStaffSection')" class="neon-button" style="width: 90px; padding: 10px;">View Staff</button>
-      <button onclick="toggleSection('registerLearnerSection')" class="neon-button" style="width: 90px; padding: 10px;">Register Learner</button>
+<button class="menu-button" aria-label="Registration Options" onclick="toggleRegistrationMenu()"> 
+  <i class="fas fa-cogs"></i> Registration Options 
+</button> 
+
+<div class="dropdown" id="registrationMenu">
+  <button onclick="toggleSection('parentRegistrationSection')" class="neon-button" style="width: 90px; padding: 10px;">
+    <i class="fas fa-user-plus"></i> Register Parent
+  </button>
+  <button onclick="toggleSection('staffRegistrationSection')" class="neon-button" style="width: 90px; padding: 10px;">
+    <i class="fas fa-chalkboard-teacher"></i> Register Staff
+  </button>
+  <button onclick="toggleRegisterSupportStaff()" class="neon-button">
+    <i class="fas fa-users-cog"></i> Register Support Staff
+  </button>
+  <button onclick="toggleSection('registeredParentsSection')" class="neon-button" style="width: 90px; padding: 10px;">
+    <i class="fas fa-users"></i> View Parents
+  </button>
+  <button onclick="toggleSection('registeredStaffSection')" class="neon-button" style="width: 90px; padding: 10px;">
+    <i class="fas fa-users"></i> View Staff
+  </button>
+
+
+ <button onclick="toggleSection('registerLearnerSection')" class="neon-button" style="width: 90px; padding: 10px;">
+    <i class="fas fa-user-plus"></i> Register Learner
+</button>
+
     </div>
   </div>
 </div>
@@ -1056,7 +1074,7 @@ button {
         Parent Phone No: <input type="text" id="learnerPhone" required><br>
         Birth Certificate No: <input type="number" id="birthCertificate" required><br>
         Admission Number: <input type="text" id="admissionNumber" required><br>
-         Photo: <input type="file" id="learnerPhoto" accept="image/*"><br>
+ Photo: <input type="file" id="learnerPhoto" accept="image/*"><br>
         <button type="submit">Add Learner</button>
     </form>
 </div>
@@ -1068,14 +1086,27 @@ button {
         <h2>Registered Learners</h2>
         <input type="text" id="searchLearner" onkeyup="searchLearner()" placeholder="Search for learner">
         <div class="menu-container">
-  <button class="menu-button" aria-label="Learners Options" onclick="toggleLearnersMenu()">Learners Options</button>
-  <div class="dropdown" id="learnersMenu">
-    <button onclick="printRegisteredLearners()" class="neon-button">Print Registered Learners</button>
-    <button onclick="groupLearnersByGrade()" class="neon-button">Group by Grade</button>
-    <button onclick="promoteLearners()" class="neon-button">Promote Learners to Next Grade</button>
-    <button onclick="groupLearnersByGender()" class="neon-button">Group by Gender</button>
-    <button onclick="printGroupedByGender()" class="neon-button">Print Grouped by Gender</button>
-  </div>
+<button class="menu-button" aria-label="Learners Options" onclick="toggleLearnersMenu()">
+  <i class="fas fa-graduation-cap"></i> Learners Options
+</button>
+
+<div class="dropdown" id="learnersMenu">
+  <button onclick="printRegisteredLearners()" class="neon-button">
+    <i class="fas fa-print"></i> Print Registered Learners
+  </button>
+  <button onclick="groupLearnersByGrade()" class="neon-button">
+    <i class="fas fa-users"></i> Group by Grade
+  </button>
+  <button onclick="promoteLearners()" class="neon-button">
+    <i class="fas fa-arrow-up"></i> Promote Learners to Next Grade
+  </button>
+  <button onclick="groupLearnersByGender()" class="neon-button">
+    <i class="fas fa-transgender-alt"></i> Group by Gender
+  </button>
+  <button onclick="printGroupedByGender()" class="neon-button">
+    <i class="fas fa-print"></i> Print Grouped by Gender
+  </button>
+</div>
 </div>
 
 <div id="groupedByGender"></div>
@@ -1201,9 +1232,18 @@ button {
 <div id="marksTableSection" class="hidden-section">
         <h2>Marks Table</h2>
         <input type="text" id="searchMarks" onkeyup="searchMarks()" placeholder="Search Marks">
-        <button onclick="printMarksTable()">Print Merit List</button>
-        <button onclick="saveMarks()">Save Marks</button>
-<button onclick="saveCurrentMarksTable()">
+        <button onclick="printMarksTable()" class="neon-button">
+  <i class="fas fa-print"></i> Print Merit List
+</button>
+
+<button onclick="saveMarks()" class="neon-button">
+  <i class="fas fa-save"></i> Save Marks
+</button>
+
+<button onclick="saveCurrentMarksTable()" class="neon-button">
+  <i class="fas fa-table"></i> Save Current Marks Table
+</button>
+
     <span class="material-icons">save</span> Save Merit List
 </button>
 
@@ -1234,28 +1274,54 @@ button {
 <div id="archivesSection" class="hidden-section">
     <h2>Archived Marks</h2>
     <div id="archivedMarksList"></div>
-<button onclick="combineMeritListsByGrade()">Combine Merit Lists for Same Grade</button>
+<button onclick="combineMeritListsByGrade()" class="neon-button">
+  <i class="fas fa-sync-alt"></i> Combine Merit Lists for Same Grade
+</button>
+
 <div id="combinedMeritLists"></div>
- <button onclick="printCombinedMeritList()">Print Combined Merit List</button>
+
+<button onclick="printCombinedMeritList()" class="neon-button">
+  <i class="fas fa-print"></i> Print Combined Merit List
+</button>
+
 </div>
 <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
     <div style="border: 5px solid #f3f3f3; border-radius: 50%; border-top: 5px solid #3498db; width: 50px; height: 50px; animation: spin 1s linear infinite;"></div>
 </div>
 <div id="juniorSchoolActions" class="hidden-section">
   <div class="menu-container">
-  <button class="menu-button" aria-label="Junior School Actions" onclick="toggleJuniorSchoolMenu()">Nice To See You Here Click Me</button>
-  <div class="dropdown" id="juniorSchoolMenu">
-    <button onclick="printAssessmentReport()" class="neon-button btn-print">Print Report</button>
-    <button onclick="showSubjectChampions()" class="neon-button btn-champions">Subject Champions</button>
-    <button onclick="showSubjectRanking()" class="neon-button btn-ranking">Subject Ranking</button>
-    <button onclick="showSubjectPerformance()" class="neon-button btn-performance">Subject Performance</button>
-    <button onclick="toggleSection('juniorMarksEntrySection')" class="neon-button btn-blue">Capture Outcomes</button>
-    <button onclick="toggleSection('marksTableSection')" class="neon-button btn-red">Merit List</button>
-    <button onclick="toggleSection('bulkReportGeneration')" class="neon-button btn-blue">Bulk Report Generation</button>
-    <button onclick="generateGenderPerformance()" class="neon-button">Generate Gender Performance</button>
+  <button class="menu-button" aria-label="Junior School Actions" onclick="toggleJuniorSchoolMenu()">
+  <i class="fas fa-school"></i> Nice To See You Here Click Me
+</button>
 
-
-  <button onclick="hideGeneratedReports()" class="neon-button btn-red circle-button">Back</button>
+<div class="dropdown" id="juniorSchoolMenu">
+  <button onclick="printAssessmentReport()" class="neon-button btn-print">
+    <i class="fas fa-print"></i> Print Report
+  </button>
+  <button onclick="showSubjectChampions()" class="neon-button btn-champions">
+    <i class="fas fa-trophy"></i> Subject Champions
+  </button>
+  <button onclick="showSubjectRanking()" class="neon-button btn-ranking">
+    <i class="fas fa-chart-line"></i> Subject Ranking
+  </button>
+  <button onclick="showSubjectPerformance()" class="neon-button btn-performance">
+    <i class="fas fa-chart-bar"></i> Subject Performance
+  </button>
+  <button onclick="toggleSection('juniorMarksEntrySection')" class="neon-button btn-blue">
+    <i class="fas fa-pen"></i> Capture Outcomes
+  </button>
+  <button onclick="toggleSection('marksTableSection')" class="neon-button btn-red">
+    <i class="fas fa-list"></i> Merit List
+  </button>
+  <button onclick="toggleSection('bulkReportGeneration')" class="neon-button btn-blue">
+    <i class="fas fa-file-alt"></i> Bulk Report Generation
+  </button>
+  <button onclick="generateGenderPerformance()" class="neon-button">
+    <i class="fas fa-genderless"></i> Generate Gender Performance
+  </button>
+  <button onclick="hideGeneratedReports()" class="neon-button btn-red circle-button">
+    <i class="fas fa-arrow-left"></i> Back
+  </button>
 
   </div>
 </div>
@@ -1498,7 +1564,7 @@ button {
 
     <!-- Footer Section -->
     <footer id="footer" style="display: none; background-color: #2196F3; color: white; padding: 5px 0; text-align: center;">
-        <p>&copy; 2025 Wamere Junior School | All Rights Reserved</p>
+        <p>&copy; 2025 Nachu Junior School | All Rights Reserved</p>
     </footer>
 </body>
 <script>
