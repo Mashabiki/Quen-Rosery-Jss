@@ -3567,18 +3567,41 @@ function getLevel(score) {
 }
 
         function getComment(totalMarks) {
-            if (totalMarks >= 1 && totalMarks <= 200) return "Displays self-discipline however Should put extra effort to achieve higher scores.";
-            if (totalMarks >= 201 && totalMarks <= 400) return "Willing to help his peers; however,should focus on improving his overall performance.";
-            if (totalMarks >= 401 && totalMarks <= 600) return "Actively participates in class discussions and takes on various roles in work groups as needed.";
-            if (totalMarks >= 601 && totalMarks <= 800) return "Shown consistent improvement and tackles classroom assignments, tasks, and group work well.";
+        if (totalMarks >= 0 && totalMarks <= 100) 
+        return "Needs significant improvement. Let’s work on building foundational knowledge and skills together.";
+    if (totalMarks >= 101 && totalMarks <= 250) 
+        return "Below average. More consistent effort and dedication can help improve performance.";
+    if (totalMarks >= 251 && totalMarks <= 350) 
+        return "Approaching expectation. There is potential, but more focus and practice are required.";
+    if (totalMarks >= 351 && totalMarks <= 450) 
+        return "Average performance. Keep up the steady effort and aim higher next time.";
+    if (totalMarks >= 451 && totalMarks <= 500) 
+        return "Good performance. You are meeting expectations . With a bit more effort, you can excel further.";
+    if (totalMarks >= 501 && totalMarks <= 550) 
+        return "Very good performance. Well done! Keep pushing your limits to achieve even greater results.";
+    if (totalMarks >= 551 && totalMarks <= 600) 
+        return "Excellent work! Your hard work and dedication are evident. Keep it up!";
+    if (totalMarks >= 601 && totalMarks <= 650) 
+        return "Outstanding performance! You are demonstrating strong understanding and consistency.";
+    if (totalMarks >= 651 && totalMarks <= 701) 
+        return "Exceptional achievement! Keep maintaining this high level of performance.";
+    if (totalMarks >= 702 && totalMarks <= 750) 
+        return "Remarkable work! You are a role model for others with your consistent excellence.";
+    if (totalMarks >= 751 && totalMarks <= 796) 
+        return "Phenomenal performance! You are exceeding expectations and setting new benchmarks.";
+    if (totalMarks >= 798 && totalMarks <= 840) 
+        return "Exceptional brilliance! Keep inspiring others with your dedication and hard work.";
+    if (totalMarks >= 841 && totalMarks <= 900) 
+        return "Perfect and extraordinary! Your achievement is truly remarkable and a testament to your dedication.";
+ 
             return "";
 }
 
 function getPerformanceLevel(totalMarks) {
              if (totalMarks >= 1 && totalMarks <= 200) return "Below expectations";
-            if (totalMarks >= 201 && totalMarks <= 400) return "Approaching expectations";
-            if (totalMarks >= 401 && totalMarks <= 600) return "Meeting expectations";
-            if (totalMarks >= 601 && totalMarks <= 800) return "Exceeding expectations";
+            if (totalMarks >= 201 && totalMarks <= 399) return "Approaching expectations";
+            if (totalMarks >= 400 && totalMarks <= 600) return "Meeting expectations";
+            if (totalMarks >= 601 && totalMarks <= 900) return "Exceeding expectations";
             return "";
 }
 
