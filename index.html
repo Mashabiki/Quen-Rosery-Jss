@@ -1153,45 +1153,50 @@ button {
   </div>
 
   <!-- Fee Summary Table Container (Wrapped with Grade Filter) -->
-  <div id="feeSummaryTableContainer" style="display: none; text-align: center; padding: 20px; width: 100%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
-    <h2 style="margin-bottom: 10px; color: #333;">Fee Summary</h2>
+<div id="feeSummaryTableContainer" style="display: none; text-align: center; padding: 20px; width: 100%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
+    <h2 style="margin-bottom: 10px; color: #333;">Fee Records</h2>
+
+    <!-- Search Learner -->
+    <input type="text" id="searchLearnerFee" onkeyup="searchLearnerFee()" placeholder="Search for learner..." 
+    style="margin-bottom: 10px; padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 5px; text-align: center;">
+
     <!-- Grade Filter -->
     <label for="gradeFilter"><strong>Filter by Grade:</strong></label>
     <select id="gradeFilter" onchange="filterFeeRecords()">
-      <option value="">All Grades</option>
-      <option value="1">Grade 1</option>
-      <option value="2">Grade 2</option>
-      <option value="3">Grade 3</option>
-      <option value="4">Grade 4</option>
-      <option value="5">Grade 5</option>
-      <option value="6">Grade 6</option>
-      <option value="7">Grade 7</option>
-      <option value="8">Grade 8</option>
-      <option value="9">Grade 9</option>
+        <option value="">All Grades</option>
+        <option value="1">Grade 1</option>
+        <option value="2">Grade 2</option>
+        <option value="3">Grade 3</option>
+        <option value="4">Grade 4</option>
+        <option value="5">Grade 5</option>
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
     </select>
-    <table class="learners-table" id="feeSummaryTable" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-      <thead>
-        <tr style="background: #4CAF50; color: white;">
 
-         <th>No</th>
-          <th>Learner Name</th>
-          <th>Grade</th>
-          <th>Security Fee</th>
-          <th>BOM Fee</th>
-          <th>Tuition Fee</th>
-          <th>Exam 1 Fee</th>
-          <th>Exam 2 Fee</th>
-          <th>Exam 3 Fee</th>
-          <th>Activity Fee</th>
-          <th>Constant Fee</th>
-          <th>Total Paid</th>
-          <th>Total Balance</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="feeSummaryTableBody"></tbody>
+    <table class="learners-table" id="feeSummaryTable" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="background: #4CAF50; color: white;">
+                <th>No</th>
+                <th>Learner Name</th>
+                <th>Grade</th>
+                <th>Security Fee</th>
+                <th>BOM Fee</th>
+                <th>Tuition Fee</th>
+                <th>Exam 1 Fee</th>
+                <th>Exam 2 Fee</th>
+                <th>Exam 3 Fee</th>
+                <th>Activity Fee</th>
+                <th>Constant Fee</th>
+                <th>Total Paid</th>
+                <th>Total Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="feeSummaryTableBody"></tbody>
     </table>
-  </div>
+</div>
 
   <!-- Receipt Container -->
   <div id="receiptContainer" style="display: none; text-align: center; border-radius: 10px; padding: 20px; width: 60%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); font-family: 'Arial', sans-serif;">
@@ -1200,7 +1205,7 @@ button {
       <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-right: 10px;">
       <div style="text-align: left;">
         <h2 style="margin: 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
-        <p style="margin: 2px; font-size: 14px; color: #555;">P.O BOX 561-00902, Kikuyu, Kenya</p>
+        <p style="margin: 2px; font-size: 14px; color: #555;">P.O BOX 886-01000 Thika, Kenya</p>
         <p style="margin: 2px; font-size: 14px; color: #555;">Phone: +254-700-123456</p>
       </div>
     </div>
@@ -1232,8 +1237,8 @@ button {
     <p style="font-weight: bold; color: green;">Amount Paid: KSH <span id="receiptPaid"></span></p>
     <p style="font-weight: bold; color: red;">Balance: KSH <span id="receiptBalance"></span></p>
     <!-- Official Stamp -->
-    <div style="border: 2px solid blue; color: blue; width: 150px; height: 50px; margin: 15px auto; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center;">
-      Nachu Comprehensive School 
+    <div style="border: 2px solid blue; color: blue; width: 150px; height: 80px; margin: 15px auto; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+      QUEEN OF ROSARY COMPREHENSIVE SCHOOL 
     </div>
     <!-- Authorized Signature -->
     <div style="text-align: left; margin-top: 30px; font-size: 14px;">
@@ -1349,27 +1354,29 @@ button {
   Fees table for <span id="successYear"></span> archived successfully!
 </div>
 
-
-
 <!-- Summary Table Container (Initially Hidden) -->
 <div id="feeSummaryContainer" style="display: none; margin-top: 20px;"></div>
 <!-- Defaulters List Container -->
 <div id="defaultersTableContainer" style="display: none; text-align: center; padding: 20px; width: 80%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
     <h2 style="background: red; color: white; padding: 10px;">Defaulters List</h2>
-    
+
+    <!-- Search Learner -->
+    <input type="text" id="searchDefaulter" onkeyup="searchDefaulter()" placeholder="Search for learner..." 
+    style="margin-bottom: 10px; padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 5px; text-align: center;">
+
     <!-- Grade Filter -->
     <label for="gradeFilter"><strong>Filter by Grade:</strong></label>
     <select id="gradeFilter" onchange="generateDefaultersList()">
-      <option value="">All Grades</option>
-      <option value="1">Grade 1</option>
-      <option value="2">Grade 2</option>
-      <option value="3">Grade 3</option>
-      <option value="4">Grade 4</option>
-      <option value="5">Grade 5</option>
-      <option value="6">Grade 6</option>
-      <option value="7">Grade 7</option>
-      <option value="8">Grade 8</option>
-      <option value="9">Grade 9</option>
+        <option value="">All Grades</option>
+        <option value="1">Grade 1</option>
+        <option value="2">Grade 2</option>
+        <option value="3">Grade 3</option>
+        <option value="4">Grade 4</option>
+        <option value="5">Grade 5</option>
+        <option value="6">Grade 6</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
     </select>
 
     <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
@@ -1389,6 +1396,7 @@ button {
         <i class="fas fa-print"></i> Print Defaulters List
     </button>
 </div>
+
 
 
    
@@ -9433,9 +9441,37 @@ function printReport() {
     document.body.innerHTML = originalContent; // Restore original content after printing
     location.reload(); // Reload page to prevent display issues
 }
+function searchLearnerFee() {
+    var input = document.getElementById("searchLearnerFee");
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("feeSummaryTable");
+    var tr = table.getElementsByTagName("tr");
 
-            
+    for (var i = 1; i < tr.length; i++) { // Skip the header row
+        var td = tr[i].getElementsByTagName("td")[1]; // Learner Name Column
+        if (td) {
+            var txtValue = td.textContent || td.innerText;
+            tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    }
+}
+
+function searchDefaulter() {
+    var input = document.getElementById("searchDefaulter");
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("defaultersTableContainer").getElementsByTagName("table")[0];
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < tr.length; i++) { // Skip the header row
+        var td = tr[i].getElementsByTagName("td")[1]; // Learner Name Column
+        if (td) {
+            var txtValue = td.textContent || td.innerText;
+            tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    }
+}
+</script>         
                 
-                </script>
+                
             </body>
             </html>
