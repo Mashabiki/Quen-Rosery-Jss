@@ -968,7 +968,7 @@ button {
         <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" class="logo-img">
     </div>
    <h1>RASM School Management System</h1>
-<p style="color: red; font-weight: bold;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL JS </p>
+<p style="color: red; font-weight: bold;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL </p>
     <form id="loginForm">
         <input type="text" id="username" placeholder="Username" required><br><br>
         <input type="password" id="password" placeholder="Password" required><br><br>
@@ -1004,7 +1004,7 @@ button {
         <h1>Welcome To Rasm School Automation Management System</h1>
 <p style="color: red; font-weight: bold;">Your Gateway To Smooth And Efficient School Management </p>
     </div>
-<p style="color: red; font-weight: bold;"> QUEEN OF ROSARY COMPREHENSIVE SCHOOL JS  </p>
+<p style="color: red; font-weight: bold;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL</p>
 </header>
 <button class="btn-yellow" onclick="toggleSection('registerLearnerSection')">
         <span class="material-icons">person_add</span> Register Learner
@@ -1037,6 +1037,362 @@ button {
 <button id="logoutButton" onclick="logout()">
     <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Logout
 </button>
+ 
+  <!-- Button to Show/Hide Fee Management Menu -->
+  <button onclick="toggleFeeActionsMenu()" style="background-color: #d32f2f; color: purple; border: none; padding: 10px 10px; font-size: 16px; cursor: pointer; border-radius: 5px; margin-bottom: 10px;">
+    <i class="fas fa-cogs"></i> Manage Fees
+  </button>
+
+  <!-- Fee Management Actions Box (Initially Hidden) -->
+  <div id="feeActionsBox" style="display: none; text-align: center; background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); margin-top: 10px; width: 45%; margin-left: auto; margin-right: auto;">
+    <h2 style="color: #4CAF50; margin-bottom: 10px;">Fee Management Actions</h2>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+      <!-- Button to Toggle Fee Capture Form --> 
+    <!-- Record Fee Button -->
+<!-- Record Fee Button -->
+<button onclick="openOnlyOneSection('feeCaptureForm')" style="width: 40%; padding: 10px; background-color: #388E3C; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  <i class="fas fa-plus-circle"></i> Record Fee Here
+</button>
+
+<!-- View Fee Records Button -->
+<button onclick="openOnlyOneSection('feeSummaryTableContainer')" style="width: 40%; padding: 10px; background-color: #F57C00; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  <i class="fas fa-folder-open"></i> My Fee Records
+</button>
+
+<!-- Show Filtered Records Button -->
+<button id="togglePrintFilteredRecordsBtn" onclick="openOnlyOneSection('filteredFeeTableContainer')" 
+  style="width: 40%; padding: 10px; background-color: #1976D2; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+  <i class="fas fa-print"></i> Show Filtered Records
+</button>
+
+
+<!-- Archive Fees Button -->
+<button type="button" onclick="archiveFeesTable()" class="btn-archive" 
+  style="width: 40%; padding: 10px; background-color: #8E44AD; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  <i class="fas fa-archive"></i> Archive Fees
+</button>
+
+<!-- View Archived Fees Button -->
+<button id="toggleViewArchivedBtn" onclick="openOnlyOneSection('archivedFeesContainer')" 
+  style="width: 40%; padding: 10px; background-color: #1976D2; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  <i class="fas fa-eye"></i> View Archived Fees
+</button>
+
+<!-- Print Payment Summary Button -->
+<button onclick="printPaymentSummary()" id="printSummaryBtn" 
+  style="width: 40%; padding: 10px; background-color: #0277BD; color: white; border: none; border-radius: 5px; cursor: pointer; display: none;">
+  <i class="fas fa-print"></i> Print Summary
+</button>
+
+<!-- Show Fee Collection Summary Button -->
+<button id="toggleSummaryBtn" onclick="openOnlyOneSection('feeSummaryContainer')" 
+  style="padding: 10px; background: #9C27B0; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+  <i class="fas fa-chart-bar"></i> Show Fee Collection Summary
+</button>
+
+<!-- Show Defaulters List Button -->
+<button onclick="openOnlyOneSection('defaultersTableContainer')" 
+  style="width: 40%; padding: 10px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+  <i class="fas fa-exclamation-triangle"></i> Defaulters List
+</button>
+
+<!-- Payment Summary Button -->
+<button onclick="openOnlyOneSection('paymentSummaryContainer')" class="neon-button btn-purple" 
+  style="width: 50%; padding: 10px; margin-bottom: 15px; background-color: #9C27B0; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  <i class="fas fa-chart-bar"></i> Payment Summary Per Grade
+</button>
+
+<!-- Delete All Fee Records Button -->
+<button onclick="deleteFeeRecordsTable()" 
+  style="padding: 10px; background: red; color: white; border: none; cursor: pointer; border-radius: 5px;">
+  <i class="fas fa-trash-alt"></i> Delete All Fee Records
+</button>
+
+
+
+    </div>
+   <!-- Archived Fees Container -->
+<div id="archivedFeesContainer" style="display: none; text-align: left; background: #f0f0f0; padding: 15px; border-radius: 5px; margin-top: 20px;">
+  <h2 style="color: #4CAF50;">Archived Fee Records</h2>
+
+  <!-- Search Box for Filtering Archived Fees -->
+  <label for="archivedGradeFilter"><strong>Filter by Grade:</strong></label>
+  <input type="text" id="archivedGradeFilter" onkeyup="filterArchivedFees()" placeholder="Enter grade to filter" 
+         style="margin-bottom: 10px; padding: 5px; width: 200px; border: 1px solid #ccc; border-radius: 5px;">
+
+  <div id="archivedFeesList"></div>
+</div>
+
+
+  <!-- Fee Capture Form (Initially Hidden) -->
+  <div id="feeCaptureForm" style="display: none; text-align: center; padding: 20px; width: 60%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
+    <h2 style="color: #333;">Fee Capture Form</h2>
+    <form id="feeForm">
+      <label for="feeLearnerName"><strong>Learner Name:</strong></label>
+      <input type="text" id="feeLearnerName" placeholder="Enter learner name" required><br><br>
+      <label for="feeLearnerGrade"><strong>Grade:</strong></label>
+      <input type="text" id="feeLearnerGrade" placeholder="Enter learner grade" required><br><br>
+      <label for="securityFee"><strong>Security Fee (KSH):</strong></label>
+      <input type="number" id="securityFee" placeholder="Enter amount" required><br><br>
+      <label for="bomFee"><strong>BOM Fee (KSH):</strong></label>
+      <input type="number" id="bomFee" placeholder="Enter amount" required><br><br>
+      <label for="tuitionFee"><strong>Tuition Fee (KSH):</strong></label>
+      <input type="number" id="tuitionFee" placeholder="Enter amount" required><br><br>
+      <label for="exam1Fee"><strong>Exam 1 Fee (KSH):</strong></label>
+      <input type="number" id="exam1Fee" placeholder="Enter amount" required><br><br>
+      <label for="exam2Fee"><strong>Exam 2 Fee (KSH):</strong></label>
+      <input type="number" id="exam2Fee" placeholder="Enter amount" required><br><br>
+      <label for="exam3Fee"><strong>Exam 3 Fee (KSH):</strong></label>
+      <input type="number" id="exam3Fee" placeholder="Enter amount" required><br><br>
+      <label for="activityFee"><strong>Activity Fee (KSH):</strong></label>
+      <input type="number" id="activityFee" placeholder="Enter amount" required><br><br>
+      <button type="submit" style="padding: 10px 15px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">
+        Save Fee Details
+      </button>
+    </form>
+  </div>
+
+  <!-- Fee Summary Table Container (Wrapped with Grade Filter) -->
+  <div id="feeSummaryTableContainer" style="display: none; text-align: center; padding: 20px; width: 100%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
+    <h2 style="margin-bottom: 10px; color: #333;">Fee Summary</h2>
+    <!-- Grade Filter -->
+    <label for="gradeFilter"><strong>Filter by Grade:</strong></label>
+    <select id="gradeFilter" onchange="filterFeeRecords()">
+      <option value="">All Grades</option>
+      <option value="1">Grade 1</option>
+      <option value="2">Grade 2</option>
+      <option value="3">Grade 3</option>
+      <option value="4">Grade 4</option>
+      <option value="5">Grade 5</option>
+      <option value="6">Grade 6</option>
+      <option value="7">Grade 7</option>
+      <option value="8">Grade 8</option>
+      <option value="9">Grade 9</option>
+    </select>
+    <table class="learners-table" id="feeSummaryTable" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+      <thead>
+        <tr style="background: #4CAF50; color: white;">
+
+         <th>No</th>
+          <th>Learner Name</th>
+          <th>Grade</th>
+          <th>Security Fee</th>
+          <th>BOM Fee</th>
+          <th>Tuition Fee</th>
+          <th>Exam 1 Fee</th>
+          <th>Exam 2 Fee</th>
+          <th>Exam 3 Fee</th>
+          <th>Activity Fee</th>
+          <th>Constant Fee</th>
+          <th>Total Paid</th>
+          <th>Total Balance</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="feeSummaryTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Receipt Container -->
+  <div id="receiptContainer" style="display: none; text-align: center; border-radius: 10px; padding: 20px; width: 60%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); font-family: 'Arial', sans-serif;">
+    <!-- School Header -->
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-right: 10px;">
+      <div style="text-align: left;">
+        <h2 style="margin: 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
+        <p style="margin: 2px; font-size: 14px; color: #555;">P.O BOX 561-00902, Kikuyu, Kenya</p>
+        <p style="margin: 2px; font-size: 14px; color: #555;">Phone: +254-700-123456</p>
+      </div>
+    </div>
+    <hr style="border: 1px solid #ddd; margin: 10px 0;">
+    <!-- Receipt Title -->
+    <h3 style="margin-bottom: 5px; color: #333; text-transform: uppercase;">Official Fee Payment Receipt</h3>
+    <!-- Receipt Details -->
+    <div style="display: flex; justify-content: space-between; padding: 0 20px; font-size: 14px; color: #444;">
+      <p><strong>Receipt No:</strong> <span id="receiptNo"></span></p>
+      <p><strong>Date:</strong> <span id="receiptDate"></span></p>
+    </div>
+    <div style="background: #f8f8f8; padding: 10px; border-radius: 5px; text-align: left; font-size: 14px;">
+      <p><strong>Learner Name:</strong> <span id="receiptLearner"></span></p>
+      <p><strong>Grade:</strong> <span id="receiptGrade"></span></p>
+      <p><strong>Payment Method:</strong> Cash / MPESA</p>
+    </div>
+    <!-- Fee Breakdown Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
+      <thead>
+        <tr style="background: #4CAF50; color: white;">
+          <th style="border: 1px solid #ddd; padding: 8px;">Fee Item</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Amount (KSH)</th>
+        </tr>
+      </thead>
+      <tbody id="receiptTableBody" style="background: #f9f9f9;"></tbody>
+    </table>
+    <!-- Total Amounts -->
+    <p style="font-size: 16px; font-weight: bold; margin-top: 10px;">Total Fees: KSH <span id="receiptTotal"></span></p>
+    <p style="font-weight: bold; color: green;">Amount Paid: KSH <span id="receiptPaid"></span></p>
+    <p style="font-weight: bold; color: red;">Balance: KSH <span id="receiptBalance"></span></p>
+    <!-- Official Stamp -->
+    <div style="border: 2px solid blue; color: blue; width: 150px; height: 50px; margin: 15px auto; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center;">
+      Nachu Comprehensive School 
+    </div>
+    <!-- Authorized Signature -->
+    <div style="text-align: left; margin-top: 30px; font-size: 14px;">
+      <p><strong>Authorized by:</strong> _____________________</p>
+      <p><strong>Signature:</strong> _____________________</p>
+    </div>
+    <!-- Footer Note -->
+    <p style="margin-top: 20px; font-style: italic; font-size: 12px;">Thank you for your payment. For inquiries, contact our office.</p>
+    <!-- Print and Download Buttons -->
+    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+      <button onclick="printReceipt()" style="padding: 10px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px;">Print Receipt</button>
+      <button onclick="downloadReceiptPDF()" style="padding: 10px 15px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">Download PDF</button>
+    </div>
+  </div>
+</div>
+
+  <!-- Filtered Fee Table Container -->
+  <div id="filteredFeeTableContainer" style="display: none; text-align: center; padding: 20px; width: 90%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); font-family: 'Arial', sans-serif;">
+    <!-- School Header -->
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-right: 10px;">
+      <div style="text-align: left;">
+        <h2 style="margin: 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL </h2>
+        <p style="margin: 2px; font-size: 14px; color: #555;">P.O BOX 886-01000 Thika, Kenya</p>
+        <p style="margin: 2px; font-size: 14px; color: #555;">Phone: +254-700-123456</p>
+        <p style="margin: 2px; font-size: 14px; color: #555;"><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
+        <p style="margin: 2px; font-size: 14px; color: #555;"><strong>Year:</strong> <span id="currentYear"></span></p>
+      </div>
+    </div>
+    <hr style="border: 1px solid #ddd; margin: 10px 0;">
+    <!-- Report Title -->
+    <h3 style="margin-bottom: 5px; color: #333; text-transform: uppercase;">Filtered Fee Records for <span id="selectedGrade"></span></h3>
+    <!-- Fee Table -->
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
+      <thead>
+        <tr style="background: #4CAF50; color: white;">
+          <th style="border: 1px solid #ddd; padding: 8px;">#</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Learner Name</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Security Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">BOM Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Tuition Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Exam 1 Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Exam 2 Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Exam 3 Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Activity Fee</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Total Paid</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Balance</th>
+        </tr>
+      </thead>
+      <tbody id="filteredFeeTableBody" style="background: #f9f9f9;"></tbody>
+    </table>
+    <!-- Print & PDF Buttons -->
+    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+      <button onclick="printFilteredFeeTable()" style="padding: 10px 15px; background: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px;">Print Report</button>
+      <button onclick="downloadFeeTablePDF()" style="padding: 10px 15px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">Download PDF</button>
+    </div>
+  </div>
+
+  <!-- Payment Summary Per Grade Section -->
+  <div id="paymentSummaryContainer" style="display: none; margin-top: 20px; text-align: center; border: 2px solid black; padding: 20px;">
+    <!-- School Header -->
+    <div style="text-align: center; margin-bottom: 10px;">
+      <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-bottom: 5px;">
+      <h2 style="margin: 0; color: #4CAF50;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL </h2>
+      <p style="margin: 2px; font-size: 14px;">P.O BOX 886-01000, THIKA, Kenya</p>
+      <p style="margin: 2px; font-size: 14px;">Phone: +254-700-123456</p>
+      <p style="margin: 2px; font-size: 14px; font-weight: bold;">School Motto: "Excellence Through Knowledge"</p>
+      <h3 style="margin-top: 10px; color: #333;">Year: 2025</h3>
+    </div>
+    <h2 style="background: #4CAF50; color: white; padding: 10px;">Payment Summary Per Grade</h2>
+    <table id="summaryTable" class="learners-table" style="width: 100%; border-collapse: collapse; border: 2px solid black;">
+      <thead>
+        <tr style="background: #4CAF50; color: white; border: 2px solid black;">
+          <th style="border: 2px solid black; padding: 10px;">Grade</th>
+          <th style="border: 2px solid black; padding: 10px;">Total Collected (KSH)</th>
+          <th style="border: 2px solid black; padding: 10px;">Expected Amount (KSH)</th>
+          <th style="border: 2px solid black; padding: 10px;">Balance (KSH)</th>
+          <th style="border: 2px solid black; padding: 10px;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="paymentSummaryBody" style="border: 2px solid black;"></tbody>
+    </table>
+    <!-- Print Button -->
+    <button onclick="printPaymentSummaryOnly()" class="neon-button btn-print" style="margin-top: 15px;">
+      <i class="fas fa-print"></i> Print Payment Summary
+    </button>
+  </div>
+<!-- Custom Delete Confirmation Modal -->
+<div id="deleteConfirmModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000;">
+  <div style="background: white; width: 350px; padding: 20px; border-radius: 10px; text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">
+    <h2 style="color: red;">Warning</h2>
+    <p id="deleteMessage" style="font-size: 16px; color: black;">Are you sure you want to delete all fee records? This action cannot be undone.</p>
+    <button onclick="confirmDeleteFeeRecords()" style="background: red; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Yes, Delete</button>
+    <button onclick="closeDeleteModal()" style="background: grey; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
+  </div>
+</div>
+<div id="customAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 15px; border-radius: 5px; font-size: 16px; text-align: center; width: 300px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+  Fee details submitted  successfully!
+</div>
+<div id="archiveAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #0288d1; color: white; padding: 15px; border-radius: 5px; font-size: 16px; text-align: center; width: 300px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+  Archived successfully!
+</div>
+<!-- Archive Confirmation Alert -->
+<div id="archiveConfirmAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #fbc02d; color: black; padding: 15px; border-radius: 5px; font-size: 16px; text-align: center; width: 350px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+  An archive for <span id="archiveYear"></span> exists. Do you want to update it?
+  <br><br>
+  <button onclick="confirmArchive(true)" style="background-color: green; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">Yes</button>
+  <button onclick="confirmArchive(false)" style="background-color: red; color: white; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer;">No</button>
+</div>
+
+<!-- Archive Success Alert -->
+<div id="archiveSuccessAlert" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #0288d1; color: white; padding: 15px; border-radius: 5px; font-size: 16px; text-align: center; width: 300px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+  Fees table for <span id="successYear"></span> archived successfully!
+</div>
+
+
+
+<!-- Summary Table Container (Initially Hidden) -->
+<div id="feeSummaryContainer" style="display: none; margin-top: 20px;"></div>
+<!-- Defaulters List Container -->
+<div id="defaultersTableContainer" style="display: none; text-align: center; padding: 20px; width: 80%; margin: auto; background: #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); border-radius: 10px;">
+    <h2 style="background: red; color: white; padding: 10px;">Defaulters List</h2>
+    
+    <!-- Grade Filter -->
+    <label for="gradeFilter"><strong>Filter by Grade:</strong></label>
+    <select id="gradeFilter" onchange="generateDefaultersList()">
+      <option value="">All Grades</option>
+      <option value="1">Grade 1</option>
+      <option value="2">Grade 2</option>
+      <option value="3">Grade 3</option>
+      <option value="4">Grade 4</option>
+      <option value="5">Grade 5</option>
+      <option value="6">Grade 6</option>
+      <option value="7">Grade 7</option>
+      <option value="8">Grade 8</option>
+      <option value="9">Grade 9</option>
+    </select>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
+        <thead>
+            <tr style="background: red; color: white;">
+                <th>No</th>
+                <th>Learner Name</th>
+                <th>Grade</th>
+                <th>Balance Due (KSH)</th>
+            </tr>
+        </thead>
+        <tbody id="defaultersTableBody" style="background: #f9f9f9;"></tbody>
+    </table>
+
+    <!-- Print Button -->
+    <button onclick="printDefaultersList()" style="margin-top: 15px; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <i class="fas fa-print"></i> Print Defaulters List
+    </button>
+</div>
+
+
+   
+
 
 
 
@@ -1112,6 +1468,10 @@ button {
   <button onclick="promoteLearners()" class="neon-button">
     <i class="fas fa-arrow-up"></i> Promote Learners to Next Grade
   </button>
+<!-- Undo Promotion Button -->
+<button onclick="undoPromotion()" class="neon-button neon-red">
+    <i class="fas fa-undo"></i> Undo Promotion
+</button>
   <button onclick="groupLearnersByGender()" class="neon-button">
     <i class="fas fa-transgender-alt"></i> Group by Gender
   </button>
@@ -1253,10 +1613,10 @@ button {
         <button onclick="printMarksTable()" class="neon-button">
   <i class="fas fa-print"></i> Print Merit List
 </button>
-
-<button onclick="saveMarks()" class="neon-button">
-  <i class="fas fa-save"></i> Save Marks
+<button onclick="sendToArchives()" class="neon-button">
+    <i class="fas fa-archive"></i> Send to Archives
 </button>
+
 
 <button onclick="saveCurrentMarksTable()" class="neon-button">
   <i class="fas fa-table"></i> Save Current Marks Table
@@ -1268,7 +1628,9 @@ button {
    <div id="marksHeader"></div>
     <table class="report-table">
         <thead>
-
+<button onclick="deleteMarksTable()" style="background: red; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">
+    <i class="fas fa-trash"></i> Delete Marks Table
+</button>
             <th>No.</th> <!-- Serial Number -->
             <th>Learner</th> <!-- Learner Name -->
             <th>Grade</th> <!-- Grade -->
@@ -1287,6 +1649,35 @@ button {
     </thead>
     <tbody id="marksList"></tbody>
 </table>
+    <!-- Section for Subject Levels -->
+<h2>Subject Level Summary</h2>
+<table class="report-table">
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Level 1 (BE)</th>
+            <th>Level 2 (AE)</th>
+            <th>Level 3 (ME)</th>
+            <th>Level 4 (EE)</th>
+        </tr>
+    </thead>
+    <tbody id="subjectLevels"></tbody>
+</table>
+
+
+<!-- Simple Print Button -->
+<button onclick="printSubjectLevels()" style="
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 5px;
+">
+    <i class="fas fa-print"></i> Print Subject Levels
+</button>
+
     </div>
 <!-- Archived Marks Section -->
 <div id="archivesSection" class="hidden-section">
@@ -1337,11 +1728,58 @@ button {
   <button onclick="generateGenderPerformance()" class="neon-button">
     <i class="fas fa-genderless"></i> Generate Gender Performance
   </button>
+<button onclick="togglePathwaysTable()" class="button toggle-button">
+        <i class="fas fa-chart-bar"></i> Group Learners by Pathways
+    </button>
   <button onclick="hideGeneratedReports()" class="neon-button btn-red circle-button">
     <i class="fas fa-arrow-left"></i> Back
   </button>
+<!-- Merit List Selection -->
+<label for="gradeSelect" style="font-size: 14px; font-weight: bold; color: #4CAF50;">
+    <i class="fas fa-list-ol"></i> <strong>Merit List Here:</strong>
+</label>
 
-  </div>
+<select id="gradeSelect" style="
+    padding: 5px;
+    font-size: 12px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    background-color: #e8f5e9;
+    color: #333;
+    margin-right: 2px;">
+    <option value="">--Select Grade--</option>
+    <option value="7">Grade 7</option>
+    <option value="7A">Grade 7A</option>
+    <option value="7B">Grade 7B</option>
+    <option value="7C">Grade 7C</option>
+    <option value="8">Grade 8</option>
+    <option value="8A">Grade 8A</option>
+    <option value="8B">Grade 8B</option>
+    <option value="8C">Grade 8C</option>
+    <option value="9">Grade 9</option>
+    <option value="9A">Grade 9A</option>
+    <option value="9B">Grade 9B</option>
+    <option value="9C">Grade 9C</option>
+</select>
+
+<!-- Merit List Control Buttons -->
+<button onclick="generateMeritList()" class="neon-button btn-ranking">
+    <i class="fas fa-chart-line"></i> Get Merit List
+</button>
+
+<button onclick="toggleMeritList()" class="neon-button btn-toggle" id="toggleBtn">
+    <i class="fas fa-eye-slash"></i> Hide Merit List
+</button>
+
+<button onclick="printMeritList()" id="printBtn" class="neon-button btn-print" style="display:none;">
+    <i class="fas fa-print"></i> Print
+</button>
+
+
+
+<div id="meritListContainer" style="display:none; margin-top:20px;"></div>
+
+</div>
 </div>
 
  <!-- Dropdown for selecting print options --> 
@@ -1585,10 +2023,124 @@ button {
 <div id="alertContainer" style="position: fixed; top: 10%; left: 50%; transform: translateX(-50%); z-index: 1000; width: 90%; max-width: 400px;"></div>
 
 <div id="savedTablesContainer"></div>
+</div> 
 </div>
+
+<!-- Table Section -->
+<div id="resultsSection" style="display: none; margin: 20px;">
+    <h3>Career Pathways Results</h3>
+
+    <!-- Print Report Button -->
+    <button onclick="printPathwayReport()" style="padding: 8px 12px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-print"></i> Print Career Pathway Report
+    </button>
+
+    <!-- Save Report Button -->
+    <button onclick="saveReport()" style="padding: 8px 12px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-save"></i> Save Report
+    </button>
+
+    <!-- View Saved Reports Button -->
+    <button onclick="viewSavedReports()" style="padding: 8px 12px; background: #FF9800; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-folder-open"></i> View Saved Reports
+    </button>
+
+    <!-- Select Grade for Full Report -->
+    <select id="selectFullReportGrade">
+        <option value="">Select Grade</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+    </select>
+
+    <!-- View Full Career Report Button -->
+    <button onclick="viewFullYearReport()" style="padding: 8px 12px; background: #673AB7; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-chart-line"></i> View Full Report (Exam 1 - 6)
+    </button>
+
+    <table id="pathwaysResultsTable" class="report-table">
+        <thead>
+            <tr>
+                <th rowspan="2">Learner</th>
+                <th rowspan="2">Grade</th>
+                <th colspan="6">STEM Subjects</th>
+                <th colspan="4">Social Sciences Subjects</th>
+                <th colspan="3">Sports, Arts & Science Subjects</th>
+                <th rowspan="2">STEM Average</th>
+                <th rowspan="2">Social Sciences Average</th>
+                <th rowspan="2">Sports, Arts & Science Average</th>
+                <th rowspan="2">Best Pathway</th>
+            </tr>
+            <tr>
+                <!-- STEM Subjects -->
+                <th>ENG</th>
+                <th>MATHS</th>
+                <th>PRE-TECH</th>
+                <th>KISWA</th>
+                <th>I Scie</th>
+                <th>AGRIC</th>
+                <!-- Social Sciences Subjects -->
+                <th>Kiswa</th>
+                <th>ENG</th>
+                <th>SST</th>
+                <th>CRE</th>
+                <!-- Sports, Arts & Science Subjects -->
+                <th>KISWA</th>
+                <th>ENG</th>
+                <th>C/A</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Saved Reports Section -->
+    <div id="savedReportsSection" style="display: none; margin-top: 20px;">
+        <h3>Saved Reports</h3>
+        <table id="savedReportsTable" class="report-table">
+            <thead></thead>
+            <tbody></tbody>
+<button id="printButton" onclick="printReport()" style="display:none;">Print Report</button>
+<select id="selectGrade">
+    <option value="">-- Select Grade --</option>
+    <option value="7">Grade 7</option>
+    <option value="8">Grade 8</option>
+    <option value="9">Grade 9</option>
+</select>
+<button onclick="viewSavedReports()">View Report</button>
+<button id="printButton" onclick="printReport()" style="display:none;">Print Report</button>
+
+        </table>
+    </div>
+
+    <!-- Full Career Pathway Report -->
+    <div id="fullReportSection" style="display: none; margin-top: 20px;">
+        <h3>Full Career Pathway Report (Exam 1 - 6)</h3>
+        <table id="fullReportTable" class="report-table">
+            <thead>
+                <tr>
+<button id="printButton" onclick="printReport()" style="display:none;">Print Report</button>
+
+                    <th>No.</th>
+                    <th>Learner Name</th>
+                    <th>Grade</th>
+                    <th>Exam 1</th>
+                    <th>Exam 2</th>
+                    <th>Exam 3</th>
+                    <th>Exam 4</th>
+                    <th>Exam 5</th>
+                    <th>Exam 6</th>
+                    <th>Best Career Pathway</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+    
     <!-- Footer Section -->
     <footer id="footer" style="display: none; background-color: #2196F3; color: white; padding: 5px 0; text-align: center;">
-        <p>&copy; 2025 QUEEN  OF ROSARY COMPREHENSIVE SCHOOL | All Rights Reserved</p>
+        <p>&copy; 2025 QUEEN OF ROSARY COMPREHENSIVE SCHOOL | All Rights Reserved</p>
     </footer>
 </body>
    
@@ -1817,7 +2369,7 @@ function updateLearnersTable() {
 
           
           // Hardcoded credentials (for demonstration purposes)
-        const validUsername = "Queen254";
+        const validUsername = "Nachu254";
         const validPassword = "Nm643PpQ@";
 
         // Login form submission
@@ -1932,17 +2484,38 @@ function toggleChampionsForm() {
     const form = document.getElementById("championsForm");
     form.style.display = form.style.display === "none" ? "block" : "none";
 }
-function saveMarks() {
+function sendToArchives() {
     showLoadingSpinner(); // Show spinner
 
-    // Simulate saving with a timeout
     setTimeout(() => {
-        const archivedMarks = JSON.parse(localStorage.getItem("archivedMarks")) || [];
+        let archivedMarks;
+        
+        // Retrieve existing archived marks safely
+        try {
+            archivedMarks = JSON.parse(localStorage.getItem("archivedMarks")) || [];
+        } catch (e) {
+            console.error("Error parsing archived marks:", e);
+            archivedMarks = [];
+        }
+
+        // Ensure marks exist before archiving
+        console.log("Marks before archiving:", marks);
+        if (!marks || marks.length === 0) {
+            alert("No marks available to archive!");
+            hideLoadingSpinner();
+            return;
+        }
+
+        // Archive the marks
         archivedMarks.push(...marks);
         localStorage.setItem("archivedMarks", JSON.stringify(archivedMarks));
 
+        // Debugging: Verify saved data
+        console.log("Archived Marks after archiving:", JSON.parse(localStorage.getItem("archivedMarks")));
+
         // Show success message
         const successMessage = document.getElementById("saveSuccessMessage");
+        successMessage.textContent = "Marks successfully archived!";
         successMessage.style.display = "block";
 
         setTimeout(() => {
@@ -1950,9 +2523,33 @@ function saveMarks() {
             hideLoadingSpinner(); // Hide spinner after saving
         }, 3000);
 
-        updateMarksTable(); // Update table after saving
+        updateArchivedMarksTable(); // Refresh archived marks display
     }, 2000); // Simulated delay for saving process
 }
+function updateArchivedMarksTable() {
+    let archivedMarks = JSON.parse(localStorage.getItem("archivedMarks")) || [];
+    const archivedMarksList = document.getElementById("archivedMarksList");
+
+    if (!archivedMarksList) {
+        console.error("Archived marks list container not found!");
+        return;
+    }
+
+    archivedMarksList.innerHTML = archivedMarks.length === 0 
+        ? "<tr><td colspan='10'>No archived marks available.</td></tr>"
+        : archivedMarks.map((entry, index) => `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${entry.learner}</td>
+                <td>${entry.grade}</td>
+                ${Object.values(entry.scores).map(score => `<td>${score}</td>`).join("")}
+                <td>${entry.totalMarks}</td>
+            </tr>
+        `).join("");
+
+    console.log("Archived marks table updated!");
+}
+
 
 function startFireworks() {
     const fireworksOverlay = document.getElementById('fireworks-overlay');
@@ -2802,6 +3399,7 @@ function viewArchives() {
 
             </div>
            <button onclick="printArchivedTable('${grade}')"><i class="fas fa-print"></i> Print Grade ${grade}</button>
+  <button onclick="deleteArchivedTable('${grade}')" class="btn-red">Delete</button>
 
             <table id="archivedTable-${grade}" class="report-table">
                 <thead>
@@ -2876,7 +3474,103 @@ function viewArchives() {
     document.getElementById("archivedMarksList").innerHTML = archivedHtml;
     document.getElementById("archivesSection").style.display = "block"; // Show the archives section
 }
+function deleteArchivedTable(grade) {
+    var tableElement = document.getElementById(`archivedTable-${grade}`);
 
+    if (tableElement) {
+        showCustomConfirm(
+            `Are you sure you want to delete <span style="color: red; font-weight: bold;">Grade ${grade} archived marks</span>?`, 
+            () => {
+                // Remove from UI
+                tableElement.parentElement.remove();
+
+                // Retrieve archived marks from local storage
+                let archivedMarks = JSON.parse(localStorage.getItem("archivedMarks")) || [];
+
+                // Filter out the deleted grade
+                archivedMarks = archivedMarks.filter(mark => mark.grade !== grade);
+
+                // Update local storage
+                localStorage.setItem("archivedMarks", JSON.stringify(archivedMarks));
+
+                showCustomAlert(`<span style="color: green; font-weight: bold;">Archived marks for Grade ${grade} deleted successfully!</span>`);
+            }
+        );
+    } else {
+        showCustomAlert(`<span style="color: red; font-weight: bold;">Error: Table not found.</span>`);
+    }
+}
+ // Function to show a custom-styled alert box
+function showCustomAlert(message) {
+    let alertBox = document.createElement("div");
+    alertBox.innerHTML = `<div style="
+        position: fixed; 
+        top: 20%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        background-color: #f8f9fa;
+        border: 2px solid green;
+        padding: 15px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        z-index: 1000;">
+        ${message}
+        <br><br>
+        <button onclick="this.parentElement.remove()" style="
+            background: green; 
+            color: white; 
+            padding: 8px 15px; 
+            border: none; 
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;">OK</button>
+    </div>`;
+    document.body.appendChild(alertBox);
+}
+
+// Function to show a custom-styled confirmation box
+function showCustomConfirm(message, onConfirm) {
+    let confirmBox = document.createElement("div");
+    confirmBox.innerHTML = `<div style="
+        position: fixed; 
+        top: 20%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        background-color: #fff3cd;
+        border: 2px solid orange;
+        padding: 15px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        z-index: 1000;">
+        ${message}
+        <br><br>
+        <button onclick="onConfirm(); this.parentElement.remove()" style="
+            background: red; 
+            color: white; 
+            padding: 8px 15px; 
+            border: none; 
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;">Yes</button>
+        <button onclick="this.parentElement.remove()" style="
+            background: gray; 
+            color: white; 
+            padding: 8px 15px; 
+            border: none; 
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;">No</button>
+    </div>`;
+    document.body.appendChild(confirmBox);
+}    
 // Function to display the alert message with custom styling
 function showAlertMessage(message) {
     const alertDiv = document.createElement('div');
@@ -3156,13 +3850,16 @@ function removeLearner(index) {
 }
 function showSubjectPerformance() {
     const subjectScores = {};
+
     marks.forEach(mark => {
         mark.scores.forEach((score, index) => {
-            const subject = [
+            const subjects = [
                 'English', 'Mathematics', 'Pre-Technical Studies', 
                 'Kiswahili', 'Integrated Science', 'Social Studies', 
                 'Agriculture', 'Religious Education', 'Creative Art'
-            ][index];
+            ];
+            const subject = subjects[index];
+
             if (!subjectScores[subject]) {
                 subjectScores[subject] = { total: 0, count: 0 };
             }
@@ -3171,22 +3868,50 @@ function showSubjectPerformance() {
         });
     });
 
+    // Function to determine performance level
+    function getPerformanceLevel(score) {
+        if (score >= 0 && score <= 25) return "Level 1 (BE)";
+        if (score >= 26 && score <= 49) return "Level 2 (AE)";
+        if (score >= 50 && score <= 75) return "Level 3 (ME)";
+        if (score >= 76 && score <= 100) return "Level 4 (EE)";
+        return "Invalid Score";
+    }
+
     const meanScores = Object.keys(subjectScores).map(subject => {
         const mean = (subjectScores[subject].total / subjectScores[subject].count).toFixed(2);
-        return { subject, mean };
+        const level = getPerformanceLevel(mean); // Get performance level
+        return { subject, mean, level };
     }).sort((a, b) => b.mean - a.mean);
 
-    let performanceHtml = '<h3>Subject Performance</h3><table class="report-table"><thead><tr><th>No.</th><th>Subject</th><th>Mean Score</th></tr></thead><tbody>';
-    let number = 1; // Add numbering
-    meanScores.forEach(({ subject, mean }) => {
-        performanceHtml += `<tr><td>${number++}</td><td>${subject}</td><td>${mean}</td></tr>`;
-    });
-    performanceHtml += '</tbody></table>';
+    // Generate performance table
+    let performanceHtml = `<h3 style="color: #4CAF50; text-align: center;">Subject Performance</h3>`;
+    performanceHtml += `<table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Subject</th>
+                                    <th>Mean Score</th>
+                                    <th>Performance Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
 
-    const reportDiv = document.getElementById("report");
-    reportDiv.innerHTML = performanceHtml;
-     
-        }
+    let number = 1; // Add numbering
+    meanScores.forEach(({ subject, mean, level }) => {
+        performanceHtml += `<tr>
+                                <td>${number++}</td>
+                                <td>${subject}</td>
+                                <td>${mean}</td>
+                                <td>${level}</td>
+                            </tr>`;
+    });
+
+    performanceHtml += `</tbody></table>`;
+
+    // Display the subject performance report
+    document.getElementById("report").innerHTML = performanceHtml;
+}
+
 // Toggle visibility of the Registered Learners box
 function toggleRegisteredLearners() {
     const section = document.getElementById('registeredLearnersBox');
@@ -3278,7 +4003,7 @@ function printSubjectPerformance() {
                         color: blue;
                         text-align: center;
                         width: 200px;
-                        height: 80px;
+                        height: 70px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -3302,7 +4027,7 @@ function printSubjectPerformance() {
                     <p>Term: ${term}</p>
                 </div>
                 ${performanceHtml}
-                <div class="stamp">QUEEN OF ROSERY COMPREHENSIVE SCHOOL<br>P.O BOX 886-0100 Thika</div>
+                <div class="stamp">QUEEN OF ROSARY JUNIOR  SCHOOL<br>P.O BOX 886-01000 Thika</div>
             </body>
         </html>
     `);
@@ -3370,7 +4095,7 @@ function generateBulkReports() {
                         ${schoolLogo}
                         <div style="margin-left:110px;">
                             <h2 style="margin:0; font-size:20px;"> QUEEN OF ROSARY JUNIOR SCHOOL ASSESMENT REPORT</h2>
-                            <h3 style="margin:0; font-size:16px;">P.O BOX 886-0100 Thika </h3>
+                            <h3 style="margin:0; font-size:16px;">P.O BOX 886-01000 Thika</h3>
                             <h4 style="margin:0; font-size:14px;">Ministry Of Education Science And Technology</h4>
                         </div>
                     </div>
@@ -3424,8 +4149,8 @@ function generateBulkReports() {
                         Class Teacher Signature: ${details.classTeacherSignature || '_____________'}<br>
                         Principal Signature: ${details.principalSignature || '_____________'}<br>
                         Official Stamp: <div class="stamp">
-                             QUEEN OF ROSERY JUNIOR  SCHOOL <br>
-                            P.O BOX 886-0100 Thika<br>
+                             QUEEN OF ROSARY  Junior  School <br>
+                            P.O BOX 886-01000 Thika<br>
                             Date: ${formattedDate}<br>
                         </div>
                     </div>
@@ -3567,41 +4292,45 @@ function getLevel(score) {
 }
 
         function getComment(totalMarks) {
-        if (totalMarks >= 0 && totalMarks <= 100) 
-        return "Needs significant improvement. Let’s work on building foundational knowledge and skills together.";
-    if (totalMarks >= 101 && totalMarks <= 250) 
-        return "Below average. More consistent effort and dedication can help improve performance.";
-    if (totalMarks >= 251 && totalMarks <= 350) 
-        return "Approaching expectation. There is potential, but more focus and practice are required.";
-    if (totalMarks >= 351 && totalMarks <= 450) 
-        return "Average performance. Keep up the steady effort and aim higher next time.";
-    if (totalMarks >= 451 && totalMarks <= 500) 
-        return "Good performance. You are meeting expectations . With a bit more effort, you can excel further.";
-    if (totalMarks >= 501 && totalMarks <= 550) 
-        return "Very good performance. Well done! Keep pushing your limits to achieve even greater results.";
-    if (totalMarks >= 551 && totalMarks <= 600) 
-        return "Excellent work! Your hard work and dedication are evident. Keep it up!";
-    if (totalMarks >= 601 && totalMarks <= 650) 
-        return "Outstanding performance! You are demonstrating strong understanding and consistency.";
-    if (totalMarks >= 651 && totalMarks <= 701) 
-        return "Exceptional achievement! Keep maintaining this high level of performance.";
-    if (totalMarks >= 702 && totalMarks <= 750) 
-        return "Remarkable work! You are a role model for others with your consistent excellence.";
-    if (totalMarks >= 751 && totalMarks <= 796) 
-        return "Phenomenal performance! You are exceeding expectations and setting new benchmarks.";
-    if (totalMarks >= 798 && totalMarks <= 840) 
-        return "Exceptional brilliance! Keep inspiring others with your dedication and hard work.";
-    if (totalMarks >= 841 && totalMarks <= 900) 
-        return "Perfect and extraordinary! Your achievement is truly remarkable and a testament to your dedication.";
- 
-            return "";
+           if (totalMarks >= 0 && totalMarks <= 20) 
+    return "Needs significant improvement. Should seek help and put in extra effort.";
+if (totalMarks >= 21 && totalMarks <= 30) 
+    return "Shows some understanding but needs to work harder and focus on their studies.";
+if (totalMarks >= 31 && totalMarks <= 50) 
+    return "Displays potential but requires more dedication to reach higher performance.";
+if (totalMarks >= 51 && totalMarks <= 70) 
+    return "Making steady progress. Should maintain focus to improve further.";
+if (totalMarks >= 71 && totalMarks <= 85) 
+    return "Demonstrates good understanding but should aim for consistent excellence.";
+if (totalMarks >= 86 && totalMarks <= 140) 
+    return "Shows dedication and effort but can aim for even higher performance.";
+if (totalMarks >= 141 && totalMarks <= 200) 
+    return "Displays self-discipline; however, should put extra effort to achieve higher scores.";
+if (totalMarks >= 201 && totalMarks <= 300) 
+    return "Willing to help peers; however, should focus on improving overall performance.";
+if (totalMarks >= 301 && totalMarks <= 400) 
+    return "Actively participates in class discussions and takes on various roles in work groups.";
+if (totalMarks >= 401 && totalMarks <= 449) 
+    return "Demonstrates strong skills and consistently performs above expectations.";
+if (totalMarks >= 450 && totalMarks <= 500) 
+    return "Excels in assignments and shows leadership in group work.";
+if (totalMarks >= 501 && totalMarks <= 599) 
+    return "An exemplary performer who inspires peers through excellent work.";
+if (totalMarks >= 600 && totalMarks <= 630) 
+    return "A highly motivated learner who consistently achieves outstanding results.";
+if (totalMarks >= 631 && totalMarks <= 700) 
+    return "Shows exceptional skills and a deep understanding of the material.";
+if (totalMarks >= 701 && totalMarks <= 900) 
+    return "An outstanding achiever who excels beyond expectations.";
+return "";
+
 }
 
 function getPerformanceLevel(totalMarks) {
              if (totalMarks >= 1 && totalMarks <= 200) return "Below expectations";
-            if (totalMarks >= 201 && totalMarks <= 399) return "Approaching expectations";
-            if (totalMarks >= 400 && totalMarks <= 600) return "Meeting expectations";
-            if (totalMarks >= 601 && totalMarks <= 900) return "Exceeding expectations";
+            if (totalMarks >= 201 && totalMarks <= 400) return "Approaching expectations";
+            if (totalMarks >= 401 && totalMarks <= 600) return "Meeting expectations";
+            if (totalMarks >= 601 && totalMarks <= 800) return "Exceeding expectations";
             return "";
 }
 
@@ -3639,7 +4368,7 @@ function printAssessmentReport() {
                     .stamp {
                         border: 2px solid blue;
                         color: blue;
-                        width: 160px;
+                        width: 200px;
                         height: 70px;
                         display: flex;
                         align-items: center;
@@ -3674,7 +4403,7 @@ function printAssessmentReport() {
 
                 <!-- Stamp Section -->
                 <div class="stamp">
-                    QUEEN OF ROSARY COMPREHENSIVE SCHOOL <br>
+                   QUEEN OF ROSARY COMPREHENSIVE SCHOOL <br>
                     P.O BOX 886-01000 Thika
                 </div>
             </body>
@@ -3814,7 +4543,7 @@ function printAssessmentReport() {
                             border: 2px solid blue;
                             color: blue;
                             width: 200px;
-                            height: 80px;
+                            height: 70px;
                             display: flex;
                             align-items: center;
                             justify-content: center;
@@ -3877,7 +4606,7 @@ function printAssessmentReport() {
                         </tbody>
                     </table>
                     <!-- Append the stamp after printing the table -->
-                    <div class="stamp">QUEEN OF ROSERY JUNIOR SCHOOL<br>P.O BOX 886-0100 Thika</div>
+                    <div class="stamp">QUEEN OF ROSARY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 Thika</div>
                 </body>
             </html>
         `);
@@ -3927,11 +4656,13 @@ function printGroupedTable(grade) {
 function showSubjectChampions() {
     const champions = marks.reduce((acc, mark) => {
         mark.scores.forEach((score, index) => {
-            const subject = [
+            const subjects = [
                 'English', 'Mathematics', 'Pre-Technical Studies', 
                 'Kiswahili', 'Integrated Science', 'Social Studies', 
                 'Agriculture', 'Religious Education', 'Creative Art'
-            ][index];
+            ];
+            const subject = subjects[index];
+
             if (!acc[subject] || score > acc[subject].score) {
                 acc[subject] = { name: mark.learner, score };
             }
@@ -3939,62 +4670,114 @@ function showSubjectChampions() {
         return acc;
     }, {});
 
-    let championsHtml = '<h3>Subject Champions</h3><table class="learners-table"><thead><tr><th>No.</th><th>Subject</th><th>Champion</th><th>Score</th></tr></thead><tbody>';
+    // Function to determine performance level
+    function getPerformanceLevel(score) {
+        if (score >= 0 && score <= 25) return "Level 1 (BE)";
+        if (score >= 26 && score <= 49) return "Level 2 (AE)";
+        if (score >= 50 && score <= 75) return "Level 3 (ME)";
+        if (score >= 76 && score <= 100) return "Level 4 (EE)";
+        return "Invalid Score";
+    }
+
+    let championsHtml = `<h3 style="color: #4CAF50; text-align: center;">Subject Champions</h3>`;
+    championsHtml += `<table class="learners-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Subject</th>
+                                <th>Champion</th>
+                                <th>Score</th>
+                                <th>Performance Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
     let number = 1; // Add numbering
     for (const subject in champions) {
-        championsHtml += `
-            <tr>
-                <td>${number++}</td>
-                <td>${subject}</td>
-                <td>${champions[subject].name}</td>
-                <td>${champions[subject].score}</td>
-            </tr>
-        `;
+        let champion = champions[subject];
+        let level = getPerformanceLevel(champion.score);
+        
+        championsHtml += `<tr>
+                            <td>${number++}</td>
+                            <td>${subject}</td>
+                            <td>${champion.name}</td>
+                            <td>${champion.score}</td>
+                            <td>${level}</td>
+                          </tr>`;
     }
-    championsHtml += '</tbody></table>';
+
+    championsHtml += `</tbody></table>`;
 
     const reportDiv = document.getElementById("report");
     reportDiv.innerHTML = championsHtml;
 
-    // Start fireworks
+    // Start fireworks effect for champions
     startFireworks();
+}
+
+  function showSubjectRanking() {
+    const rankings = marks.reduce((acc, mark) => {
+        mark.scores.forEach((score, index) => {
+            const subjects = [
+                'English', 'Mathematics', 'Pre-Technical Studies', 
+                'Kiswahili', 'Integrated Science', 'Social Studies', 
+                'Agriculture', 'Religious Education', 'Creative Art'
+            ];
+            const subject = subjects[index];
+
+            if (!acc[subject]) {
+                acc[subject] = [];
+            }
+            acc[subject].push({ name: mark.learner, score });
+        });
+        return acc;
+    }, {});
+
+    for (const subject in rankings) {
+        rankings[subject].sort((a, b) => b.score - a.score);
+    }
+
+    // Function to determine performance level
+    function getPerformanceLevel(score) {
+        if (score >= 0 && score <= 25) return "Level 1 (BE)";
+        if (score >= 26 && score <= 49) return "Level 2 (AE)";
+        if (score >= 50 && score <= 75) return "Level 3 (ME)";
+        if (score >= 76 && score <= 100) return "Level 4 (EE)";
+        return "Invalid Score";
+    }
+
+    let rankingsHtml = `<h3 style="color: #4CAF50; text-align: center;">Subject Rankings</h3>`;
+    
+    for (const subject in rankings) {
+        rankingsHtml += `<h4 style="color: #2E86C1;">${subject}</h4>`;
+        rankingsHtml += `<table class="learners-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                    <th>Performance Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+
+        rankings[subject].forEach((entry, index) => {
+            let level = getPerformanceLevel(entry.score);
+            rankingsHtml += `<tr>
+                                <td>${index + 1}</td>
+                                <td>${entry.name}</td>
+                                <td>${entry.score}</td>
+                                <td>${level}</td>
+                            </tr>`;
+        });
+
+        rankingsHtml += `</tbody></table>`;
+    }
+
+    const reportDiv = document.getElementById("report");
+    reportDiv.innerHTML = rankingsHtml;
+}
      
-        }
-
-        function showSubjectRanking() {
-            const rankings = marks.reduce((acc, mark) => {
-                mark.scores.forEach((score, index) => {
-                    const subject = ['English', 'Mathematics', 'Pre-Technical Studies', 'Kiswahili', 'Integrated Science', 'Social Studies', 'Agriculture', 'Religious Education', 'Creative Art'][index];
-                    if (!acc[subject]) {
-                        acc[subject] = [];
-                    }
-                    acc[subject].push({ name: mark.learner, score });
-                });
-                return acc;
-            }, {});
-
-            for (const subject in rankings) {
-                rankings[subject].sort((a, b) => b.score - a.score);
-            }
-
-            let rankingsHtml = '<h3>Subject Rankings</h3>';
-            for (const subject in rankings) {
-                rankingsHtml += `<h4>${subject}</h4><table class="learners-table"><thead><tr><th>Rank</th><th>Name</th><th>Score</th></tr></thead><tbody>`;
-                rankings[subject].forEach((entry, index) => {
-                    rankingsHtml += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${entry.name}</td>
-                            <td>${entry.score}</td>
-                        </tr>
-                    `;
-                });
-                rankingsHtml += '</tbody></table>';
-            }
-
-            const reportDiv = document.getElementById("report");
-            reportDiv.innerHTML = rankingsHtml;
-        }
 
  function printSubjectChampions() {
     // Retrieve input values
@@ -4033,7 +4816,7 @@ function showSubjectChampions() {
                         color: blue;
                         text-align: center;
                         width: 200px;
-                        height: 80px;
+                        height: 70px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -4050,7 +4833,7 @@ function showSubjectChampions() {
                     <p>Term: ${term}</p>
                 </div>
                 ${championsHtml}
-                <div class="stamp">QUEEN OF ROSERY JUNIOR SCHOOL<br>P.O BOX 886-01000 THIKA</div>
+                <div class="stamp">QUEEN OF ROSARY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 Thika</div>
             </body>
         </html>
     `);
@@ -4099,7 +4882,7 @@ function printSubjectRanking() {
                         color: blue;
                         text-align: center;
                         width: 200px;
-                        height: 80px;
+                        height: 70px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -4116,7 +4899,7 @@ function printSubjectRanking() {
                     <p>Term: ${term}</p>
                 </div>
                 ${rankingsHtml}
-                <div class="stamp">QUEEN OF ROSERY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 THIKA</div>
+                <div class="stamp">QUEEN OF ROSARY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 Thika</div>
             </body>
         </html>
     `);
@@ -4559,7 +5342,7 @@ const footer = document.getElementById("footer");
 // Ensure reportDiv is before footer
 footer.parentNode.insertBefore(reportDiv, footer);
 
- const schoolEmail = "info@Queenofrosery.com"; // School email address
+ const schoolEmail = "info@QUEENOFROSARYCOMPREHENSIVESCHOOL.com"; // School email address
 function registerSupportStaff() {
     const fields = {
         staffId: document.getElementById("supportStaffId").value,
@@ -4681,7 +5464,7 @@ function showFeedbackMessage(message, type = "success") {
         const idCardHtml = `
             <div class="id-card">
                 <div class="header">
-                    <h1>QUEEN OF ROSERY COMPREHENSIVE SCHOOL</h1>
+                    <h1> QUEEN OF ROSARY Junior School</h1>
                     <p class="school-tagline">"Excellence and Integrity"</p>
                 </div>
                 <div class="id-card-content">
@@ -4749,7 +5532,7 @@ function showFeedbackMessage(message, type = "success") {
                 <body>
                     <div class="id-card">
                         <div class="header">
-                            <h1>QUEEN OF ROSERY COMPREHENSIVE SCHOOL</h1>
+                            <h1>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h1>
                             <p class="school-tagline">"Excellence and Integrity"</p>
                         </div>
                         <div class="id-card-content">
@@ -4919,9 +5702,13 @@ document.getElementById("marksForm").addEventListener("submit", function (e) {
     // Reset the form
     this.reset();
 });
+// Object to store original grades before promotion
+let previousGrades = {};
+
+// Function to promote learners
 function promoteLearners() {
     console.log("Starting promotion process...");
-    
+
     // Check if learners data exists
     if (!learners || learners.length === 0) {
         console.error("Learners data is not available.");
@@ -4932,12 +5719,18 @@ function promoteLearners() {
     // Iterate through learners and promote eligible ones
     learners.forEach((learner, index) => {
         console.log(`Processing learner: ${learner.name}, Grade: ${learner.grade}`);
+
         const gradeMatch = learner.grade.match(/^(\d+)([A-Z]*)$/);
         if (gradeMatch) {
             const currentGrade = parseInt(gradeMatch[1]);
             const stream = gradeMatch[2];
             console.log(`Current Grade: ${currentGrade}, Stream: ${stream}`);
-            
+
+            // Store the original grade before promotion
+            if (!previousGrades[learner.name]) {
+                previousGrades[learner.name] = learner.grade;
+            }
+
             // Promote learners in grades 7, 8, and 9
             if (currentGrade >= 7 && currentGrade <= 9) {
                 const newGrade = (currentGrade + 1) + stream;
@@ -4963,12 +5756,42 @@ function promoteLearners() {
         promotionMessage.style.display = 'block';
         setTimeout(() => {
             promotionMessage.style.display = 'none';
-        }, 3000); // Hide after 3 seconds
+        }, 3000);
     } else {
         alert("Eligible learners have been promoted to the next grade!");
     }
 }
 
+// Function to undo promotion
+function undoPromotion() {
+    console.log("Undoing promotion...");
+
+    if (Object.keys(previousGrades).length === 0) {
+        alert("No previous promotion records found!");
+        return;
+    }
+
+    // Iterate and revert grades
+    learners.forEach(learner => {
+        if (previousGrades[learner.name]) {
+            learner.grade = previousGrades[learner.name]; // Restore original grade
+            console.log(`Reverted ${learner.name} to ${learner.grade}`);
+        }
+    });
+
+    // Update storage and UI
+    if (useIndexedDB) {
+        saveLearnersToIndexedDB();
+    } else {
+        saveLearnersToLocalStorage();
+    }
+    updateLearnersTable();
+
+    // Clear the stored previous grades
+    previousGrades = {};
+
+    alert("Promotion undone successfully!");
+}
 // Helper to detect storage type
 const useIndexedDB = window.indexedDB ? true : false;
 
@@ -5206,7 +6029,7 @@ function displayMessage() {
                     </style>
                 </head>
                 <body>
-                    <h1>Support Staff List - Nachu Junior School</h1>
+                    <h1>Support Staff List -QUEEN OF ROSARY Junior School </h1>
                     <table>
                         <thead>
                             <tr>
@@ -5370,6 +6193,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeStorage(); // Ensure storage is initialized
     loadMarks(); // Load marks from storage
 });
+
 function generateGenderPerformance() {
     const marksTableBody = document.getElementById("marksList");
     const learnersTableBody = document.getElementById("learnersList");
@@ -5379,38 +6203,50 @@ function generateGenderPerformance() {
         return;
     }
 
-    // Fetch values from the Champions Form
-    const schoolName = document.getElementById("schoolName")?.value || "N/A";
-    const gradeLevel = document.getElementById("gradeLevel")?.value || "N/A";
-    const year = document.getElementById("year")?.value || "N/A";
-    const term = document.getElementById("term")?.value || "N/A";
-
-    // Extract learners and their genders
+    // Extract learners' details (Name, Gender)
     const learners = Array.from(learnersTableBody.querySelectorAll("tr")).map(row => {
         const cells = row.querySelectorAll("td");
         return {
-            name: cells[2]?.textContent.trim(), // Assuming Name is the 3rd column
-            gender: cells[3]?.textContent.trim().toLowerCase(), // Assuming Gender is the 4th column
+            name: cells[2]?.textContent.trim(),
+            gender: cells[3]?.textContent.trim().toLowerCase(),
         };
     });
 
-    // Extract marks data
+    // Extract marks data exactly as recorded
     const marks = Array.from(marksTableBody.querySelectorAll("tr")).map(row => {
         const cells = row.querySelectorAll("td");
-        const learnerName = cells[1]?.textContent.trim(); // Assuming Learner Name is the 2nd column
-        const totalMarks = parseInt(cells[cells.length - 2]?.textContent.trim()) || 0; // Assuming Total Marks is second-last column
-        return { learner: learnerName, totalMarks };
+        return {
+            learner: cells[1]?.textContent.trim(),
+            grade: cells[2]?.textContent.trim(),
+            english: parseInt(cells[3]?.textContent.trim()) || 0,
+            englishLevel: cells[4]?.textContent.trim() || "-",
+            math: parseInt(cells[5]?.textContent.trim()) || 0,
+            mathLevel: cells[6]?.textContent.trim() || "-",
+            preTech: parseInt(cells[7]?.textContent.trim()) || 0,
+            preTechLevel: cells[8]?.textContent.trim() || "-",
+            kiswahili: parseInt(cells[9]?.textContent.trim()) || 0,
+            kiswahiliLevel: cells[10]?.textContent.trim() || "-",
+            science: parseInt(cells[11]?.textContent.trim()) || 0,
+            scienceLevel: cells[12]?.textContent.trim() || "-",
+            social: parseInt(cells[13]?.textContent.trim()) || 0,
+            socialLevel: cells[14]?.textContent.trim() || "-",
+            agriculture: parseInt(cells[15]?.textContent.trim()) || 0,
+            agricultureLevel: cells[16]?.textContent.trim() || "-",
+            religion: parseInt(cells[17]?.textContent.trim()) || 0,
+            religionLevel: cells[18]?.textContent.trim() || "-",
+            art: parseInt(cells[19]?.textContent.trim()) || 0,
+            artLevel: cells[20]?.textContent.trim() || "-",
+            totalMarks: parseInt(cells[cells.length - 2]?.textContent.trim()) || 0
+        };
     });
 
     // Group marks by gender
-    const genderPerformance = {
-        Male: [],
-        Female: [],
-    };
+    const genderPerformance = { Male: [], Female: [] };
 
     marks.forEach(markEntry => {
-        const learner = learners.find(learner => learner.name === markEntry.learner);
+        const learner = learners.find(l => l.name === markEntry.learner);
         if (learner) {
+            markEntry.gender = learner.gender;
             if (learner.gender === "male") {
                 genderPerformance.Male.push(markEntry);
             } else if (learner.gender === "female") {
@@ -5419,167 +6255,135 @@ function generateGenderPerformance() {
         }
     });
 
-    // Sort each group by total marks (descending)
-    const sortPerformance = (data) => data.sort((a, b) => b.totalMarks - a.totalMarks);
+    // Sort learners within each gender by total marks (Descending order)
+    genderPerformance.Male.sort((a, b) => b.totalMarks - a.totalMarks);
+    genderPerformance.Female.sort((a, b) => b.totalMarks - a.totalMarks);
 
-    sortPerformance(genderPerformance.Male);
-    sortPerformance(genderPerformance.Female);
+    // Function to calculate correct totals and averages
+    function calculateSubjectStats(data) {
+        let totals = {
+            english: 0, math: 0, preTech: 0, kiswahili: 0, science: 0,
+            social: 0, agriculture: 0, religion: 0, art: 0, totalMarks: 0
+        };
 
-    // Ensure data exists
-    if (genderPerformance.Male.length === 0 && genderPerformance.Female.length === 0) {
-        alert("No learners with recorded marks found in the system.");
-        return;
+        data.forEach(entry => {
+            totals.english += entry.english;
+            totals.math += entry.math;
+            totals.preTech += entry.preTech;
+            totals.kiswahili += entry.kiswahili;
+            totals.science += entry.science;
+            totals.social += entry.social;
+            totals.agriculture += entry.agriculture;
+            totals.religion += entry.religion;
+            totals.art += entry.art;
+            totals.totalMarks += entry.totalMarks;
+        });
+
+        let count = data.length;
+        let averages = count > 0 ? {
+            english: (totals.english / count).toFixed(1),
+            math: (totals.math / count).toFixed(1),
+            preTech: (totals.preTech / count).toFixed(1),
+            kiswahili: (totals.kiswahili / count).toFixed(1),
+            science: (totals.science / count).toFixed(1),
+            social: (totals.social / count).toFixed(1),
+            agriculture: (totals.agriculture / count).toFixed(1),
+            religion: (totals.religion / count).toFixed(1),
+            art: (totals.art / count).toFixed(1),
+            totalMarks: (totals.totalMarks / count).toFixed(1)
+        } : totals;
+
+        return { totals, averages };
     }
 
-    // Create HTML for each gender group
-    const createPerformanceTable = (data, gender) => {
+    // Function to generate performance tables
+    function createPerformanceTable(data, gender) {
         if (data.length === 0) return `<h3>No ${gender} learners with recorded marks.</h3>`;
 
+        let { totals, averages } = calculateSubjectStats(data);
+
         let tableHtml = `
-            <h3>${gender} Performance</h3>
-            <table class="report-table">
+            <h2 style="color: ${gender === "Male" ? "blue" : "purple"}; text-align: center;">
+                ${gender} Performance Report
+            </h2>
+            <table border="1" style="width:100%; border-collapse: collapse;">
                 <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Name</th>
-                        <th>Total Marks</th>
+                    <tr style="background: #4CAF50; color: white;">
+                        <th>Name</th><th>Grade</th>
+                        <th>English</th><th>Level</th><th>Math</th><th>Level</th>
+                        <th>Pre-Tech</th><th>Level</th><th>Kiswahili</th><th>Level</th>
+                        <th>Science</th><th>Level</th><th>Social</th><th>Level</th>
+                        <th>Agriculture</th><th>Level</th><th>Religion</th><th>Level</th>
+                        <th>Creative Art</th><th>Level</th><th>Total Marks</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
-        data.forEach((entry, index) => {
+        data.forEach(entry => {
             tableHtml += `
                 <tr>
-                    <td>${index + 1}</td>
-                    <td>${entry.learner}</td>
-                    <td>${entry.totalMarks}</td>
+                    <td>${entry.learner}</td><td>${entry.grade}</td>
+                    <td>${entry.english}</td><td>${entry.englishLevel}</td>
+                    <td>${entry.math}</td><td>${entry.mathLevel}</td>
+                    <td>${entry.preTech}</td><td>${entry.preTechLevel}</td>
+                    <td>${entry.kiswahili}</td><td>${entry.kiswahiliLevel}</td>
+                    <td>${entry.science}</td><td>${entry.scienceLevel}</td>
+                    <td>${entry.social}</td><td>${entry.socialLevel}</td>
+                    <td>${entry.agriculture}</td><td>${entry.agricultureLevel}</td>
+                    <td>${entry.religion}</td><td>${entry.religionLevel}</td>
+                    <td>${entry.art}</td><td>${entry.artLevel}</td>
+                    <td><strong>${entry.totalMarks}</strong></td>
                 </tr>
             `;
         });
 
-        tableHtml += `
-                </tbody>
-            </table>
-        `;
+       // Add totals row
+tableHtml += `
+    <tr style="background: yellow; font-weight: bold;">
+        <td colspan="2">Totals</td>
+        <td>${totals.english}</td><td>-</td>
+        <td>${totals.math}</td><td>-</td>
+        <td>${totals.preTech}</td><td>-</td>
+        <td>${totals.kiswahili}</td><td>-</td>
+        <td>${totals.science}</td><td>-</td>
+        <td>${totals.social}</td><td>-</td>
+        <td>${totals.agriculture}</td><td>-</td>
+        <td>${totals.religion}</td><td>-</td>
+        <td>${totals.art}</td><td>-</td>
+        <td><strong>${totals.totalMarks}</strong></td>
+    </tr>
+`;
 
-        return tableHtml;
-    };
+// Add averages row
+tableHtml += `
+    <tr style="background: lightblue; font-weight: bold;">
+        <td colspan="2">Averages</td>
+        <td>${averages.english}</td><td>-</td>
+        <td>${averages.math}</td><td>-</td>
+        <td>${averages.preTech}</td><td>-</td>
+        <td>${averages.kiswahili}</td><td>-</td>
+        <td>${averages.science}</td><td>-</td>
+        <td>${averages.social}</td><td>-</td>
+        <td>${averages.agriculture}</td><td>-</td>
+        <td>${averages.religion}</td><td>-</td>
+        <td>${averages.art}</td><td>-</td>
+        <td><strong>${averages.totalMarks}</strong></td>
+    </tr>
+`;
 
-    // Display results
-    const reportDiv = document.getElementById("report");
-    reportDiv.innerHTML = `
-        <div>
-            <h2>Gender Performance Report</h2>
-            <p><strong>School:</strong> ${schoolName}</p>
-            <p><strong>Grade:</strong> ${gradeLevel}</p>
-            <p><strong>Year:</strong> ${year}</p>
-            <p><strong>Term:</strong> ${term}</p>
-        </div>
+tableHtml += `</tbody></table><br><br>`;
+return tableHtml;
+
+    }
+
+    document.getElementById("report").innerHTML = `
         ${createPerformanceTable(genderPerformance.Male, "Male")}
         ${createPerformanceTable(genderPerformance.Female, "Female")}
-        <button onclick="printReport()" class="btn-print">Print Report</button>
     `;
 }
 
-// Function to print the report
-function printReport() {
-    const reportDiv = document.getElementById("report");
-    const printContent = reportDiv.innerHTML;
 
-    // URL or base64 string of your logo
-    const logoUrl = " https://i.imgur.com/UW65hfv.png"; // Replace with your logo's URL or base64 string
-
-    const printWindow = window.open("", "_blank", "width=800,height=600");
-    printWindow.document.open();
-    printWindow.document.write(`
-        <html>
-        <head>
-            <title>Gender Performance Report</title>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                }
-                h2, h3 {
-                    text-align: center;
-                }
-                .report-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-                .report-table th, .report-table td {
-                    border: 1px solid #000;
-                    padding: 8px;
-                    text-align: center;
-                }
-                .report-table th {
-                    background-color: #f2f2f2;
-                    font-weight: bold;
-                }
-                p {
-                    margin: 5px 0;
-                    text-align: center;
-                }
-                .logo {
-                    display: block;
-                    margin: 0 auto;
-                    width: 100px; /* Adjust this size */
-                    height: auto;
-                }
-            </style>
-        </head>
-        <body>
-            <img src="${logoUrl}" class="logo" alt="School Logo">
-            ${printContent}
-        </body>
-        </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-}
-function printGenderPerformance() {
-    // Assuming you have a gender performance table or data to print
-    const genderPerformanceTable = document.getElementById("genderPerformanceTable").outerHTML; 
-
-    const printWindow = window.open("", "_blank");
-
-    // Retrieve gender performance data (adjust based on your implementation)
-    const schoolName = document.getElementById("schoolName").value || "School Name Not Provided";
-    const year = document.getElementById("year").value || "Year Not Provided";
-    const date = document.getElementById("date").value || "Date Not Provided";
-
-    // Open a new print window and write the content for printing
-    printWindow.document.write(`
-        <html>
-            <head>
-                <title>Gender Performance Report</title>
-                <style>
-                    body { font-family: Arial, sans-serif; margin: 20px; }
-                    table { width: 100%; border-collapse: collapse; }
-                    th, td { border: 1px solid black; padding: 8px; text-align: center; }
-                    th { background-color: #f2f2f2; font-size: 16px; }
-                    td { font-size: 14px; }
-                    .header-info { font-weight: bold; margin-bottom: 20px; font-size: 16px; }
-                </style>
-            </head>
-            <body>
-                <div class="header-info">
-                    <p><strong>School:</strong> ${schoolName}</p>
-                    <p><strong>Year:</strong> ${year}</p>
-                    <p><strong>Date:</strong> ${date}</p>
-                </div>
-                <h1>Gender Performance Report</h1>
-                ${genderPerformanceTable}
-            </body>
-        </html>
-    `);
-
-    // Close the document and trigger the print dialog
-    printWindow.document.close();
-    printWindow.print();
-}
 document.getElementById('photoInput').addEventListener('change', function (event) {
     const files = event.target.files;
     const gallery = document.getElementById('photoGallery');
@@ -6646,8 +7450,1992 @@ document.getElementById("learnerSelect").addEventListener("change", function () 
     };
 });
 
+function calculateSubjectLevels() {
+    let subjects = ["english", "math", "preTech", "kiswahili", "science", "social", "agriculture", "religion", "art"];
+    let subjectLevels = {};
+
+    // Initialize level counters for each subject
+    subjects.forEach(subject => {
+        subjectLevels[subject] = { level1: 0, level2: 0, level3: 0, level4: 0 };
+    });
+
+    let marksRows = document.querySelectorAll("#marksList tr");
+
+    // If no marks are present, reset the summary table
+    if (marksRows.length === 0) {
+        document.getElementById("subjectLevels").innerHTML = "<tr><td colspan='5'>No data available</td></tr>";
+        return;
+    }
+
+    // Process each row in the marks table
+    marksRows.forEach(row => {
+        let cells = row.querySelectorAll("td");
+
+        subjects.forEach((subject, index) => {
+            let levelCellIndex;
+
+            // Fix the column index for Maths and English (adjust their position)
+            if (subject === "english") {
+                levelCellIndex = 4; // "Lev" column for English
+            } else if (subject === "math") {
+                levelCellIndex = 6; // "Lev" column for Math
+            } else {
+                levelCellIndex = (index * 2) + 4; // General calculation for other subjects
+            }
+
+            let levelText = cells[levelCellIndex]?.innerText.trim(); // Extract level text
+
+            if (levelText) {
+                let level = parseInt(levelText, 10); // Convert to a number
+
+                // Count learners for each level
+                if (level === 1) {
+                    subjectLevels[subject].level1++;
+                } else if (level === 2) {
+                    subjectLevels[subject].level2++;
+                } else if (level === 3) {
+                    subjectLevels[subject].level3++;
+                } else if (level === 4) {
+                    subjectLevels[subject].level4++;
+                }
+            }
+        });
+    });
+
+    // Update the Subject Level Summary Table
+    let subjectLevelsTable = document.getElementById("subjectLevels");
+    subjectLevelsTable.innerHTML = ""; // Clear existing data
+
+    subjects.forEach(subject => {
+        let row = `<tr>
+            <td>${subject.toUpperCase()}</td>
+            <td>${subjectLevels[subject].level1} learners (BE)</td>
+            <td>${subjectLevels[subject].level2} learners (AE)</td>
+            <td>${subjectLevels[subject].level3} learners (ME)</td>
+            <td>${subjectLevels[subject].level4} learners (EE)</td>
+        </tr>`;
+        subjectLevelsTable.innerHTML += row;
+    });
+}
+
+// Call function after marks are loaded
+document.addEventListener("DOMContentLoaded", function () {
+    calculateSubjectLevels();
+});
+
+// Attach this function to events like adding/editing marks dynamically
+function refreshLevels() {
+    calculateSubjectLevels();
+}
+
+function printSubjectLevels() {
+    const subjectTable = document.getElementById("subjectLevels");
+    if (!subjectTable) {
+        alert("No subject level data available to print.");
+        return;
+    }
+
+    // Get the first available grade dynamically
+    const firstRow = document.querySelector("#marksTableSection .report-table tbody tr");
+    const grade = firstRow ? firstRow.children[2].textContent.trim() : "N/A";
+
+    let printContents = `
+        <html>
+        <head>
+            <title>Nachu Junior School Subject Level Summary Report</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+                h2, p { margin: 5px 0; }
+                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                th, td { border: 1px solid black; padding: 8px; text-align: center; }
+                th { background-color: #4CAF50; color: white; }
+                .school-logo { max-width: 100px; display: block; margin: 0 auto; }
+            </style>
+        </head>
+        <body>
+            <div>
+                <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" class="school-logo">
+                <h2>QUEEN OF ROSARY Junior School Subject Level Summary Report</h2>
+                <p><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+                <p><strong>Phone: +254-700-123456</strong></p>
+                <p><em>School Motto: "Excellence Through Knowledge"</em></p>
+                <p><strong>Year: 2025</strong></p>
+                <p><strong>Grade: ${grade}</strong></p>
+            </div>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Level 1</th>
+                        <th>Level 2</th>
+                        <th>Level 3</th>
+                        <th>Level 4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${subjectTable.innerHTML}
+                </tbody>
+            </table>
+            <br>
+            <button onclick="window.print()">Print Report</button>
+        </body>
+        </html>
+    `;
+
+    let newWindow = window.open("", "_blank");
+    newWindow.document.write(printContents);
+    newWindow.document.close();
+}
+function groupLearnersByPathways() {
+    const learnersTable = document.querySelector("#marksTableSection .report-table tbody");
+    const learnersRows = Array.from(learnersTable.querySelectorAll("tr"));
+    const resultsTable = document.querySelector("#pathwaysResultsTable tbody");
+
+    // Clear previous results from the main table
+    resultsTable.innerHTML = "";
+
+    // Remove existing summary table if it exists
+    let existingSummary = document.getElementById("summaryTable");
+    if (existingSummary) {
+        existingSummary.parentNode.removeChild(existingSummary);
+    }
+
+    // Initialize summary counts for each pathway
+    const pathwayCounts = {
+        STEM: 0,
+        "Social Sciences": 0,
+        "Sports, Arts & Science": 0,
+    };
+
+    learnersRows.forEach((row) => {
+        const cells = row.querySelectorAll("td");
+        if (cells.length < 22) return; // Ensure row has enough data
+
+        const learnerName = cells[1].textContent.trim();
+        const grade = cells[2].textContent.trim();
+
+        // Extract scores from table cells
+        const scores = {
+            English: parseInt(cells[3].textContent.trim()) || 0,
+            Math: parseInt(cells[5].textContent.trim()) || 0,
+            "Pre-technical Studies": parseInt(cells[7].textContent.trim()) || 0,
+            Kiswahili: parseInt(cells[9].textContent.trim()) || 0,
+            "Integrated Science": parseInt(cells[11].textContent.trim()) || 0,
+            "Social Studies": parseInt(cells[13].textContent.trim()) || 0,
+            Agriculture: parseInt(cells[15].textContent.trim()) || 0,
+            "Religious Education": parseInt(cells[17].textContent.trim()) || 0,
+            "Creative Art": parseInt(cells[19].textContent.trim()) || 0,
+        };
+
+        // Define pathways and their subject associations
+        const pathways = {
+            STEM: ["English", "Math", "Pre-technical Studies", "Kiswahili", "Integrated Science", "Agriculture"],
+            "Social Sciences": ["Kiswahili", "English", "Social Studies", "Religious Education"],
+            "Sports, Arts & Science": ["Kiswahili", "English", "Creative Art"],
+        };
+
+        const pathwayResults = {};
+
+        // Calculate average scores for each pathway
+        Object.keys(pathways).forEach((pathway) => {
+            const subjects = pathways[pathway];
+            const total = subjects.reduce((sum, subject) => sum + (scores[subject] || 0), 0);
+            const average = total / subjects.length;
+            pathwayResults[pathway] = average;
+        });
+
+        // Determine the best pathway
+        const bestPathway = Object.keys(pathwayResults).reduce((a, b) =>
+            pathwayResults[a] > pathwayResults[b] ? a : b
+        );
+
+        // Increase count for the selected best pathway
+        pathwayCounts[bestPathway]++;
+
+        // Append learner's result to the main results table
+        const resultRow = document.createElement("tr");
+        resultRow.innerHTML = `
+            <td>${learnerName}</td>
+            <td>${grade}</td>
+            ${pathways.STEM.map(subject => `<td>${scores[subject]}</td>`).join("")}
+            ${pathways["Social Sciences"].map(subject => `<td>${scores[subject]}</td>`).join("")}
+            ${pathways["Sports, Arts & Science"].map(subject => `<td>${scores[subject]}</td>`).join("")}
+            <td>${pathwayResults.STEM.toFixed(2)}</td>
+            <td>${pathwayResults["Social Sciences"].toFixed(2)}</td>
+            <td>${pathwayResults["Sports, Arts & Science"].toFixed(2)}</td>
+            <td><strong>${bestPathway}</strong></td>
+        `;
+        resultsTable.appendChild(resultRow);
+    });
+
+    // Build the summary table HTML
+    const summaryHTML = `
+       <table id="summaryTable" border="1" cellspacing="0" cellpadding="5" style="width: 50%; margin: 10px auto; text-align: center; font-family: Arial, sans-serif;">
+           <thead>
+              <tr>
+                 <th>Pathway</th>
+                 <th>Number of Learners</th>
+              </tr>
+           </thead>
+           <tbody>
+              <tr><td>STEM</td><td>${pathwayCounts["STEM"]}</td></tr>
+              <tr><td>Social Sciences</td><td>${pathwayCounts["Social Sciences"]}</td></tr>
+              <tr><td>Sports, Arts & Science</td><td>${pathwayCounts["Sports, Arts & Science"]}</td></tr>
+           </tbody>
+       </table>
+    `;
+
+    // Insert the summary table after the main results table
+    const resultsSection = document.getElementById("resultsSection");
+    resultsSection.insertAdjacentHTML("beforeend", summaryHTML);
+}
+
+function togglePathwaysTable() {
+    const resultsSection = document.getElementById("resultsSection");
+    const toggleButton = document.querySelector(".toggle-button");
+
+    if (resultsSection.style.display === "none") {
+        resultsSection.style.display = "block";
+        groupLearnersByPathways(); // Populate the table with updated data
+        toggleButton.innerHTML = `<i class="fas fa-eye-slash"></i> Hide Pathways Table`;
+    } else {
+        resultsSection.style.display = "none";
+        toggleButton.innerHTML = `<i class="fas fa-chart-bar"></i> Group Learners by Pathways`;
+    }
+}
+
+function printPathwayReport() {
+    const resultsSection = document.getElementById("resultsSection");
+    if (!resultsSection || resultsSection.style.display === "none") {
+        alert("Please generate the pathway report first before printing.");
+        return;
+    }
+
+    // Build the main results table HTML for printing
+    const mainTableHTML = `
+        <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; text-align: center; font-family: Arial, sans-serif;">
+            <thead>
+                <tr>
+                    <th rowspan="2">Learner</th>
+                    <th rowspan="2">Grade</th>
+                    <th colspan="6">STEM Subjects</th>
+                    <th colspan="4">Social Sciences Subjects</th>
+                    <th colspan="3">Sports, Arts & Science Subjects</th>
+                    <th rowspan="2">STEM Average</th>
+                    <th rowspan="2">Social Sciences Average</th>
+                    <th rowspan="2">Sports, Arts & Science Average</th>
+                    <th rowspan="2">Best Pathway</th>
+                </tr>
+                <tr>
+                    <th>ENG</th><th>MATH</th><th>PRE-TECH</th><th>KISWA</th><th>I SCIE</th><th>AGRIC</th>
+                    <th>KISWA</th><th>ENG</th><th>SST</th><th>CRE</th>
+                    <th>KISWA</th><th>ENG</th><th>C/A</th>
+                </tr>
+            </thead>
+            <tbody>${document.querySelector("#pathwaysResultsTable tbody").innerHTML}</tbody>
+        </table>
+    `;
+
+    // Get the summary table HTML
+    const summaryTableHTML = document.getElementById("summaryTable").outerHTML;
+
+    // Combine header, main table, and summary table into the final report content
+    const reportContent = `
+        <div style="text-align: center; font-family: Arial, sans-serif;">
+            <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 100px; display: block; margin: 0 auto;">
+            <h2 style="margin: 5px 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL Pathway Report</h2>
+            <p>P.O BOX 886-01000 Thika KENYA </p>
+            <p>Phone: +254-700-123456</p>
+            <p style="font-style: italic; font-weight: bold;">School Motto: "Excellence Through Knowledge"</p>
+            <p><strong>Year: 2025</strong></p>
+        </div>
+        <hr>
+        ${mainTableHTML}
+        <br>
+        <h3 style="text-align: center;">Pathway Summary</h3>
+        ${summaryTableHTML}
+    `;
+
+    // Open print window and include the complete report content
+    const printWindow = window.open("", "", "width=900,height=600");
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Career Pathway Report</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; }
+                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+                th, td { border: 1px solid black; padding: 5px; }
+                th { background-color: #f2f2f2; }
+            </style>
+        </head>
+        <body>
+            ${reportContent}
+            <br><button onclick="window.print()">Print Report</button>
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+}
 
 
-</script>
-</body>
-</html>
+function deleteMarksTable() {
+    var tableElement = document.querySelector(".report-table"); // Find the table
+    var marksHeader = document.getElementById("marksHeader"); // Find the header
+    var marksList = document.getElementById("marksList"); // Find table body
+
+    if (tableElement) {
+        showCustomConfirm(
+            `Are you sure you want to delete the <span style="color: red; font-weight: bold;">entire marks table</span>?`,
+            function () {  // Ensure the function executes on "Yes"
+                // Remove from UI
+                tableElement.remove();
+                if (marksHeader) marksHeader.innerHTML = ""; // Clear the header
+                if (marksList) marksList.innerHTML = ""; // Clear the table content
+
+                // Remove marks data from local storage
+                localStorage.removeItem("marksTableData");
+
+                showCustomAlert(`<span style="color: green; font-weight: bold;">Marks table deleted successfully!</span>`);
+            }
+        );
+    } else {
+        showCustomAlert(`<span style="color: red; font-weight: bold;">Error: Marks table not found.</span>`);
+    }
+}
+
+function showCustomConfirm(message, onConfirm) {
+    let confirmBox = document.createElement("div");
+    confirmBox.innerHTML = `<div style="
+        position: fixed; 
+        top: 20%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        background-color: #fff3cd;
+        border: 2px solid orange;
+        padding: 15px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+        color: black;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        z-index: 1000;">
+        ${message}
+        <br><br>
+        <button id="confirmYes" style="
+            background: red; 
+            color: white; 
+            padding: 8px 15px; 
+            border: none; 
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;">Yes</button>
+        <button onclick="this.parentElement.remove()" style="
+            background: gray; 
+            color: white; 
+            padding: 8px 15px; 
+            border: none; 
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;">No</button>
+    </div>`;
+
+    document.body.appendChild(confirmBox);
+
+    // Attach the confirmation function to the "Yes" button
+    document.getElementById("confirmYes").addEventListener("click", function () {
+        onConfirm();  // Call the actual delete function
+        confirmBox.remove();  // Remove confirmation box
+    });
+}
+function generateMeritList() {
+    let selectedGrade = document.getElementById("gradeSelect").value;
+
+    if (!selectedGrade) {
+        alert("Please select a grade.");
+        return;
+    }
+
+    let learnersTable = document.getElementById("learnersList");
+    if (!learnersTable) {
+        alert("Registered learners table not found.");
+        return;
+    }
+
+    let learners = [];
+    let rows = learnersTable.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        if (cells.length > 0) {
+            let grade = cells[4].innerText.trim();
+            let name = cells[2].innerText.trim();
+            
+            if (grade === selectedGrade) {
+                learners.push(name);
+            }
+        }
+    }
+
+    if (learners.length === 0) {
+        alert("No learners found in the selected grade.");
+        return;
+    }
+
+    let meritListHTML = `
+        <div id="meritList" style="text-align: center; font-family: Arial, sans-serif;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="width: 80px; margin-right: 10px;">
+            </div>
+            <h2 style="margin: 5px 0; font-size: 20px; font-weight: bold;"> QUEEN OF ROSARY COMPREHENSIVE SCHOOL MERIT  LIST</h2>
+            <p style="margin: 2px 0; font-size: 14px;"><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+            <p style="margin: 2px 0; font-size: 14px;"><strong>Phone: +254-700-123456</strong></p>
+            <p style="margin: 2px 0; font-size: 14px;"><strong>School Motto: "Excellence Through Knowledge"</strong></p>
+            <p style="margin: 5px 0; font-size: 16px;"><strong>Year: 2025</strong></p>
+            <p style="font-size: 16px; font-weight: bold; text-decoration: underline;">Grade: ${selectedGrade}</p>
+
+            <table border="1" cellspacing="0" cellpadding="5" style="width: 100%; border-collapse: collapse; text-align: center; border: 2px solid black;">
+                <thead style="background-color: #f0f0f0; font-weight: bold;">
+                    <tr>
+                        <th>No.</th>
+                        <th>Learner</th>
+                        <th>Grade</th>
+                        <th>Eng</th><th>Lev</th>
+                        <th>Math</th><th>Lev</th>
+                        <th>Pre-Tech</th><th>Lev</th>
+                        <th>Kisw</th><th>Lev</th>
+                        <th>Scie</th><th>Lev</th>
+                        <th>Sst</th><th>Lev</th>
+                        <th>Agric</th><th>Lev</th>
+                        <th>Cre</th><th>Lev</th>
+                        <th>C/A</th><th>Lev</th>
+                        <th>Total Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    learners.forEach((learner, index) => {
+        meritListHTML += `
+            <tr>
+                <td style="border: 2px solid black;">${index + 1}</td>
+                <td style="border: 2px solid black;">${learner}</td>
+                <td style="border: 2px solid black;">${selectedGrade}</td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+       <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+                
+<td style="border: 2px solid black;"></td>
+            </tr>
+        `;
+    });
+
+    meritListHTML += `
+        <tr style="font-weight: bold;">
+            <td colspan="3" style="border: 2px solid black;">Totals</td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+       <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+              <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+        <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+       
+     <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            
+<td style="border: 2px solid black;"></td>
+        </tr>
+        <tr style="font-weight: bold;">
+            <td colspan="3" style="border: 2px solid black;">Averages</td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+       <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
+               
+<td style="border: 2px solid black;"></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        <button onclick="printMeritList()" id="printBtn" style="display:block; margin-top:10px;">Print</button>
+    `;
+
+    document.getElementById("meritListContainer").innerHTML = meritListHTML;
+    document.getElementById("meritListContainer").style.display = "block";
+}
+
+function printMeritList() {
+    let printContent = document.getElementById("meritList").innerHTML;
+    let newWin = window.open("", "", "width=900,height=650");
+    newWin.document.write("<html><head><title>Print Merit List</title></head><body>");
+    newWin.document.write(printContent);
+    newWin.document.write("</body></html>");
+    newWin.document.close();
+    newWin.print();
+}
+function toggleMeritList() {
+    let meritList = document.getElementById("meritListContainer");
+    let toggleBtn = document.getElementById("toggleBtn");
+
+    if (meritList.style.display === "none") {
+        meritList.style.display = "block";
+        toggleBtn.innerHTML = `<i class="fas fa-eye-slash"></i> Hide Merit List`;
+    } else {
+        meritList.style.display = "none";
+        toggleBtn.innerHTML = `<i class="fas fa-eye"></i> Show Merit List`;
+    }
+}
+ // Initialize fee details from localStorage
+    let feeDetails = JSON.parse(localStorage.getItem("feeDetails")) || [];
+
+    // Function to determine constant fee based on grade
+    function getConstantFee(grade) {
+      if (["1", "2", "3"].includes(grade)) {
+        return 4000;
+      } else if (["4", "5", "6"].includes(grade)) {
+        return 6000;
+      } else if (["7", "8", "9"].includes(grade)) {
+        return 7000;
+      } else {
+        return 0;
+      }
+    }
+
+    // Handle fee form submission
+    document.getElementById("feeForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const learnerName = document.getElementById("feeLearnerName").value;
+  const learnerGrade = document.getElementById("feeLearnerGrade").value;
+  const securityFee = parseFloat(document.getElementById("securityFee").value);
+  const bomFee = parseFloat(document.getElementById("bomFee").value);
+  const tuitionFee = parseFloat(document.getElementById("tuitionFee").value);
+  const exam1Fee = parseFloat(document.getElementById("exam1Fee").value);
+  const exam2Fee = parseFloat(document.getElementById("exam2Fee").value);
+  const exam3Fee = parseFloat(document.getElementById("exam3Fee").value);
+  const activityFee = parseFloat(document.getElementById("activityFee").value);
+
+  const constantFee = getConstantFee(learnerGrade);
+  const totalPaid = securityFee + bomFee + tuitionFee + exam1Fee + exam2Fee + exam3Fee + activityFee;
+  const balance = constantFee - totalPaid;
+
+  const feeDetail = {
+    id: Date.now(),
+    name: learnerName,
+    grade: learnerGrade,
+    securityFee,
+    bomFee,
+    tuitionFee,
+    exam1Fee,
+    exam2Fee,
+    exam3Fee,
+    activityFee,
+    constantFee,
+    totalPaid,
+    balance
+  };
+
+  feeDetails.push(feeDetail);
+  localStorage.setItem("feeDetails", JSON.stringify(feeDetails));
+  updateFeeSummaryTable();
+  
+  showCustomAlert(); // Show the new colored alert
+  document.getElementById("feeForm").reset();
+});
+
+    // Update fee summary table
+    function updateFeeSummaryTable() {
+      const feeSummaryTableBody = document.getElementById("feeSummaryTableBody");
+      feeSummaryTableBody.innerHTML = "";
+      feeDetails.forEach((detail, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'name', this.textContent)">${detail.name}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'grade', this.textContent)">${detail.grade}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'securityFee', this.textContent)">${detail.securityFee}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'bomFee', this.textContent)">${detail.bomFee}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'tuitionFee', this.textContent)">${detail.tuitionFee}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'exam1Fee', this.textContent)">${detail.exam1Fee}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'exam2Fee', this.textContent)">${detail.exam2Fee}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'exam3Fee', this.textContent)">${detail.exam3Fee}</td>
+          <td contenteditable="true" onblur="updateDetail(${detail.id}, 'activityFee', this.textContent)">${detail.activityFee}</td>
+          <td>${detail.constantFee}</td>
+          <td>${detail.totalPaid}</td>
+          <td>${detail.balance}</td>
+          <td>
+            <button onclick="generateReceipt(${detail.id})">Generate Receipt</button>
+            <button onclick="deleteDetail(${detail.id})">Delete</button>
+          </td>
+        `;
+        feeSummaryTableBody.appendChild(row);
+      });
+    }
+
+    // Update fee detail on cell blur
+    function updateDetail(id, key, value) {
+      const detail = feeDetails.find(d => d.id === id);
+      if (detail) {
+        detail[key] = parseFloat(value) || value;
+        detail.totalPaid = detail.securityFee + detail.bomFee + detail.tuitionFee + detail.exam1Fee + detail.exam2Fee + detail.exam3Fee + detail.activityFee;
+        detail.balance = detail.constantFee - detail.totalPaid;
+        localStorage.setItem("feeDetails", JSON.stringify(feeDetails));
+        updateFeeSummaryTable();
+      }
+    }
+
+    // Delete fee detail
+    function deleteDetail(id) {
+      feeDetails = feeDetails.filter(d => d.id !== id);
+      localStorage.setItem("feeDetails", JSON.stringify(feeDetails));
+      updateFeeSummaryTable();
+    }
+
+    // Generate receipt for a learner
+    function generateReceipt(id) {
+      const detail = feeDetails.find(d => d.id === id);
+      if (detail) {
+        document.getElementById("receiptNo").innerText = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById("receiptDate").innerText = new Date().toLocaleDateString();
+        document.getElementById("receiptLearner").innerText = detail.name;
+        document.getElementById("receiptGrade").innerText = detail.grade;
+        document.getElementById("receiptTotal").innerText = detail.totalPaid + detail.balance;
+        document.getElementById("receiptPaid").innerText = detail.totalPaid;
+        document.getElementById("receiptBalance").innerText = detail.balance;
+
+        const receiptTableBody = document.getElementById("receiptTableBody");
+        receiptTableBody.innerHTML = `
+          <tr><td>Security Fee</td><td>KSH ${detail.securityFee}</td></tr>
+          <tr><td>BOM Fee</td><td>KSH ${detail.bomFee}</td></tr>
+          <tr><td>Tuition Fee</td><td>KSH ${detail.tuitionFee}</td></tr>
+          <tr><td>Exam 1 Fee</td><td>KSH ${detail.exam1Fee}</td></tr>
+          <tr><td>Exam 2 Fee</td><td>KSH ${detail.exam2Fee}</td></tr>
+          <tr><td>Exam 3 Fee</td><td>KSH ${detail.exam3Fee}</td></tr>
+          <tr><td>Activity Fee</td><td>KSH ${detail.activityFee}</td></tr>
+        `;
+        document.getElementById("receiptContainer").style.display = "block";
+      }
+    }
+
+    // Print receipt (single definition with page reload after printing)
+    function printReceipt() {
+      const receiptContent = document.getElementById("receiptContainer").innerHTML;
+      const originalContent = document.body.innerHTML;
+      document.body.innerHTML = receiptContent;
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+
+    // Download receipt as PDF
+    function downloadReceiptPDF() {
+      const receipt = document.getElementById('receiptContainer');
+      html2pdf(receipt, {
+        margin: 10,
+        filename: 'Fee_Receipt.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      });
+    }
+
+    // Filter fee records by grade
+    function filterFeeRecords() {
+      const selectedGrade = document.getElementById("gradeFilter").value;
+      const table = document.getElementById("feeSummaryTable");
+      const rows = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < rows.length; i++) {
+        const gradeCell = rows[i].getElementsByTagName("td")[2];
+        if (gradeCell) {
+          const grade = gradeCell.textContent || gradeCell.innerText;
+          rows[i].style.display = (selectedGrade === "" || grade === selectedGrade) ? "" : "none";
+        }
+      }
+    }
+
+    // Print filtered fee records
+    function printFilteredFeeRecords() {
+      const selectedGrade = document.getElementById("gradeFilter").value;
+      const currentYear = new Date().getFullYear();
+      document.getElementById("currentYear").innerText = currentYear;
+      document.getElementById("selectedGrade").innerText = selectedGrade ? `Grade ${selectedGrade}` : "All Grades";
+      const feeTableBody = document.getElementById("filteredFeeTableBody");
+      feeTableBody.innerHTML = "";
+
+      const filteredDetails = selectedGrade ? feeDetails.filter(d => d.grade == selectedGrade) : feeDetails;
+      if (filteredDetails.length === 0) {
+        feeTableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; padding: 10px;">No records found</td></tr>`;
+      } else {
+        filteredDetails.forEach((detail, index) => {
+          feeTableBody.innerHTML += `
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 8px;">${index + 1}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${detail.name}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.securityFee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.bomFee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.tuitionFee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam1Fee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam2Fee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam3Fee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.activityFee}</td>
+              <td style="border: 1px solid #ddd; padding: 8px; color: green;">KSH ${detail.totalPaid}</td>
+              <td style="border: 1px solid #ddd; padding: 8px; color: red;">KSH ${detail.balance}</td>
+            </tr>
+          `;
+        });
+      }
+      document.getElementById("filteredFeeTableContainer").style.display = "block";
+    }
+
+    // Print filtered fee table
+    function printFilteredFeeTable() {
+      const printContent = document.getElementById('filteredFeeTableContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      document.body.innerHTML = printContent;
+      window.print();
+      document.body.innerHTML = originalContent;
+    }
+
+    // Download filtered fee table as PDF
+    function downloadFeeTablePDF() {
+      const table = document.getElementById('filteredFeeTableContainer');
+      html2pdf(table, {
+        margin: 10,
+        filename: 'Filtered_Fee_Records.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+      });
+    }
+
+    // Toggle visibility functions
+    function toggleFeeCaptureForm() {
+      const feeForm = document.getElementById("feeCaptureForm");
+      feeForm.style.display = (feeForm.style.display === "none" || feeForm.style.display === "") ? "block" : "none";
+    }
+
+    function toggleFeeSummaryAndReceipt() {
+      const feeSummaryTable = document.getElementById("feeSummaryTableContainer");
+      const receiptContainer = document.getElementById("receiptContainer");
+      if (feeSummaryTable.style.display === "none" || feeSummaryTable.style.display === "") {
+        feeSummaryTable.style.display = "block";
+        receiptContainer.style.display = "block";
+      } else {
+        feeSummaryTable.style.display = "none";
+        receiptContainer.style.display = "none";
+      }
+    }
+
+    function toggleFeeActionsMenu() {
+      const menu = document.getElementById("feeActionsBox");
+      menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+    }
+
+    // Payment Summary generation and toggle
+    function generatePaymentSummary() {
+      const summaryContainer = document.getElementById("paymentSummaryContainer");
+      const summaryBody = document.getElementById("paymentSummaryBody");
+      summaryBody.innerHTML = "";
+      const feeRows = document.querySelectorAll("#feeSummaryTable tbody tr");
+      const gradeSummary = {};
+
+      feeRows.forEach((row) => {
+        const cells = row.getElementsByTagName("td");
+        const grade = cells[2].innerText.trim();
+        const totalPaid = parseFloat(cells[11].innerText) || 0;
+        const constantFee = parseFloat(cells[10].innerText) || 0;
+
+        if (!gradeSummary[grade]) {
+          gradeSummary[grade] = { totalPaid: 0, learnerCount: 0, constantFee: constantFee };
+        }
+        gradeSummary[grade].totalPaid += totalPaid;
+        gradeSummary[grade].learnerCount += 1;
+      });
+
+      for (let grade in gradeSummary) {
+        let expectedTotal = gradeSummary[grade].constantFee * gradeSummary[grade].learnerCount;
+        let balance = expectedTotal - gradeSummary[grade].totalPaid;
+        let status = (balance === 0) ? "Cleared" : (balance > 0) ? `KSH ${balance} Due` : `Overpaid by KSH ${Math.abs(balance)}`;
+        summaryBody.innerHTML += `<tr>
+                                    <td>${grade}</td>
+                                    <td>KSH ${gradeSummary[grade].totalPaid.toLocaleString()}</td>
+                                    <td>KSH ${expectedTotal.toLocaleString()}</td>
+                                    <td>KSH ${balance.toLocaleString()}</td>
+                                    <td>${status}</td>
+                                  </tr>`;
+      }
+      summaryContainer.style.display = "block";
+    }
+
+    function togglePaymentSummary() {
+      const summaryContainer = document.getElementById("paymentSummaryContainer");
+      if (summaryContainer.style.display === "none" || summaryContainer.style.display === "") {
+        generatePaymentSummary();
+        summaryContainer.style.display = "block";
+      } else {
+        summaryContainer.style.display = "none";
+      }
+    }
+
+    function printPaymentSummaryOnly() {
+      const printContent = document.getElementById("summaryTable").outerHTML;
+      const newWindow = window.open("", "", "width=800, height=600");
+      newWindow.document.write("<html><head><title>Payment Summary</title><style>");
+      newWindow.document.write("body { font-family: Arial, sans-serif; text-align: center; }");
+      newWindow.document.write("table { width: 100%; border-collapse: collapse; border: 2px solid black; margin-top: 20px; }");
+      newWindow.document.write("th, td { border: 2px solid black; padding: 10px; text-align: center; }");
+      newWindow.document.write("h2, h3, p { text-align: center; margin: 5px 0; }");
+      newWindow.document.write("</style></head><body>");
+      newWindow.document.write("<h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>");
+      newWindow.document.write("<p>P.O BOX 886-01000 Thika Kenya</p>");
+      newWindow.document.write("<p>Phone: +254-700-123456</p>");
+      newWindow.document.write("<p><strong>School Motto:</strong> Excellence Through Knowledge</p>");
+      newWindow.document.write("<h3>Year: 2025</h3>");
+      newWindow.document.write("<h2 style='background: #4CAF50; color: white; padding: 10px;'>Payment Summary Per Grade</h2>");
+      newWindow.document.write(printContent);
+      newWindow.document.write("</body></html>");
+      newWindow.document.close();
+      newWindow.print();
+    }
+function archiveFeesTable() {
+  const feeTable = document.getElementById("feeSummaryTable");
+  if (!feeTable || feeTable.rows.length <= 1) {
+    alert("No fee records to archive.");
+    return;
+  }
+
+  const currentYear = new Date().getFullYear();
+  let savedArchives = JSON.parse(localStorage.getItem("archivedFeesHTML")) || {};
+
+  if (savedArchives[currentYear]) {
+    // Show confirmation alert instead of window.confirm()
+    document.getElementById("archiveYear").innerText = currentYear;
+    document.getElementById("archiveConfirmAlert").style.display = "block";
+  } else {
+    // Proceed with archiving if no existing archive
+    saveArchive(currentYear, feeTable);
+  }
+}
+
+// Function to handle archive confirmation
+function confirmArchive(update) {
+  const currentYear = new Date().getFullYear();
+  document.getElementById("archiveConfirmAlert").style.display = "none"; // Hide confirmation alert
+
+  if (update) {
+    // Proceed with updating the archive
+    saveArchive(currentYear, document.getElementById("feeSummaryTable"));
+  }
+}
+
+// Function to save or update the archive
+function saveArchive(year, table) {
+  let savedArchives = JSON.parse(localStorage.getItem("archivedFeesHTML")) || {};
+  const timestamp = new Date().toLocaleString();
+  let archiveEntry = `<div class="archived-fees-record">
+                        <h3>Archived for Year: ${year} (Updated on: ${timestamp})</h3>
+                        ${table.outerHTML}
+                      </div>`;
+
+  savedArchives[year] = archiveEntry;
+  localStorage.setItem("archivedFeesHTML", JSON.stringify(savedArchives));
+
+  // Show success message
+  document.getElementById("successYear").innerText = year;
+  document.getElementById("archiveSuccessAlert").style.display = "block";
+
+  // Hide the success alert after 3 seconds
+  setTimeout(() => {
+    document.getElementById("archiveSuccessAlert").style.display = "none";
+  }, 3000);
+
+  viewArchivedFees();
+}
+
+// Display all archived fee records from localStorage
+function viewArchivedFees() {
+  try {
+    const savedArchives = JSON.parse(localStorage.getItem("archivedFeesHTML")) || {};
+    const archivedFeesContainer = document.getElementById("archivedFeesContainer");
+    const archivedFeesList = document.getElementById("archivedFeesList");
+
+    if (Object.keys(savedArchives).length === 0) {
+      archivedFeesContainer.style.display = "none";
+      alert("No archived fee records found.");
+      return;
+    }
+
+    let archiveContent = "";
+    for (const year in savedArchives) {
+      archiveContent += `
+        <div class="archive-year" style="border-bottom: 1px solid #ddd; margin-bottom: 10px; padding-bottom: 10px;">
+          <h3>Archived Fees for ${year}</h3>
+          <button onclick="printArchivedFees('${year}')" style="margin-bottom: 10px; padding: 5px 10px; background: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px;">
+            <i class="fas fa-print"></i> Print This Archive
+          </button>
+          <div id="archivedTable-${year}">
+            ${savedArchives[year]}
+          </div>
+        </div>
+      `;
+    }
+
+    archivedFeesList.innerHTML = archiveContent;
+    archivedFeesContainer.style.display = "block";
+  } catch (error) {
+    console.error("Error retrieving archived fee records:", error);
+    alert("An error occurred while retrieving archived fee records.");
+  }
+}
+
+
+    // Generate learner receipt from archived fees
+    function generateLearnerReceipt(learnerName) {
+      const savedArchives = JSON.parse(localStorage.getItem("archivedFeesHTML")) || {};
+      if (Object.keys(savedArchives).length === 0) {
+        alert("No archived fee records available.");
+        return;
+      }
+      const tempDiv = document.createElement("div");
+      for (let year in savedArchives) {
+        tempDiv.innerHTML += savedArchives[year];
+      }
+      const tables = tempDiv.getElementsByTagName("table");
+      for (let table of tables) {
+        for (let row of table.rows) {
+          if (row.cells.length > 0 && row.cells[1].innerText.trim() === learnerName.trim()) {
+            const receiptContent = `
+              <h2>Fee Receipt</h2>
+              <p><strong>Learner:</strong> ${row.cells[1].innerText}</p>
+              <p><strong>Grade:</strong> ${row.cells[2].innerText}</p>
+              <p><strong>Security Fee:</strong> ${row.cells[3].innerText} KSH</p>
+              <p><strong>BOM Fee:</strong> ${row.cells[4].innerText} KSH</p>
+              <p><strong>Tuition Fee:</strong> ${row.cells[5].innerText} KSH</p>
+              <p><strong>Exam 1 Fee:</strong> ${row.cells[6].innerText} KSH</p>
+              <p><strong>Exam 2 Fee:</strong> ${row.cells[7].innerText} KSH</p>
+              <p><strong>Exam 3 Fee:</strong> ${row.cells[8].innerText} KSH</p>
+              <p><strong>Activity Fee:</strong> ${row.cells[9].innerText} KSH</p>
+              <p><strong>Constant Fee:</strong> ${row.cells[10].innerText} KSH</p>
+              <p><strong>Total Paid:</strong> ${row.cells[11].innerText} KSH</p>
+              <p><strong>Balance:</strong> ${row.cells[12].innerText} KSH</p>
+              <hr>
+              <p><em>Thank you for your payment!</em></p>
+            `;
+            const receiptWindow = window.open("", "_blank");
+            receiptWindow.document.write(receiptContent);
+            receiptWindow.document.close();
+            receiptWindow.print();
+            return;
+          }
+        }
+      }
+      alert("Learner not found in archived records.");
+    }
+
+    // Stub for exportToExcel function (implement as needed)
+    function exportToExcel(table, filename) {
+      console.log("Exporting table to Excel as: " + filename);
+    }
+
+    // Initialize fee summary table on page load
+    updateFeeSummaryTable();
+
+    // Optional: onload actions
+    window.onload = function() {
+      const savedArchives = JSON.parse(localStorage.getItem("archivedFeesHTML")) || {};
+      if (Object.keys(savedArchives).length > 0) {
+        console.log("Archived fees loaded from storage.");
+      }
+    };
+function togglePrintFilteredRecords() {
+  const container = document.getElementById("filteredFeeTableContainer");
+  const btn = document.getElementById("togglePrintFilteredRecordsBtn");
+  
+  // If container is visible, hide it and update button text
+  if (container.style.display === "block") {
+    container.style.display = "none";
+    btn.innerHTML = '<i class="fas fa-print"></i> Show Filtered Records';
+  } else {
+    // Update the filtered table content first
+    const selectedGrade = document.getElementById("gradeFilter").value;
+    const currentYear = new Date().getFullYear();
+    document.getElementById("currentYear").innerText = currentYear;
+    document.getElementById("selectedGrade").innerText = selectedGrade ? `Grade ${selectedGrade}` : "All Grades";
+    
+    const feeTableBody = document.getElementById("filteredFeeTableBody");
+    feeTableBody.innerHTML = ""; // Clear previous content
+
+    // Filter fee details by grade (if selected) or show all
+    const filteredDetails = selectedGrade ? feeDetails.filter(d => d.grade == selectedGrade) : feeDetails;
+    
+    if (filteredDetails.length === 0) {
+      feeTableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; padding: 10px;">No records found</td></tr>`;
+    } else {
+      filteredDetails.forEach((detail, index) => {
+        feeTableBody.innerHTML += `
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">${index + 1}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${detail.name}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.securityFee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.bomFee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.tuitionFee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam1Fee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam2Fee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam3Fee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.activityFee}</td>
+            <td style="border: 1px solid #ddd; padding: 8px; color: green;">KSH ${detail.totalPaid}</td>
+            <td style="border: 1px solid #ddd; padding: 8px; color: red;">KSH ${detail.balance}</td>
+          </tr>
+        `;
+      });
+    }
+    
+    // Show the filtered records container and update button text
+    container.style.display = "block";
+    btn.innerHTML = '<i class="fas fa-print"></i> Hide Filtered Records';
+  }
+}
+function toggleViewArchivedFees() {
+  const container = document.getElementById("archivedFeesContainer");
+  const btn = document.getElementById("toggleViewArchivedBtn");
+
+  // If container is visible, hide it and update button text
+  if (container.style.display === "block") {
+    container.style.display = "none";
+    btn.innerHTML = '<i class="fas fa-eye"></i> View Archived Fees';
+  } else {
+    // Otherwise, display the container
+    viewArchivedFees(); // Refresh or load the archived fees content
+    container.style.display = "block";
+    btn.innerHTML = '<i class="fas fa-eye"></i> Hide Archived Fees';
+  }
+}
+// Closes all fee action sections
+function closeAllFeeActionSections() {
+  const sections = [
+    "feeCaptureForm", 
+    "feeSummaryTableContainer", 
+    "receiptContainer", 
+    "filteredFeeTableContainer", 
+    "archivedFeesContainer", 
+    "paymentSummaryContainer"
+  ];
+  sections.forEach(id => {
+    const sec = document.getElementById(id);
+    if (sec) sec.style.display = "none";
+  });
+}
+
+// Generic function to toggle a group of sections
+function toggleFeeActionGroup(sectionIds) {
+  // Check if any of the sections in the group is currently visible
+  const isAnyOpen = sectionIds.some(id => {
+    const sec = document.getElementById(id);
+    return sec && sec.style.display === "block";
+  });
+
+  // If any is open, close them; otherwise, close all and then open the group
+  if (isAnyOpen) {
+    sectionIds.forEach(id => {
+      const sec = document.getElementById(id);
+      if (sec) sec.style.display = "none";
+    });
+  } else {
+    closeAllFeeActionSections();
+    sectionIds.forEach(id => {
+      const sec = document.getElementById(id);
+      if (sec) sec.style.display = "block";
+    });
+  }
+}
+function filterArchivedFees() {
+  const input = document.getElementById("archivedGradeFilter").value.toLowerCase();
+  const archiveEntries = document.querySelectorAll("#archivedFeesList .archive-year");
+
+  archiveEntries.forEach(entry => {
+    const tableRows = entry.querySelectorAll("table tbody tr");
+    let found = false;
+
+    tableRows.forEach(row => {
+      const gradeCell = row.cells[2]?.innerText.toLowerCase(); // Assuming Grade is in the 3rd column
+      if (gradeCell && gradeCell.includes(input)) {
+        row.style.display = "";
+        found = true;
+      } else {
+        row.style.display = "none";
+      }
+    });
+
+    // Hide/archive section if no rows match the filter
+    entry.style.display = found ? "block" : "none";
+  });
+}
+
+function printArchivedFees(year) {
+  const archivedTable = document.getElementById(`archivedTable-${year}`);
+
+  if (!archivedTable) {
+    alert("No archived records found for " + year);
+    return;
+  }
+
+  // Clone the table and remove hidden rows (filtered-out rows)
+  const clonedTable = archivedTable.cloneNode(true);
+  const rows = clonedTable.getElementsByTagName("tr");
+
+  for (let i = rows.length - 1; i >= 0; i--) {
+    if (rows[i].style.display === "none") {
+      rows[i].remove(); // Remove hidden rows
+    }
+  }
+
+  const printWindow = window.open("", "", "width=900,height=600");
+  printWindow.document.write(`
+    <html>
+    <head>
+      <title>Archived Fees for ${year}</title>
+      <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .header-container { text-align: center; margin-bottom: 20px; }
+        .header-container img { max-width: 80px; }
+        .header-container h2, .header-container p { margin: 5px 0; }
+
+        /* Table Styling */
+        table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          margin-top: 20px; 
+        }
+        th, td { 
+          border: 2px solid black;  /* Ensures visible black borders */
+          padding: 8px; 
+          text-align: left; 
+        }
+        th { 
+          background: #4CAF50; 
+          color: white; 
+          font-weight: bold; 
+        }
+        tr:nth-child(even) { 
+          background: #f2f2f2; 
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header-container">
+        <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
+        <h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
+        <h3>Archived Fee Records for ${year}</h3>
+        <p><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+        <p><strong>Phone: +254-700-123456</strong></p>
+        <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
+        <p><strong>Year:</strong> ${year}</p>
+        <hr>
+      </div>
+      
+      ${clonedTable.outerHTML}
+
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.print();
+}
+function deleteFeeRecordsTable() {
+  const confirmation = confirm("?? Are you sure you want to delete all fee records? This action cannot be undone.");
+
+  if (confirmation) {
+    // Clear the table body
+    document.getElementById("feeSummaryTableBody").innerHTML = "";
+
+    // Remove fee details from localStorage
+    localStorage.removeItem("feeDetails");
+
+    // Custom alert with a red background
+    showCustomAlert(" All fee records have been deleted successfully!", "red");
+  }
+}
+function showDeleteConfirmation(message) {
+  document.getElementById("deleteMessage").innerText = message;
+  document.getElementById("deleteConfirmModal").style.display = "block";
+}
+
+
+function closeDeleteModal() {
+  document.getElementById("deleteConfirmModal").style.display = "none";
+}
+
+function confirmDeleteFeeRecords() {
+  // Close the modal immediately
+  closeDeleteModal();
+
+  // Clear the table
+  document.getElementById("feeSummaryTableBody").innerHTML = "";
+
+  // Remove fee details from localStorage
+  localStorage.removeItem("feeDetails");
+
+  // Delay the alert slightly to ensure visibility
+  setTimeout(() => {
+    showCustomAlert("? All fee records have been deleted successfully!", "red");
+  }, 300); // 300ms delay to ensure the modal closes first
+}
+
+
+function deleteFeeRecordsTable() {
+  showDeleteConfirmation(" Are you sure you want to delete all fee records? This action cannot be undone.");
+}
+
+function showCustomAlert(message, color) {
+  // Remove any existing alert
+  const existingAlert = document.getElementById("customAlert");
+  if (existingAlert) existingAlert.remove();
+
+  // Create a new alert box
+  const alertBox = document.createElement("div");
+  alertBox.id = "customAlert";
+  alertBox.innerHTML = message;
+  alertBox.style.cssText = `
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${color};
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+  `;
+
+  document.body.appendChild(alertBox);
+
+  // Remove alert after 3 seconds
+  setTimeout(() => {
+    alertBox.remove();
+  }, 3000);
+}
+
+
+function showCustomAlert(message, color) {
+  // Remove any existing alert
+  const existingAlert = document.getElementById("customAlert");
+  if (existingAlert) existingAlert.remove();
+
+  // Create a new alert box
+  const alertBox = document.createElement("div");
+  alertBox.id = "customAlert";
+  alertBox.innerHTML = message;
+  alertBox.style.cssText = `
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${color};
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+  `;
+
+  document.body.appendChild(alertBox);
+
+  // Remove alert after 3 seconds
+  setTimeout(() => {
+    alertBox.remove();
+  }, 3000);
+}
+function showCustomAlert() {
+  const alertBox = document.getElementById("customAlert");
+  alertBox.style.display = "block";
+  
+  // Hide the alert after 3 seconds
+  setTimeout(() => {
+    alertBox.style.display = "none";
+  }, 3000);
+}
+
+function showArchiveAlert() {
+  const alertBox = document.getElementById("archiveAlert");
+  alertBox.style.display = "block";
+
+  // Hide the alert after 3 seconds
+  setTimeout(() => {
+    alertBox.style.display = "none";
+  }, 3000);
+}
+
+function displayCategoryCollectionSummary() {
+  const feeTable = document.getElementById("feeSummaryTableBody");
+  if (!feeTable) {
+    alert("Fee summary table not found.");
+    return;
+  }
+
+  const categoryTotals = {};
+
+  feeTable.querySelectorAll("tr").forEach(row => {
+    const cells = row.getElementsByTagName("td");
+    if (cells.length > 1) {
+      const grade = cells[2].textContent.trim();
+      const securityFee = parseFloat(cells[3].textContent) || 0;
+      const bomFee = parseFloat(cells[4].textContent) || 0;
+      const tuitionFee = parseFloat(cells[5].textContent) || 0;
+      const exam1Fee = parseFloat(cells[6].textContent) || 0;
+      const exam2Fee = parseFloat(cells[7].textContent) || 0;
+      const exam3Fee = parseFloat(cells[8].textContent) || 0;
+      const activityFee = parseFloat(cells[9].textContent) || 0;
+      const totalPaid = parseFloat(cells[11].textContent) || 0;
+
+      if (!categoryTotals[grade]) {
+        categoryTotals[grade] = { securityFee: 0, bomFee: 0, tuitionFee: 0, exam1Fee: 0, exam2Fee: 0, exam3Fee: 0, activityFee: 0, totalCollected: 0 };
+      }
+
+      categoryTotals[grade].securityFee += securityFee;
+      categoryTotals[grade].bomFee += bomFee;
+      categoryTotals[grade].tuitionFee += tuitionFee;
+      categoryTotals[grade].exam1Fee += exam1Fee;
+      categoryTotals[grade].exam2Fee += exam2Fee;
+      categoryTotals[grade].exam3Fee += exam3Fee;
+      categoryTotals[grade].activityFee += activityFee;
+      categoryTotals[grade].totalCollected += totalPaid;
+    }
+  });
+
+  let summaryTableHTML = `
+    <h2 style="color: #4CAF50; text-align: center;">Fee Collection Summary Per Grade</h2>
+    <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
+      <thead>
+        <tr style="background: #4CAF50; color: white;">
+          <th style="border: 1px solid black; padding: 10px;">Grade</th>
+          <th style="border: 1px solid black; padding: 10px;">Security Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">BOM Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">Tuition Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">Exam 1 Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">Exam 2 Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">Exam 3 Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">Activity Fee</th>
+          <th style="border: 1px solid black; padding: 10px;">Total Collected</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  for (let grade in categoryTotals) {
+    summaryTableHTML += `
+      <tr style="background: #f9f9f9;">
+        <td style="border: 1px solid black; padding: 10px;">${grade}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].securityFee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].bomFee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].tuitionFee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].exam1Fee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].exam2Fee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].exam3Fee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px;">KSH ${categoryTotals[grade].activityFee.toLocaleString()}</td>
+        <td style="border: 1px solid black; padding: 10px; font-weight: bold; color: green;">KSH ${categoryTotals[grade].totalCollected.toLocaleString()}</td>
+      </tr>`;
+  }
+
+  summaryTableHTML += `</tbody></table>
+    <div style="text-align: center; margin-top: 15px;">
+      <button onclick="printCategoryCollectionSummary()" style="padding: 10px; background: #0277BD; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <i class="fas fa-print"></i> Print Summary
+      </button>
+    </div>`;
+
+  document.getElementById("feeSummaryContainer").innerHTML = summaryTableHTML;
+}
+
+function printCategoryCollectionSummary() {
+  const summaryTable = document.getElementById("feeSummaryContainer").innerHTML;
+  const currentYear = new Date().getFullYear(); // Get current year
+
+  // Print content with school header
+  const printWindow = window.open("", "", "width=900,height=600");
+  printWindow.document.write(`
+    <html>
+    <head>
+      <title>Category Collection Summary</title>
+      <style>
+        body { font-family: Arial, sans-serif; text-align: center; color: black; }
+        .header-container { text-align: center; margin-bottom: 20px; color: black; }
+        .header-container img { max-width: 80px; }
+        .header-container h2, .header-container h3, .header-container p { margin: 5px 0; color: black; }
+
+        /* Table Styling */
+        table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          margin-top: 20px; 
+          color: black; /* Ensuring all table text prints in black */
+        }
+        th, td { 
+          border: 2px solid black;  
+          padding: 8px; 
+          text-align: left; 
+          color: black; /* Ensures all text remains black */
+        }
+        th { 
+          background: #ffffff; /* White background to contrast black text */
+          font-weight: bold; 
+        }
+        tr:nth-child(even) { 
+          background: #f2f2f2; 
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header-container">
+        <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
+        <h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
+        <h3>Category Collection Summary</h3>
+        <p><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+        <p><strong>Phone: +254-700-123456</strong></p>
+        <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
+        <p><strong>Year:</strong> ${currentYear}</p>
+        <hr>
+      </div>
+      
+      ${summaryTable}
+
+    </body>
+    </html>
+  `);
+
+  printWindow.document.close();
+  printWindow.print();
+}
+function updateTotalSchoolFeeCollected() {
+  let totalCollected = 0;
+  
+  // Get all rows from the fee summary table
+  const feeTable = document.getElementById("feeSummaryTableBody");
+  if (!feeTable) {
+    console.error("Fee summary table not found.");
+    return;
+  }
+
+  // Loop through all rows and sum the "Total Paid" column (index 11)
+  feeTable.querySelectorAll("tr").forEach(row => {
+    const cells = row.getElementsByTagName("td");
+    if (cells.length > 1) {
+      const totalPaid = parseFloat(cells[11].textContent) || 0;
+      totalCollected += totalPaid;
+    }
+  });
+
+  // Get the container where total collected is displayed
+  let totalContainer = document.getElementById("totalSchoolFeeContainer");
+  
+  // If it doesn't exist, create it and append to the page
+  if (!totalContainer) {
+    totalContainer = document.createElement("div");
+    totalContainer.id = "totalSchoolFeeContainer";
+    totalContainer.style = "margin-top: 20px; text-align: center; font-size: 18px; font-weight: bold; color: #4CAF50;";
+    
+    // Append it below the fee summary table
+    document.getElementById("feeSummaryTableContainer").appendChild(totalContainer);
+  }
+
+  // Update the total collected amount
+  totalContainer.innerHTML = `Total School Fee Collected: <span style="color: black;">KSH ${totalCollected.toLocaleString()}</span>`;
+}
+
+// Call the function initially to show the total on page load
+updateTotalSchoolFeeCollected();
+
+// Update total whenever a new fee entry is added
+document.getElementById("feeForm").addEventListener("submit", function () {
+  setTimeout(updateTotalSchoolFeeCollected, 100); // Delay to ensure data updates first
+});
+function animateCounter(start, end, duration, element) {
+  let startTime = null;
+
+  function updateCounter(currentTime) {
+    if (!startTime) startTime = currentTime;
+    const elapsedTime = currentTime - startTime;
+    const progress = Math.min(elapsedTime / duration, 1);
+    const value = Math.floor(progress * (end - start) + start);
+    element.innerText = `KSH ${value.toLocaleString()}`;
+
+    if (progress < 1) {
+      requestAnimationFrame(updateCounter);
+    }
+  }
+
+  requestAnimationFrame(updateCounter);
+}
+
+function updateTotalSchoolFeeCollected() {
+  let totalCollected = 0;
+  
+  // Get all rows from the fee summary table
+  const feeTable = document.getElementById("feeSummaryTableBody");
+  if (!feeTable) {
+    console.error("Fee summary table not found.");
+    return;
+  }
+
+  // Loop through all rows and sum the "Total Paid" column (index 11)
+  feeTable.querySelectorAll("tr").forEach(row => {
+    const cells = row.getElementsByTagName("td");
+    if (cells.length > 1) {
+      const totalPaid = parseFloat(cells[11].textContent) || 0;
+      totalCollected += totalPaid;
+    }
+  });
+
+  // Get or create the total fee container
+  let totalContainer = document.getElementById("totalSchoolFeeContainer");
+  if (!totalContainer) {
+    totalContainer = document.createElement("div");
+    totalContainer.id = "totalSchoolFeeContainer";
+    totalContainer.style = "margin-top: 20px; text-align: center; font-size: 22px; font-weight: bold; color: #4CAF50;";
+    
+    // Append below the fee summary table
+    document.getElementById("feeSummaryTableContainer").appendChild(totalContainer);
+  }
+
+  // Start animation from the current displayed value to the new total
+  const currentDisplayedValue = parseInt(totalContainer.innerText.replace(/[^\d]/g, "")) || 0;
+  animateCounter(currentDisplayedValue, totalCollected, 1500, totalContainer);
+}
+
+// Call the function initially to show the total on page load
+updateTotalSchoolFeeCollected();
+
+// Update total whenever a new fee entry is added
+document.getElementById("feeForm").addEventListener("submit", function () {
+  setTimeout(updateTotalSchoolFeeCollected, 100); // Slight delay to ensure data updates first
+});
+
+function toggleDefaultersList() {
+    const container = document.getElementById("defaultersTableContainer");
+    
+    if (container.style.display === "none" || container.style.display === "") {
+        generateDefaultersList(); // Generate the list before showing
+        container.style.display = "block";
+    } else {
+        container.style.display = "none";
+    }
+}
+
+function generateDefaultersList() {
+    const selectedGrade = document.getElementById("gradeFilter").value;
+    const defaultersTableBody = document.getElementById("defaultersTableBody");
+    defaultersTableBody.innerHTML = ""; // Clear previous data
+
+    const defaulters = feeDetails.filter(student => student.balance > 0 && (selectedGrade === "" || student.grade == selectedGrade));
+
+    if (defaulters.length === 0) {
+        defaultersTableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 10px;">No defaulters found</td></tr>`;
+    } else {
+        defaulters.forEach((student, index) => {
+            const row = `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${student.name}</td>
+                    <td>${student.grade}</td>
+                    <td style="color: red;">KSH ${student.balance}</td>
+                </tr>
+            `;
+            defaultersTableBody.innerHTML += row;
+        });
+    }
+}
+
+function printDefaultersList() {
+    const selectedGrade = document.getElementById("gradeFilter").value;
+    const currentYear = new Date().getFullYear();
+    const gradeText = selectedGrade ? `Grade ${selectedGrade}` : "All Grades";
+
+    const defaultersTable = document.getElementById("defaultersTableContainer").innerHTML;
+
+    const printWindow = window.open("", "", "width=900,height=600");
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Defaulters List</title>
+            <style>
+                body { font-family: Arial, sans-serif; text-align: center; color: black; }
+                .header-container { text-align: center; margin-bottom: 20px; color: black; }
+                .header-container img { max-width: 80px; }
+                .header-container h2, .header-container p, .header-container h3 { margin: 5px 0; color: black; }
+                
+                /* Table Styling */
+                table { 
+                    width: 100%; 
+                    border-collapse: collapse; 
+                    margin-top: 20px; 
+                    color: black;
+                }
+                th, td { 
+                    border: 2px solid black;  /* Ensures all table borders are black */
+                    padding: 8px; 
+                    text-align: left; 
+                    color: black; /* Ensures all text is black */
+                }
+                th { 
+                    background: #f2f2f2; /* Light grey for header background */
+                    font-weight: bold; 
+                }
+                tr:nth-child(even) { 
+                    background: #ffffff; /* White background for even rows */
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header-container">
+                <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
+                <h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL </h2>
+                <h3>Defaulters List</h3>
+                <p><strong>Po Box 886-01000 Thika, KENYA</strong></p>
+                <p><strong>Phone: +254-700-123456</strong></p>
+                <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
+                <p><strong>Year:</strong> ${currentYear}</p>
+                <p><strong>Grade:</strong> ${gradeText}</p>
+                <hr style="border: 1px solid black;">
+            </div>
+            
+            ${defaultersTable}
+
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+}
+
+function openOnlyOneSection(sectionId) {
+    // List of all section IDs that can be opened
+    const sections = [
+        "feeCaptureForm",
+        "feeSummaryTableContainer",
+        "receiptContainer",
+        "filteredFeeTableContainer",
+        "archivedFeesContainer",
+        "paymentSummaryContainer",
+        "defaultersTableContainer",
+        "feeSummaryContainer"
+    ];
+
+    // Close all sections
+    sections.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) {
+            section.style.display = "none";
+        }
+    });
+
+    // Open the requested section
+    const selectedSection = document.getElementById(sectionId);
+    if (selectedSection) {
+        selectedSection.style.display = "block";
+    }
+}
+function openOnlyOneSection(sectionId) {
+    // List of all section IDs
+    const sections = [
+        "feeCaptureForm",
+        "feeSummaryTableContainer",
+        "receiptContainer",
+        "filteredFeeTableContainer",
+        "archivedFeesContainer",
+        "paymentSummaryContainer",
+        "defaultersTableContainer",
+        "feeSummaryContainer"
+    ];
+
+    // Close all sections first
+    sections.forEach(id => {
+        const section = document.getElementById(id);
+        if (section) section.style.display = "none";
+    });
+
+    // Run necessary data function before opening the section
+    switch (sectionId) {
+        case "feeSummaryContainer":
+            displayCategoryCollectionSummary();  // Generate Fee Collection Summary
+            break;
+        case "defaultersTableContainer":
+            generateDefaultersList();  // Generate Defaulters List
+            break;
+        case "paymentSummaryContainer":
+            generatePaymentSummary();  // Generate Payment Summary
+            break;
+        case "filteredFeeTableContainer":
+            updateFilteredFeeRecords();  // Load Filtered Fee Records
+            break;
+    }
+
+    // Open the requested section
+    const selectedSection = document.getElementById(sectionId);
+    if (selectedSection) selectedSection.style.display = "block";
+}
+
+// Function to Load Filtered Fee Records
+function updateFilteredFeeRecords() {
+    const selectedGrade = document.getElementById("gradeFilter")?.value || "";
+    const tableBody = document.getElementById("filteredFeeTableBody");
+
+    if (!tableBody) return;
+
+    tableBody.innerHTML = "";  // Clear previous content
+
+    // Filter fee details based on the selected grade
+    const filteredDetails = selectedGrade ? feeDetails.filter(d => d.grade == selectedGrade) : feeDetails;
+
+    if (filteredDetails.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="11" style="text-align: center; padding: 10px;">No records found</td></tr>`;
+    } else {
+        filteredDetails.forEach((detail, index) => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${index + 1}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${detail.name}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.securityFee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.bomFee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.tuitionFee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam1Fee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam2Fee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.exam3Fee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">KSH ${detail.activityFee}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; color: green;">KSH ${detail.totalPaid}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; color: red;">KSH ${detail.balance}</td>
+                </tr>`;
+        });
+    }
+}
+
+// Function to create a custom modal
+function showModal(message, type = "info", callback = null) {
+    let modal = document.createElement("div");
+    modal.style.position = "fixed";
+    modal.style.top = "50%";
+    modal.style.left = "50%";
+    modal.style.transform = "translate(-50%, -50%)";
+    modal.style.padding = "20px";
+    modal.style.backgroundColor = "#fff";
+    modal.style.border = "2px solid #333";
+    modal.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.2)";
+    modal.style.textAlign = "center";
+    modal.style.zIndex = "10000";
+    modal.style.borderRadius = "10px";
+
+    let color = type === "error" ? "red" : type === "success" ? "green" : "#333";
+    let textColor = type === "error" ? "white" : "black";
+
+    modal.innerHTML = `
+        <p style="color: ${textColor}; font-weight: bold;">${message}</p>
+        <button id="closeModal" style="padding: 8px 15px; margin-top: 10px; background: ${color}; color: white; border: none; border-radius: 5px; cursor: pointer;">OK</button>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById("closeModal").onclick = () => {
+        document.body.removeChild(modal);
+        if (callback) callback();
+    };
+}
+
+// Function to create a custom prompt
+function showPrompt(message, callback) {
+    let modal = document.createElement("div");
+    modal.style.position = "fixed";
+    modal.style.top = "50%";
+    modal.style.left = "50%";
+    modal.style.transform = "translate(-50%, -50%)";
+    modal.style.padding = "20px";
+    modal.style.backgroundColor = "#fff";
+    modal.style.border = "2px solid #333";
+    modal.style.boxShadow = "0px 0px 10px rgba(0,0,0,0.2)";
+    modal.style.textAlign = "center";
+    modal.style.zIndex = "10000";
+    modal.style.borderRadius = "10px";
+
+    modal.innerHTML = `
+        <p style="font-weight: bold;">${message}</p>
+        <input type="text" id="modalInput" style="padding: 8px; margin-bottom: 10px; width: 80%;"><br>
+        <button id="confirmPrompt" style="padding: 8px 15px; background: green; color: white; border: none; border-radius: 5px; cursor: pointer;">OK</button>
+        <button id="cancelPrompt" style="padding: 8px 15px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Cancel</button>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById("confirmPrompt").onclick = () => {
+        let value = document.getElementById("modalInput").value.trim();
+        document.body.removeChild(modal);
+        callback(value);
+    };
+
+    document.getElementById("cancelPrompt").onclick = () => {
+        document.body.removeChild(modal);
+        callback(null);
+    };
+}
+
+// Function to save the report
+function saveReport() {
+    showPrompt("Enter Grade to Save Report:", (grade) => {
+        if (!grade) {
+            showModal("Grade is required.", "error");
+            return;
+        }
+
+        showPrompt("Enter Exam Number (1-6):", (examNumber) => {
+            if (!examNumber || examNumber < 1 || examNumber > 6) {
+                showModal("Invalid exam number.", "error");
+                return;
+            }
+
+            let table = document.getElementById("pathwaysResultsTable");
+            let rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+            let savedData = JSON.parse(localStorage.getItem(`Career_Report_Grade${grade}`)) || {};
+
+            for (let i = 0; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName("td");
+                let learnerName = cells[0].innerText;
+                let bestPathway = cells[cells.length - 1].innerText; 
+
+                if (!savedData[learnerName]) {
+                    savedData[learnerName] = { grade: grade, exams: {}, pathwayCount: {} };
+                }
+
+                savedData[learnerName].exams[`Exam${examNumber}`] = bestPathway;
+
+                savedData[learnerName].pathwayCount[bestPathway] = 
+                    (savedData[learnerName].pathwayCount[bestPathway] || 0) + 1;
+            }
+
+            localStorage.setItem(`Career_Report_Grade${grade}`, JSON.stringify(savedData));
+            showModal(`Report saved successfully for Grade ${grade}, Exam ${examNumber}.`, "success");
+        });
+    });
+}
+
+// Function to view saved reports
+function viewSavedReports() {
+    showPrompt("Enter Grade to View Report:", (selectedGrade) => {
+        if (!selectedGrade) {
+            showModal("Please enter a valid grade.", "error");
+            return;
+        }
+
+        let allKeys = Object.keys(localStorage).filter(key => key.startsWith("Career_Report_Grade"));
+        let savedData = {};
+
+        // Loop through all saved reports and check if they belong to the selected grade
+        allKeys.forEach(key => {
+            let gradeFromKey = key.replace("Career_Report_Grade", ""); // Extract the stored grade (e.g., "7A")
+
+            if (gradeFromKey.startsWith(selectedGrade)) { // Include "7A", "7B", etc.
+                let reportData = JSON.parse(localStorage.getItem(key));
+                Object.assign(savedData, reportData); // Merge data from matching grades
+            }
+        });
+
+        if (Object.keys(savedData).length === 0) {
+            showModal(`No saved reports found for Grade ${selectedGrade}.`, "error");
+            return;
+        }
+
+        let savedReportsTable = document.getElementById("savedReportsTable");
+        let savedReportsSection = document.getElementById("savedReportsSection");
+        savedReportsSection.style.display = "block";
+
+        savedReportsTable.getElementsByTagName("thead")[0].innerHTML = "";
+        savedReportsTable.getElementsByTagName("tbody")[0].innerHTML = "";
+
+        let theadContent = `<tr>
+            <th>No.</th>
+            <th>Learner Name</th>
+            <th>Grade</th>
+            <th>Exam 1</th>
+            <th>Exam 2</th>
+            <th>Exam 3</th>
+            <th>Exam 4</th>
+            <th>Exam 5</th>
+            <th>Exam 6</th>
+            <th>Best Career Pathway</th>
+        </tr>`;
+        savedReportsTable.getElementsByTagName("thead")[0].innerHTML = theadContent;
+
+        let tbodyContent = "";
+        let counter = 1;
+
+        for (let learner in savedData) {
+            let exams = savedData[learner].exams;
+            let pathwayCount = savedData[learner].pathwayCount;
+
+            let bestPathway = Object.keys(pathwayCount).reduce((a, b) => pathwayCount[a] > pathwayCount[b] ? a : b, "");
+
+            tbodyContent += `<tr>
+                <td>${counter++}</td>
+                <td>${learner}</td>
+                <td>${savedData[learner].grade}</td>
+                <td>${exams.Exam1 || "-"}</td>
+                <td>${exams.Exam2 || "-"}</td>
+                <td>${exams.Exam3 || "-"}</td>
+                <td>${exams.Exam4 || "-"}</td>
+                <td>${exams.Exam5 || "-"}</td>
+                <td>${exams.Exam6 || "-"}</td>
+                <td><strong>${bestPathway}</strong></td>
+            </tr>`;
+        }
+
+        savedReportsTable.getElementsByTagName("tbody")[0].innerHTML = tbodyContent;
+        document.getElementById("printButton").style.display = "block";
+    });
+}
+
+
+function printReport() {
+    let reportContent = document.getElementById("savedReportsSection").innerHTML;
+
+    let originalContent = document.body.innerHTML; // Store original page content
+
+    document.body.innerHTML = `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="school_logo_url_here" alt="School Logo" style="width: 100px; height: auto;"><br>
+            <h2>QUEEN OF ROSARY Junior School Compiled Pathway Report</h2>
+            <p>P.O BOX 886-01000 Thika KENYA</p>
+            <p>Phone: +254-700-123456</p>
+            <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
+            <p><strong>Year:</strong> 2025</p>
+        </div>
+
+        ${reportContent}
+    `;
+
+    window.print(); // Print the page
+
+    document.body.innerHTML = originalContent; // Restore original content after printing
+    location.reload(); // Reload page to prevent display issues
+}
+
+            
+                
+                </script>
+            </body>
+            </html>
