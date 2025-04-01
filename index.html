@@ -10,6 +10,8 @@
 <script src="https://cdn.sheetjs.com/xlsx-latest/xlsx.full.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+
 <style>
     .report-logo {
         display: block;
@@ -968,7 +970,7 @@ button {
         <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" class="logo-img">
     </div>
    <h1>RASM School Management System</h1>
-<p style="color: red; font-weight: bold;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL </p>
+<p style="color: red; font-weight: bold;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL </p>
     <form id="loginForm">
         <input type="text" id="username" placeholder="Username" required><br><br>
         <input type="password" id="password" placeholder="Password" required><br><br>
@@ -1004,44 +1006,225 @@ button {
         <h1>Welcome To Rasm School Automation Management System</h1>
 <p style="color: red; font-weight: bold;">Your Gateway To Smooth And Efficient School Management </p>
     </div>
-<p style="color: red; font-weight: bold;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL</p>
+<p style="color: red; font-weight: bold;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL</p>
 </header>
-<button class="btn-yellow" onclick="toggleSection('registerLearnerSection')">
-        <span class="material-icons">person_add</span> Register Learner
-    </button>
 
 <button class="btn-bright green" onclick="toggleSection('registeredLearnersBox')">
-    <span class="material-icons">groups</span> Registered Learners
+    <span class="material-icons" style="color: #2ecc71;">groups</span> Learners Database
 </button>
 
 <button class="btn-actions" onclick="toggleSection('juniorSchoolActions')">
     <span class="material-icons">school</span> Assessment Actions
 </button>
-
 <button class="btn-purple" onclick="toggleSection('championsForm')">
-    <span class="material-icons">admin_panel_settings</span> Admin Details
+    <span class="material-icons" style="color: #9b59b6;">admin_panel_settings</span> Admin Details
 </button>
-
-<button class="btn-red" onclick="viewArchives()">
-    <span class="material-icons">archive</span> View Archives
-</button>
- <button class="btn-red" onclick="toggleArchives()">
-    <span class="material-icons">visibility</span> View Archived
-</button>
-
 
 <!-- Menu Button -->
 <button id="menuToggle" class="btn-toggle" onclick="toggleSection('menuActions')">
-    <span class="material-icons">group</span> Manage Staff
+    <span class="material-icons" style="color: #3498db;">group</span> Manage Staff
 </button>
-<button id="logoutButton" onclick="logout()">
-    <i class="fas fa-sign-out-alt" style="margin-right: 5px;"></i> Logout
+
+<button id="logoutButton" onclick="logout()" style="background-color: #e74c3c; color: white; border: none; padding: 10px 15px; font-size: 16px; cursor: pointer; border-radius: 5px;">
+    <i class="fas fa-sign-out-alt" style="color: #fff; margin-right: 5px;"></i> Logout
 </button>
+
+<!-- Button to Show/Hide Fee Management Menu -->
+<button onclick="toggleFeeActionsMenu()" style="background-color: #d32f2f; color: white; border: none; padding: 10px 15px; font-size: 16px; cursor: pointer; border-radius: 5px; margin-bottom: 10px;">
+    <i class="fas fa-cogs" style="color: #ffeb3b;"></i> Manage Fees
+</button>
+
+<section id="library-records"> 
  
-  <!-- Button to Show/Hide Fee Management Menu -->
-  <button onclick="toggleFeeActionsMenu()" style="background-color: #d32f2f; color: purple; border: none; padding: 10px 10px; font-size: 16px; cursor: pointer; border-radius: 5px; margin-bottom: 10px;">
-    <i class="fas fa-cogs"></i> Manage Fees
+  <!-- Toggle Button -->
+  <button
+    type="button"
+    onclick="toggleLibraryManagement()"
+    style="display: flex; align-items: center; gap: 5px;"
+  >
+    <i class="fas fa-book" style="font-size: 16px;"></i> Library Records 
   </button>
+
+  <!-- Library Management Section -->
+  <div id="library-management" style="display: none; margin-top: 20px;">
+
+    <!-- Toggle Form Visibility Button -->
+    <button
+      type="button"
+      id="manage-library-btn"
+      onclick="toggleFormVisibility()"
+      style="margin-bottom: 20px;"
+    >
+      Library
+    </button>
+
+    <!-- Add Record Form -->
+    <form id="record-form" onsubmit="addRecord(event)" style="display: none;">
+      <label>
+        Name:
+        <input type="text" id="name" required />
+      </label>
+
+      <label>
+        Grade:
+        <input type="text" id="grade" required />
+      </label>
+
+      <label>
+        Book No:
+        <input type="text" id="bookNo" required />
+      </label>
+
+      <label>
+        <label for="date">Date:</label>
+        <input type="date" id="date" readonly />
+      </label>
+
+      <!-- Issued Books -->
+      <fieldset>
+        <legend>Issued Books</legend>
+        <label>
+          <input
+            type="checkbox"
+            id="selectAllIssued"
+            onclick="toggleCheckboxes('issuedBooks', this)"
+          />
+          Select All
+        </label>
+        <div id="issuedBooks">
+          <!-- Issued Book Options -->
+          <label><input type="checkbox" value="English" /> English</label>
+          <label><input type="checkbox" value="Maths" /> Maths</label>
+          <label><input type="checkbox" value="Pre-technical" /> Pre-technical</label>
+          <label><input type="checkbox" value="Kiswahili" /> Kiswahili</label>
+          <label><input type="checkbox" value="Science" /> Science</label>
+          <label><input type="checkbox" value="Social Studies" /> Social Studies</label>
+          <label><input type="checkbox" value="Business" /> Business</label>
+          <label><input type="checkbox" value="Agriculture" /> Agriculture</label>
+          <label><input type="checkbox" value="Health Education" /> Health Education</label>
+          <label><input type="checkbox" value="Sports" /> Sports</label>
+          <label><input type="checkbox" value="Performing Art" /> Performing Art</label>
+          <label><input type="checkbox" value="Life Skills" /> Life Skills</label>
+          <label><input type="checkbox" value="Computer" /> Computer</label>
+          <label><input type="checkbox" value="Visual Art" /> Visual Art</label>
+          <label><input type="checkbox" value="Chemistry" /> Chemistry</label>
+          <label><input type="checkbox" value="Biology" /> Biology</label>
+          <label><input type="checkbox" value="Physics" /> Physics</label>
+          <label><input type="checkbox" value="Geography" /> Geography</label>
+          <label><input type="checkbox" value="History" /> History</label>
+          <label><input type="checkbox" value="Physical Education" /> Physical Education</label>
+        </div>
+      </fieldset>
+
+      <!-- Lost Books -->
+      <fieldset>
+        <legend>Lost Books</legend>
+        <label>
+          <input
+            type="checkbox"
+            id="selectAllLost"
+            onclick="toggleCheckboxes('lostBooks', this)"
+          />
+          Select All
+        </label>
+        <div id="lostBooks">
+          <!-- Lost Book Options -->
+          <label><input type="checkbox" value="English" /> English</label>
+          <label><input type="checkbox" value="Maths" /> Maths</label>
+          <label><input type="checkbox" value="Pre-technical" /> Pre-technical</label>
+          <label><input type="checkbox" value="Kiswahili" /> Kiswahili</label>
+          <label><input type="checkbox" value="Science" /> Science</label>
+          <label><input type="checkbox" value="Social Studies" /> Social Studies</label>
+          <label><input type="checkbox" value="Business" /> Business</label>
+          <label><input type="checkbox" value="Agriculture" /> Agriculture</label>
+          <label><input type="checkbox" value="Health Education" /> Health Education</label>
+          <label><input type="checkbox" value="Sports" /> Sports</label>
+          <label><input type="checkbox" value="Performing Art" /> Performing Art</label>
+          <label><input type="checkbox" value="Life Skills" /> Life Skills</label>
+          <label><input type="checkbox" value="Computer" /> Computer</label>
+          <label><input type="checkbox" value="Visual Art" /> Visual Art</label>
+          <label><input type="checkbox" value="Chemistry" /> Chemistry</label>
+          <label><input type="checkbox" value="Biology" /> Biology</label>
+          <label><input type="checkbox" value="Physics" /> Physics</label>
+          <label><input type="checkbox" value="Geography" /> Geography</label>
+          <label><input type="checkbox" value="History" /> History</label>
+          <label><input type="checkbox" value="Physical Education" /> Physical Education</label>
+        </div>
+      </fieldset>
+
+      <label for="status">Status:</label>
+      <input type="text" id="status" readonly />
+
+      <button type="submit">
+  <i class="fas fa-plus-circle"></i> Add Record
+</button>
+    </form>
+
+    <!-- Search and Filter Section -->
+    <section id="filters" style="margin-top: 20px;">
+      <input
+        type="text"
+        id="search-bar"
+        placeholder="Search by name..."
+        oninput="searchTable()"
+        style="margin-right: 10px;"
+      />
+      <select id="grade-filter" onchange="searchTable()">
+        <!-- Options dynamically populated -->
+      </select>
+    </section>
+
+    <!-- Records Table -->
+    <table
+      border="1"
+      style="width: 100%; border-collapse: collapse; margin-top: 20px; text-align: left;"
+    >
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Grade</th>
+          <th>Book No</th>
+          <th>Date</th>
+          <th>Issued Books</th>
+          <th>Lost Books</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamically generated rows -->
+      </tbody>
+    </table>
+
+  <!-- Button with an icon -->
+<button onclick="printFilteredTable()" style="margin-top: 20px;">
+  <i class="fas fa-print"></i> Print Table
+</button>
+    <!-- Library Cards Section -->
+    <div id="library-cards-section" style="margin-top: 20px;">
+      <select id="grade-filter">
+        <option value="All">All Grades</option>
+      </select>
+     <!-- Button with an icon -->
+ <button
+        onclick="generateLibraryCards()"
+        style="
+          margin-left: 10px;
+          padding: 10px 20px;
+          background-color: #007BFF;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        "
+      >
+        Generate Library Cards
+      </button>
+    </div>
+  </div>
+
+
+
 
   <!-- Fee Management Actions Box (Initially Hidden) -->
   <div id="feeActionsBox" style="display: none; text-align: center; background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); margin-top: 10px; width: 45%; margin-left: auto; margin-right: auto;">
@@ -1108,9 +1291,12 @@ button {
   <i class="fas fa-trash-alt"></i> Delete All Fee Records
 </button>
 
-
-
-    </div>
+<!-- Button to Show Learner Count -->
+<button onclick="openOnlyOneSection('learnerCountContainer')" 
+  style="background: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+  <i class="fas fa-users"></i> Show Learner Count Per Grade
+</button>
+  </div>
    <!-- Archived Fees Container -->
 <div id="archivedFeesContainer" style="display: none; text-align: left; background: #f0f0f0; padding: 15px; border-radius: 5px; margin-top: 20px;">
   <h2 style="color: #4CAF50;">Archived Fee Records</h2>
@@ -1204,8 +1390,8 @@ button {
     <div style="display: flex; align-items: center; justify-content: center;">
       <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-right: 10px;">
       <div style="text-align: left;">
-        <h2 style="margin: 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
-        <p style="margin: 2px; font-size: 14px; color: #555;">P.O BOX 886-01000 Thika, Kenya</p>
+        <h2 style="margin: 0;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL</h2>
+        <p style="margin: 2px; font-size: 14px; color: #555;">Po Box 886-01000 Thika, Kenya</p>
         <p style="margin: 2px; font-size: 14px; color: #555;">Phone: +254-700-123456</p>
       </div>
     </div>
@@ -1238,7 +1424,7 @@ button {
     <p style="font-weight: bold; color: red;">Balance: KSH <span id="receiptBalance"></span></p>
     <!-- Official Stamp -->
     <div style="border: 2px solid blue; color: blue; width: 150px; height: 80px; margin: 15px auto; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center;">
-      QUEEN OF ROSARY COMPREHENSIVE SCHOOL 
+      QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL 
     </div>
     <!-- Authorized Signature -->
     <div style="text-align: left; margin-top: 30px; font-size: 14px;">
@@ -1261,8 +1447,8 @@ button {
     <div style="display: flex; align-items: center; justify-content: center;">
       <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-right: 10px;">
       <div style="text-align: left;">
-        <h2 style="margin: 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL </h2>
-        <p style="margin: 2px; font-size: 14px; color: #555;">P.O BOX 886-01000 Thika, Kenya</p>
+        <h2 style="margin: 0;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL </h2>
+        <p style="margin: 2px; font-size: 14px; color: #555;">Po Box 886-01000 Thika, Kenya</p>
         <p style="margin: 2px; font-size: 14px; color: #555;">Phone: +254-700-123456</p>
         <p style="margin: 2px; font-size: 14px; color: #555;"><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
         <p style="margin: 2px; font-size: 14px; color: #555;"><strong>Year:</strong> <span id="currentYear"></span></p>
@@ -1302,8 +1488,8 @@ button {
     <!-- School Header -->
     <div style="text-align: center; margin-bottom: 10px;">
       <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 80px; margin-bottom: 5px;">
-      <h2 style="margin: 0; color: #4CAF50;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL </h2>
-      <p style="margin: 2px; font-size: 14px;">P.O BOX 886-01000, THIKA, Kenya</p>
+      <h2 style="margin: 0; color: #4CAF50;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL </h2>
+      <p style="margin: 2px; font-size: 14px;">P.O BOX Po Box 886-01000, THIKA, Kenya</p>
       <p style="margin: 2px; font-size: 14px;">Phone: +254-700-123456</p>
       <p style="margin: 2px; font-size: 14px; font-weight: bold;">School Motto: "Excellence Through Knowledge"</p>
       <h3 style="margin-top: 10px; color: #333;">Year: 2025</h3>
@@ -1364,20 +1550,20 @@ button {
     <input type="text" id="searchDefaulter" onkeyup="searchDefaulter()" placeholder="Search for learner..." 
     style="margin-bottom: 10px; padding: 8px; width: 250px; border: 1px solid #ccc; border-radius: 5px; text-align: center;">
 
-    <!-- Grade Filter -->
-    <label for="gradeFilter"><strong>Filter by Grade:</strong></label>
-    <select id="gradeFilter" onchange="generateDefaultersList()">
-        <option value="">All Grades</option>
-        <option value="1">Grade 1</option>
-        <option value="2">Grade 2</option>
-        <option value="3">Grade 3</option>
-        <option value="4">Grade 4</option>
-        <option value="5">Grade 5</option>
-        <option value="6">Grade 6</option>
-        <option value="7">Grade 7</option>
-        <option value="8">Grade 8</option>
-        <option value="9">Grade 9</option>
-    </select>
+ <!-- Grade Filter -->
+   <label for="defaultersGradeFilter"><strong>Filter by Grade:</strong></label>
+<select id="defaultersGradeFilter" onchange="filterDefaulters()">
+  <option value="">All Grades</option>
+  <option value="1">Grade 1</option>
+  <option value="2">Grade 2</option>
+  <option value="3">Grade 3</option>
+  <option value="4">Grade 4</option>
+  <option value="5">Grade 5</option>
+  <option value="6">Grade 6</option>
+  <option value="7">Grade 7</option>
+  <option value="8">Grade 8</option>
+  <option value="9">Grade 9</option>
+</select>
 
     <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px;">
         <thead>
@@ -1396,13 +1582,6 @@ button {
         <i class="fas fa-print"></i> Print Defaulters List
     </button>
 </div>
-
-
-
-   
-
-
-
 
 <!-- Collapsible Menu Actions --> 
 <div id="menuActions" style="display: none;">
@@ -1437,25 +1616,42 @@ button {
   </div>
 </div>
 
-
-
 <div id="registerLearnerSection" style="max-width: 400px; margin: auto; display: none;">
     <h2>Register Learner</h2>
     <form id="learnerForm">
-        Name: <input type="text" id="learnerName" required><br>
-        Gender: <input type="text" id="learnerGender" required><br>
-        Grade: <input type="text" id="learnerGrade" required><br>
-        Age: <input type="number" id="learnerAge" required><br>
-        Parent Name: <input type="text" id="parentName" required><br>
-        Parent Phone No: <input type="text" id="learnerPhone" required><br>
-        Birth Certificate No: <input type="number" id="birthCertificate" required><br>
-        Admission Number: <input type="text" id="admissionNumber" required><br>
- Photo: <input type="file" id="learnerPhoto" accept="image/*"><br>
-        <button type="submit">Add Learner</button>
+        <label>Name:</label> <input type="text" id="learnerName" required><br>
+        <label>Gender:</label> <input type="text" id="learnerGender" required><br>
+        <label>Grade:</label> <input type="text" id="learnerGrade" required><br>
+        <label>Age:</label> <input type="number" id="learnerAge" required><br>
+        <label>Parent Name:</label> <input type="text" id="parentName" required><br>
+        <label>Parent Phone No:</label> <input type="text" id="learnerPhone" required><br>
+        <label>Birth Certificate No:</label> <input type="number" id="birthCertificate" required><br>
+        <label>Admission Number:</label> <input type="text" id="admissionNumber" required><br>
+
+        <!-- Photo Upload -->
+        <label>Photo:</label> <input type="file" id="learnerPhoto" accept="image/*" onchange="previewPhoto(event)"><br>
+
+        <!-- Image Preview -->
+        <img id="photoPreview" style="display:none; width:100px; height:100px; border-radius:10px; margin-top:10px;">
+
+       <!-- Voice Input Button -->
+<button type="button" onclick="startVoiceInput()" style="margin-top: 15px; padding: 10px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <i class="fas fa-microphone"></i> Start Voice Input
+</button>
+
+<!-- Add Learner Button -->
+<button type="submit" style="margin-top: 15px; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <i class="fas fa-user-plus"></i> Add Learner
+</button>
     </form>
 </div>
 
-    </div>
+<!-- Custom Styled Prompt Box -->
+<div id="voicePrompt" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%);
+    background: #4CAF50; color: white; padding: 20px; font-size: 18px; border-radius: 10px; text-align: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);">
+    <p id="promptText"></p>
+</div
 <div id="fireworks-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000;"></div>
    </div>
 <div id="registeredLearnersBox" style="display: none;">
@@ -1467,25 +1663,56 @@ button {
 </button>
 
 <div class="dropdown" id="learnersMenu">
-  <button onclick="printRegisteredLearners()" class="neon-button">
-    <i class="fas fa-print"></i> Print Registered Learners
-  </button>
-  <button onclick="groupLearnersByGrade()" class="neon-button">
-    <i class="fas fa-users"></i> Group by Grade
-  </button>
-  <button onclick="promoteLearners()" class="neon-button">
-    <i class="fas fa-arrow-up"></i> Promote Learners to Next Grade
-  </button>
+<button class="neon-button btn-yellow" onclick="toggleSection('registerLearnerSection')">
+    <span class="material-icons" style="color: #fbc02d;">person_add</span> Register Learner
+</button>
+
+<button onclick="printRegisteredLearners()" class="neon-button">
+    <i class="fas fa-print" style="color: #2ecc71;"></i> Print Registered Learners
+</button>
+
+<button onclick="groupLearnersByGrade()" class="neon-button">
+    <i class="fas fa-users" style="color: #3498db;"></i> Group by Grade
+</button>
+
+<button onclick="promoteLearners()" class="neon-button">
+    <i class="fas fa-arrow-up" style="color: #e67e22;"></i> Promote Learners to Next Grade
+</button>
+
 <!-- Undo Promotion Button -->
 <button onclick="undoPromotion()" class="neon-button neon-red">
-    <i class="fas fa-undo"></i> Undo Promotion
+    <i class="fas fa-undo" style="color: #c0392b;"></i> Undo Promotion
 </button>
-  <button onclick="groupLearnersByGender()" class="neon-button">
-    <i class="fas fa-transgender-alt"></i> Group by Gender
-  </button>
-  <button onclick="printGroupedByGender()" class="neon-button">
-    <i class="fas fa-print"></i> Print Grouped by Gender
-  </button>
+
+<button onclick="groupLearnersByGender()" class="neon-button">
+    <i class="fas fa-transgender-alt" style="color: #9b59b6;"></i> Group by Gender
+</button>
+
+<button onclick="printGroupedByGender()" class="neon-button">
+    <i class="fas fa-print" style="color: #2ecc71;"></i> Print Grouped by Gender
+</button>
+
+<!-- Button to Toggle Learners Count --> 
+<button id="toggleLearnersCountButton" onclick="toggleLearnersCount()" class="neon-button">
+    <i class="fas fa-eye" style="color: #f1c40f;"></i> Show Learners Count
+</button>
+
+<!-- Button to Print Learners Count -->
+<button onclick="printLearnersCount()" class="neon-button orange-neon">
+    <i class="fas fa-print" style="color: #e74c3c;"></i> Print Learners Count
+</button>
+
+  
+    <button class="neon-button btn-red" onclick="viewArchives()">
+        <span class="material-icons" style="color: #d32f2f;">archive</span> View Archived Exams
+    </button>
+    
+    <a href="https://drive.google.com/file/d/14qlKVZ_0nsgHqthYDAdks4qpHkZV6iN3/view?usp=drivesdk" download>Download Admission Form</a>
+    
+    <button class="neon-button btn-red" onclick="toggleArchives()">
+        <span class="material-icons" style="color: #0288d1;">visibility</span> View Archived
+    </button>
+
 </div>
 </div>
 
@@ -1627,11 +1854,12 @@ button {
 
 
 <button onclick="saveCurrentMarksTable()" class="neon-button">
-  <i class="fas fa-table"></i> Save Current Marks Table
+  <i class="fas fa-table"></i> Backup Merit
 </button>
-
-    <span class="material-icons">save</span> Save Merit List
-</button>
+<div style="background-color: #ffeb3b; color: #000; padding: 10px; border-radius: 5px; font-weight: bold; display: flex; align-items: center;">
+    <i class="fas fa-bullhorn" style="color: #d32f2f; font-size: 24px; margin-right: 8px;"></i> 
+   RASM reminds you to backup,and send to archives your marks for further analysis.
+</div>
 
    <div id="marksHeader"></div>
     <table class="report-table">
@@ -1639,6 +1867,14 @@ button {
 <button onclick="deleteMarksTable()" style="background: red; color: white; padding: 10px; border-radius: 5px; font-weight: bold;">
     <i class="fas fa-trash"></i> Delete Marks Table
 </button>
+
+<button onclick="printMarksTable()" style="background: green; color: white; padding: 10px; border-radius: 5px; font-weight: bold; margin-left: 10px;">
+    <i class="fas fa-print"></i> Print Merit 
+</button>
+ <div style="background-color: #ffeb3b; color: #000; padding: 10px; border-radius: 5px; font-weight: bold; display: flex; align-items: center;">
+    <i class="fas fa-bullhorn" style="color: #d32f2f; font-size: 24px; margin-right: 8px;"></i> 
+    Kindly generate all reports before deleting this merit list.
+</div>
             <th>No.</th> <!-- Serial Number -->
             <th>Learner</th> <!-- Learner Name -->
             <th>Grade</th> <!-- Grade -->
@@ -1657,8 +1893,11 @@ button {
     </thead>
     <tbody id="marksList"></tbody>
 </table>
-    <!-- Section for Subject Levels -->
-<h2>Subject Level Summary</h2>
+      <!-- Section for Subject Levels -->
+<h2 style="background-color: #ffeb3b; color: #000; padding: 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px; width: fit-content;">
+    <i class="fas fa-chart-bar" style="color: #d32f2f;"></i> Subject Level Summary
+</h2>
+
 <table class="report-table">
     <thead>
         <tr>
@@ -1689,59 +1928,83 @@ button {
     </div>
 <!-- Archived Marks Section -->
 <div id="archivesSection" class="hidden-section">
-    <h2>Archived Marks</h2>
+   <h2 style="background-color: #ffeb3b; color: #000; padding: 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px; width: fit-content;">
+    <i class="fas fa-archive" style="color: #d32f2f;"></i> Archived Marks
+</h2>
+
     <div id="archivedMarksList"></div>
 <button onclick="combineMeritListsByGrade()" class="neon-button">
-  <i class="fas fa-sync-alt"></i> Combine Merit Lists for Same Grade
+  <i class="fas fa-sync-alt"></i> Get Overall Merit for Same Grade
 </button>
 
 <div id="combinedMeritLists"></div>
 
 <button onclick="printCombinedMeritList()" class="neon-button">
-  <i class="fas fa-print"></i> Print Combined Merit List
+  <i class="fas fa-print"></i> Print Overall  Merit
 </button>
-
 </div>
 <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
     <div style="border: 5px solid #f3f3f3; border-radius: 50%; border-top: 5px solid #3498db; width: 50px; height: 50px; animation: spin 1s linear infinite;"></div>
 </div>
 <div id="juniorSchoolActions" class="hidden-section">
   <div class="menu-container">
-  <button class="menu-button" aria-label="Junior School Actions" onclick="toggleJuniorSchoolMenu()">
-  <i class="fas fa-school"></i> Nice To See You Here Click Me
+<button class="menu-button" aria-label="COMPREHENSIVE SCHOOL Actions" onclick="toggleJuniorSchoolMenu()">
+  <i class="fas fa-school" style="color: #3498db;"></i> HEY THERE! CLICK TO DIVE IN.
 </button>
 
 <div class="dropdown" id="juniorSchoolMenu">
   <button onclick="printAssessmentReport()" class="neon-button btn-print">
-    <i class="fas fa-print"></i> Print Report
+    <i class="fas fa-print" style="color: #2ecc71;"></i> Print Report
   </button>
-  <button onclick="showSubjectChampions()" class="neon-button btn-champions">
-    <i class="fas fa-trophy"></i> Subject Champions
+
+  <button onclick="showSubjectChampions()" class="neon-button btn-champions"> 
+    <i class="fas fa-trophy" style="color: orange;"></i> Learning Areas Star Achievers
   </button>
+
   <button onclick="showSubjectRanking()" class="neon-button btn-ranking">
-    <i class="fas fa-chart-line"></i> Subject Ranking
+    <i class="fas fa-chart-line" style="color: #f39c12;"></i> Learning Area Performance Index 
   </button>
+
   <button onclick="showSubjectPerformance()" class="neon-button btn-performance">
-    <i class="fas fa-chart-bar"></i> Subject Performance
+    <i class="fas fa-chart-bar" style="color: #9b59b6;"></i> Learning Area Performance Status
   </button>
+
   <button onclick="toggleSection('juniorMarksEntrySection')" class="neon-button btn-blue">
-    <i class="fas fa-pen"></i> Capture Outcomes
+    <i class="fas fa-pen" style="color: #e74c3c;"></i> Record Outcomes
   </button>
+
   <button onclick="toggleSection('marksTableSection')" class="neon-button btn-red">
-    <i class="fas fa-list"></i> Merit List
+    <i class="fas fa-list" style="color: #1abc9c;"></i> Merit List
   </button>
+
   <button onclick="toggleSection('bulkReportGeneration')" class="neon-button btn-blue">
-    <i class="fas fa-file-alt"></i> Bulk Report Generation
+    <i class="fas fa-file-alt" style="color: #2c3e50;"></i> Bulk Report Generation
   </button>
+
   <button onclick="generateGenderPerformance()" class="neon-button">
-    <i class="fas fa-genderless"></i> Generate Gender Performance
+    <i class="fas fa-venus-mars" style="color: #d35400;"></i> Generate Gender Merit List
   </button>
-<button onclick="togglePathwaysTable()" class="button toggle-button">
-        <i class="fas fa-chart-bar"></i> Group Learners by Pathways
-    </button>
-  <button onclick="hideGeneratedReports()" class="neon-button btn-red circle-button">
-    <i class="fas fa-arrow-left"></i> Back
+
+  <button onclick="togglePathwaysTable()" class="button toggle-button">
+    <i class="fas fa-project-diagram" style="color: #16a085;"></i> Group Learners by Pathways
   </button>
+<!-- Merit List Control Buttons -->
+<button onclick="generateMeritList()" class="neon-button btn-ranking">
+    <i class="fas fa-chart-line" style="color: #f39c12;"></i> Get Merit List
+</button>
+
+<button onclick="toggleMeritList()" class="neon-button btn-toggle" id="toggleBtn">
+    <i class="fas fa-eye-slash" style="color: #e74c3c;"></i> Hide Merit List
+</button>
+
+<button onclick="printMeritList()" id="printBtn" class="neon-button btn-print" style="display:none;">
+    <i class="fas fa-print" style="color: #2ecc71;"></i> Print
+</button>
+
+ <button onclick="hideGeneratedReports()" class="neon-button btn-red circle-button">
+    <i class="fas fa-arrow-left" style="color: #c0392b;"></i> Back
+  </button>
+
 <!-- Merit List Selection -->
 <label for="gradeSelect" style="font-size: 14px; font-weight: bold; color: #4CAF50;">
     <i class="fas fa-list-ol"></i> <strong>Merit List Here:</strong>
@@ -1769,22 +2032,6 @@ button {
     <option value="9B">Grade 9B</option>
     <option value="9C">Grade 9C</option>
 </select>
-
-<!-- Merit List Control Buttons -->
-<button onclick="generateMeritList()" class="neon-button btn-ranking">
-    <i class="fas fa-chart-line"></i> Get Merit List
-</button>
-
-<button onclick="toggleMeritList()" class="neon-button btn-toggle" id="toggleBtn">
-    <i class="fas fa-eye-slash"></i> Hide Merit List
-</button>
-
-<button onclick="printMeritList()" id="printBtn" class="neon-button btn-print" style="display:none;">
-    <i class="fas fa-print"></i> Print
-</button>
-
-
-
 <div id="meritListContainer" style="display:none; margin-top:20px;"></div>
 
 </div>
@@ -2144,11 +2391,25 @@ button {
         </table>
     </div>
 </div>
+<!-- Learner Count Display Section -->
+<div id="learnerCountContainer" style="display: none; margin-top: 20px; font-weight: bold; text-align: center;">
+    <table style="width: 100%; margin: auto; border-collapse: collapse; border: 1px solid black;">
+        <thead>
+            <tr style="background-color: #f2f2f2;">
+                <th style="font-size: 20px;">No.</th>
+                <th style="font-size: 20px;">Grade</th>
+                <th style="font-size: 20px;">Boys</th>
+                <th style="font-size: 20px;">Girls</th>
+                <th style="font-size: 20px;">Total</th>
+            </tr>
+        </thead>
+        <tbody id="learnerCountTableBody"></tbody>
+    </table>
+</div>
 
-    
     <!-- Footer Section -->
     <footer id="footer" style="display: none; background-color: #2196F3; color: white; padding: 5px 0; text-align: center;">
-        <p>&copy; 2025 QUEEN OF ROSARY COMPREHENSIVE SCHOOL | All Rights Reserved</p>
+        <p>&copy; 2025 QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL | All Rights Reserved</p>
     </footer>
 </body>
    
@@ -2377,8 +2638,8 @@ function updateLearnersTable() {
 
           
           // Hardcoded credentials (for demonstration purposes)
-        const validUsername = "Nachu254";
-        const validPassword = "Nm643PpQ@";
+        const validUsername = "Queen254";
+        const validPassword = "Thika";
 
         // Login form submission
         document.getElementById("loginForm").addEventListener("submit", function (e) {
@@ -2997,8 +3258,8 @@ function groupLearnersByGrade() {
 
 // Predefined security data (for demonstration purposes)
 const userCredentials = {
-    username: "Nachu254",
-    password: "Nm643PpQ@", // Current password
+    username: "Queen254",
+    password: "2525", // Current password
     securityAnswer: "blue" // Security question answer
 };
 
@@ -3104,20 +3365,18 @@ function printGroupedTable(grade) {
 }
 
 function printCombinedMeritList() {  
-    // Retrieve details from the Subject Champions form
     const schoolName = document.getElementById('schoolName').value || "School Name Not Provided";
     const grade = document.getElementById('gradeLevel').value || "Grade Not Provided";
     const term = document.getElementById('term').value || "Term Not Provided";
     const year = document.getElementById('year').value || "Year Not Provided";
 
-    // Custom prompt for grade input with style
     const customPrompt = document.createElement('div');
     customPrompt.style.position = 'fixed';
     customPrompt.style.top = '50%';
     customPrompt.style.left = '50%';
     customPrompt.style.transform = 'translate(-50%, -50%)';
-    customPrompt.style.backgroundColor = '#f8d7da'; // Red background
-    customPrompt.style.color = '#721c24'; // Dark red text
+    customPrompt.style.backgroundColor = '#f8d7da';
+    customPrompt.style.color = '#721c24';
     customPrompt.style.padding = '20px';
     customPrompt.style.borderRadius = '10px';
     customPrompt.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
@@ -3130,7 +3389,6 @@ function printCombinedMeritList() {
     `;
     document.body.appendChild(customPrompt);
 
-    // Handle grade input submission
     window.submitGradeInput = function() {
         const gradesInput = document.getElementById('gradeInput').value.trim();
         if (!gradesInput) {
@@ -3139,40 +3397,38 @@ function printCombinedMeritList() {
         }
         const selectedGrades = gradesInput.split(',').map(grade => grade.trim());
 
-        // Get the combined merit list content
         const combinedContentElement = document.getElementById("combinedMeritLists");
         if (!combinedContentElement || combinedContentElement.innerHTML.trim() === "") {
             alert("No combined merit list to print.");
             return;
         }
 
-        // Filter the combined content by selected grades
-        const combinedHtml = Array.from(combinedContentElement.querySelectorAll("h3, table"))
-            .filter(element => {
-                if (element.tagName === "H3") {
-                    return selectedGrades.some(grade => element.textContent.includes(`Grade ${grade}`));
+        const filteredElements = [];
+        const allElements = combinedContentElement.children;
+        for (let i = 0; i < allElements.length; i++) {
+            const element = allElements[i];
+            if (element.tagName === "H3" && selectedGrades.some(grade => element.textContent.includes(`Grade ${grade}`))) {
+                filteredElements.push(element.outerHTML);
+                if (allElements[i + 1] && allElements[i + 1].tagName === "TABLE") {
+                    filteredElements.push(allElements[i + 1].outerHTML);
                 }
-                return true;
-            })
-            .map(element => element.outerHTML)
-            .join("");
+            }
+        }
 
+        const combinedHtml = filteredElements.join("");
         if (!combinedHtml) {
             alert("No merit lists found for the selected grades.");
             return;
         }
 
-        // URL or base64 string of your logo
-        const logoUrl = "https://i.imgur.com/UW65hfv.png "; // Replace with your logo's URL or base64 string
-
-        // Create and show the spinner
+        const logoUrl = "https://i.imgur.com/UW65hfv.png ";
         const spinner = document.createElement('div');
         spinner.style.position = 'fixed';
         spinner.style.top = '50%';
         spinner.style.left = '50%';
         spinner.style.transform = 'translate(-50%, -50%)';
-        spinner.style.border = '16px solid #f3f3f3'; // Light grey
-        spinner.style.borderTop = '16px solid #3498db'; // Blue color for the spinning part
+        spinner.style.border = '16px solid #f3f3f3';
+        spinner.style.borderTop = '16px solid #3498db';
         spinner.style.borderRadius = '50%';
         spinner.style.width = '80px';
         spinner.style.height = '80px';
@@ -3180,7 +3436,6 @@ function printCombinedMeritList() {
         spinner.style.zIndex = '9999';
         document.body.appendChild(spinner);
 
-        // Add CSS for spinner animation
         const style = document.createElement('style');
         style.innerHTML = `
             @keyframes spin {
@@ -3190,7 +3445,6 @@ function printCombinedMeritList() {
         `;
         document.head.appendChild(style);
 
-        // Open a hidden iframe for printing (no pop-up window)
         const iframe = document.createElement('iframe');
         iframe.style.position = 'absolute';
         iframe.style.width = '0';
@@ -3198,7 +3452,6 @@ function printCombinedMeritList() {
         iframe.style.border = 'none';
         document.body.appendChild(iframe);
 
-        // Write the HTML content into the iframe
         iframe.contentWindow.document.open();
         iframe.contentWindow.document.write(`
             <html>
@@ -3230,7 +3483,7 @@ function printCombinedMeritList() {
                         .logo {
                             display: block;
                             margin: 0 auto;
-                            width: 100px; /* Adjust logo size */
+                            width: 100px;
                             height: auto;
                         }
                     </style>
@@ -3249,23 +3502,20 @@ function printCombinedMeritList() {
         `);
         iframe.contentWindow.document.close();
 
-        // Print the content from the iframe
         iframe.onload = function () {
             iframe.contentWindow.print();
-
-            // Remove the spinner and iframe after printing
             document.body.removeChild(spinner);
             document.body.removeChild(iframe);
-            document.body.removeChild(customPrompt); // Remove the custom prompt box
+            document.body.removeChild(customPrompt);
         };
     };
 
-    // Handle cancel action
     window.cancelGradeInput = function() {
-        document.body.removeChild(customPrompt); // Remove the custom prompt box
+        document.body.removeChild(customPrompt);
         alert("Grade selection canceled.");
     };
 }
+
 
 
 function saveGroupedChanges(grade) { 
@@ -3891,11 +4141,14 @@ function showSubjectPerformance() {
         return { subject, mean, level };
     }).sort((a, b) => b.mean - a.mean);
 
+    // Extract the top three subjects
+    const topSubjects = meanScores.slice(0, 3);
+
     // Generate performance table
     let performanceHtml = `<h3 style="color: #4CAF50; text-align: center;">Subject Performance</h3>`;
-    performanceHtml += `<table class="report-table">
+    performanceHtml += `<table class="report-table" style="width: 100%; border-collapse: collapse;">
                             <thead>
-                                <tr>
+                                <tr style="background: #4CAF50; color: white;">
                                     <th>No.</th>
                                     <th>Subject</th>
                                     <th>Mean Score</th>
@@ -3906,7 +4159,8 @@ function showSubjectPerformance() {
 
     let number = 1; // Add numbering
     meanScores.forEach(({ subject, mean, level }) => {
-        performanceHtml += `<tr>
+        const isTopSubject = topSubjects.find(top => top.subject === subject); // Check if subject is a top subject
+        performanceHtml += `<tr style="${isTopSubject ? 'background: #FFD700; font-weight: bold;' : ''}">
                                 <td>${number++}</td>
                                 <td>${subject}</td>
                                 <td>${mean}</td>
@@ -3918,7 +4172,65 @@ function showSubjectPerformance() {
 
     // Display the subject performance report
     document.getElementById("report").innerHTML = performanceHtml;
+
+    // Celebrate the top three subjects
+    celebrateTopSubjects(topSubjects);
 }
+
+// Celebration for top three subjects
+function celebrateTopSubjects(topSubjects) {
+    const celebrationHtml = topSubjects.map(({ subject, mean }) => {
+        return `<p style="font-size: 18px; font-weight: bold; color: #4CAF50; margin: 5px;">
+                     ${subject}: Mean Score ${mean}
+                </p>`;
+    }).join("");
+
+    const celebrationContainer = document.createElement("div");
+    celebrationContainer.style.position = "fixed";
+    celebrationContainer.style.top = "0";
+    celebrationContainer.style.left = "0";
+    celebrationContainer.style.width = "100%";
+    celebrationContainer.style.height = "100%";
+    celebrationContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    celebrationContainer.style.zIndex = "1000";
+    celebrationContainer.style.display = "flex";
+    celebrationContainer.style.flexDirection = "column";
+    celebrationContainer.style.justifyContent = "center";
+    celebrationContainer.style.alignItems = "center";
+    celebrationContainer.style.color = "white";
+    celebrationContainer.style.textAlign = "center";
+
+    const message = document.createElement("h1");
+    message.textContent = "Congratulations to the Top Subjects!";
+    celebrationContainer.appendChild(message);
+
+    const subjectsHtml = document.createElement("div");
+    subjectsHtml.innerHTML = celebrationHtml;
+    celebrationContainer.appendChild(subjectsHtml);
+
+    const confettiCanvas = document.createElement("canvas");
+    confettiCanvas.style.position = "absolute";
+    confettiCanvas.style.top = "0";
+    confettiCanvas.style.left = "0";
+    confettiCanvas.style.width = "100%";
+    confettiCanvas.style.height = "100%";
+    confettiCanvas.id = "confettiCanvas";
+    celebrationContainer.appendChild(confettiCanvas);
+
+    document.body.appendChild(celebrationContainer);
+
+    // Play confetti animation
+    const confettiSettings = { target: "confettiCanvas", max: 200, size: 1.5, clock: 30 };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
+
+    // Remove celebration after 5 seconds
+    setTimeout(() => {
+        celebrationContainer.remove();
+        confetti.clear(); // Stop confetti animation
+    }, 5000);
+}
+
 
 // Toggle visibility of the Registered Learners box
 function toggleRegisteredLearners() {
@@ -4035,7 +4347,7 @@ function printSubjectPerformance() {
                     <p>Term: ${term}</p>
                 </div>
                 ${performanceHtml}
-                <div class="stamp">QUEEN OF ROSARY JUNIOR  SCHOOL<br>P.O BOX 886-01000 Thika</div>
+                <div class="stamp">QUEEN  OF  ROSARY JUNIOR SCHOOL  SCHOOL<br>Po Box 886-01000 Thika</div>
             </body>
         </html>
     `);
@@ -4102,10 +4414,10 @@ function generateBulkReports() {
                     <div style="clear:both; padding-bottom:10px;">
                         ${schoolLogo}
                         <div style="margin-left:110px;">
-                            <h2 style="margin:0; font-size:20px;"> QUEEN OF ROSARY JUNIOR SCHOOL ASSESMENT REPORT</h2>
-                            <h3 style="margin:0; font-size:16px;">P.O BOX 886-01000 Thika</h3>
-                            <h4 style="margin:0; font-size:14px;">Ministry Of Education Science And Technology</h4>
-                        </div>
+                          <h2 style="margin:0; font-size:16px;"> QUEEN  OF  ROSARY JUNIOR SCHOOL LEARNER'S  PROGRESS  REPORT</h2>
+                            <h3 style="margin:0; font-size:16px;">PO BOX  886-01000 THIKA, KENYA </h3>
+                            <h4 style="margin:0; font-size:16px;">MINISTRY OF EDUCATION SCIENCE AND TECHNOLOGY</h4>
+                                     </div>
                     </div>
                     <div class="report-details" style="display: flex; align-items: flex-start; justify-content: space-between; margin-top: 10px;">
                         <div>
@@ -4157,9 +4469,8 @@ function generateBulkReports() {
                         Class Teacher Signature: ${details.classTeacherSignature || '_____________'}<br>
                         Principal Signature: ${details.principalSignature || '_____________'}<br>
                         Official Stamp: <div class="stamp">
-                             QUEEN OF ROSARY  Junior  School <br>
-                            P.O BOX 886-01000 Thika<br>
-                            Date: ${formattedDate}<br>
+                             QUEEN  Of  Rosary Junior  School <br>
+                           Po Box 886-01000 Thika<br>
                         </div>
                     </div>
                     <div style="page-break-after: always;"></div>
@@ -4176,7 +4487,7 @@ function generateSubjectRows(learnerData, teacherNames) {
     const subjects = [
          'English', 'Mathematics', 'Pre-Technical Studies', 'Kiswahili', 
         'Integrated Science', 'Social Studies', 'Agriculture', 
-        'Religious Education', 'Creative Art'
+        'Religious Education', 'Creative Arts & Sports'
     ];
 
     return subjects.map((subject, index) => {
@@ -4251,7 +4562,7 @@ function getTeacherNames(callback) {
     const subjects = [
        'English', 'Mathematics', 'Pre-Technical Studies', 'Kiswahili', 
         'Integrated Science', 'Social Studies', 'Agriculture', 
-        'Religious Education', 'Creative Art'
+        'Religious Education', 'Creative Arts & Sports'
     ];
     const teacherNames = {};
     let currentSubjectIndex = 0;
@@ -4312,36 +4623,68 @@ if (totalMarks >= 71 && totalMarks <= 85)
     return "Demonstrates good understanding but should aim for consistent excellence.";
 if (totalMarks >= 86 && totalMarks <= 140) 
     return "Shows dedication and effort but can aim for even higher performance.";
-if (totalMarks >= 141 && totalMarks <= 200) 
+if (totalMarks >= 141 && totalMarks <= 199) 
     return "Displays self-discipline; however, should put extra effort to achieve higher scores.";
-if (totalMarks >= 201 && totalMarks <= 300) 
-    return "Willing to help peers; however, should focus on improving overall performance.";
-if (totalMarks >= 301 && totalMarks <= 400) 
-    return "Actively participates in class discussions and takes on various roles in work groups.";
-if (totalMarks >= 401 && totalMarks <= 449) 
-    return "Demonstrates strong skills and consistently performs above expectations.";
-if (totalMarks >= 450 && totalMarks <= 500) 
-    return "Excels in assignments and shows leadership in group work.";
-if (totalMarks >= 501 && totalMarks <= 599) 
-    return "An exemplary performer who inspires peers through excellent work.";
-if (totalMarks >= 600 && totalMarks <= 630) 
-    return "A highly motivated learner who consistently achieves outstanding results.";
-if (totalMarks >= 631 && totalMarks <= 700) 
-    return "Shows exceptional skills and a deep understanding of the material.";
-if (totalMarks >= 701 && totalMarks <= 900) 
-    return "An outstanding achiever who excels beyond expectations.";
+if (totalMarks >= 200 && totalMarks <= 205)  
+    return "Shows enthusiasm for learning but needs to focus on grasping foundational concepts. Encouraged to seek clarification when in doubt.";  
+if (totalMarks >= 206 && totalMarks <= 215)  
+    return "Demonstrates interest in academics but requires more consistency in applying knowledge. Should practice regularly to build confidence.";  
+if (totalMarks >= 216 && totalMarks <= 225)  
+    return "Has potential to improve but needs to work on time management and study habits. Encouraged to engage more in revision and discussions.";  
+if (totalMarks >= 226 && totalMarks <= 235)  
+    return "Engages with class activities but should refine problem-solving techniques. Needs to develop a structured approach to answering questions.";  
+if (totalMarks >= 236 && totalMarks <= 245)  
+    return "Displays curiosity and willingness to learn but struggles with applying concepts. Should focus on understanding rather than memorization.";  
+if (totalMarks >= 246 && totalMarks <= 255)  
+    return "Puts in effort but must aim for greater accuracy in assignments and tests. Reviewing mistakes carefully will enhance performance.";  
+if (totalMarks >= 256 && totalMarks <= 265)  
+    return "Shows eagerness to learn but needs to work on building confidence when answering questions. Should participate more in class discussions.";  
+if (totalMarks >= 266 && totalMarks <= 275)  
+    return "Participates in class activities but requires a stronger grasp of core subjects. Encouraged to ask more questions and seek additional resources.";  
+if (totalMarks >= 276 && totalMarks <= 285)  
+    return "Makes steady progress and shows improvement in understanding concepts. Should challenge themselves further by attempting advanced problems.";  
+if (totalMarks >= 286 && totalMarks <= 295)  
+    return "Displays motivation and a desire to improve. Needs to focus on critical thinking and applying knowledge to real-world scenarios.";  
+if (totalMarks >= 296 && totalMarks <= 300)  
+    return "Committed to learning and shows perseverance. Should refine study techniques for better retention and comprehension.";  
+if (totalMarks >= 301 && totalMarks <= 350)  
+    return "Actively participates in class discussions and collaborates well with peers. Demonstrates growing confidence in expressing ideas.";  
+if (totalMarks >= 351 && totalMarks <= 400)  
+    return "Shows steady academic progress and a willingness to learn. Encouraged to maintain a consistent study schedule to reinforce learning.";  
+if (totalMarks >= 401 && totalMarks <= 449)  
+    return "Consistently performs above expectations, demonstrating strong analytical and problem-solving skills. A well-rounded student.";  
+if (totalMarks >= 450 && totalMarks <= 500)  
+    return "Exhibits leadership qualities and a solid grasp of concepts. Should continue exploring challenging material to push beyond comfort zones.";  
+if (totalMarks >= 501 && totalMarks <= 550)  
+    return "A high-achieving student who takes initiative in group discussions. Sets a great example for peers through disciplined study habits.";  
+if (totalMarks >= 551 && totalMarks <= 599)  
+    return "Excels academically and demonstrates a strong ability to grasp new concepts. Should continue nurturing curiosity and exploring deeper learning.";  
+if (totalMarks >= 600 && totalMarks <= 630)  
+    return "A highly motivated learner who consistently delivers outstanding results. Shows great potential for further academic excellence.";  
+if (totalMarks >= 631 && totalMarks <= 670)  
+    return "Displays deep subject mastery and strong analytical skills. Should take on advanced challenges to further enhance learning.";  
+if (totalMarks >= 671 && totalMarks <= 700)  
+    return "Demonstrates critical thinking and a keen ability to apply knowledge. Shows promise in problem-solving and independent learning.";  
+if (totalMarks >= 701 && totalMarks <= 750)  
+    return "Achieves remarkable academic performance with a strong work ethic. Should continue to challenge themselves with complex concepts.";  
+if (totalMarks >= 751 && totalMarks <= 800)  
+    return "Displays outstanding problem-solving skills and an in-depth understanding of subjects. A top performer with great potential.";  
+if (totalMarks >= 801 && totalMarks <= 850)  
+    return "Excels in all areas and consistently exceeds expectations. Should consider mentoring peers to reinforce knowledge.";  
+if (totalMarks >= 851 && totalMarks <= 900)  
+    return "An exceptional learner who sets a high standard for academic excellence. Demonstrates leadership, discipline, and an advanced understanding of concepts.";  
 return "";
+
 
 }
 
 function getPerformanceLevel(totalMarks) {
-             if (totalMarks >= 1 && totalMarks <= 200) return "Below expectations";
-            if (totalMarks >= 201 && totalMarks <= 400) return "Approaching expectations";
-            if (totalMarks >= 401 && totalMarks <= 600) return "Meeting expectations";
-            if (totalMarks >= 601 && totalMarks <= 800) return "Exceeding expectations";
+             if (totalMarks >= 1 && totalMarks <= 225) return "Below expectations";
+            if (totalMarks >= 226 && totalMarks <= 449) return "Approaching expectations";
+            if (totalMarks >= 450 && totalMarks <= 675) return "Meeting expectations";
+            if (totalMarks >= 676 && totalMarks <= 900) return "Exceeding expectations";
             return "";
 }
-
 function printAssessmentReport() {
     const selectedLearnerName = document.getElementById("learnerSelect").value;
     const learner = learners.find(l => l.name === selectedLearnerName);
@@ -4376,14 +4719,19 @@ function printAssessmentReport() {
                     .stamp {
                         border: 2px solid blue;
                         color: blue;
-                        width: 200px;
-                        height: 70px;
+                        width: 165px;
+                        height: 65px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin: 20px auto;
+                        margin: 10px auto;
                         text-align: center;
                         font-weight: bold;
+                        page-break-inside: avoid;
+                        page-break-before: avoid;
+                        page-break-after: avoid;
+                        position: relative;
+                        display: inline-block;
                     }
                     @media print {
                         body {
@@ -4391,28 +4739,25 @@ function printAssessmentReport() {
                             line-height: 1.5;
                         }
                         .stamp {
-                            page-break-inside: avoid;
+                            position: relative;
+                            bottom: 0;
                         }
                     }
                 </style>
             </head>
             <body>
-                <!-- Only include the photo if it exists -->
-                ${
-                  learner && learner.photo
-                    ? `<div class="learner-photo-container">
-                        <img src="${learner.photo}" alt="Learner Photo" class="learner-photo" style="width:70px; height:70px; object-fit:cover; border-radius:50%; border:1px solid #ccc;">
-                      </div>`
-                    : ''
+                ${learner && learner.photo ? `
+                    <div class="learner-photo-container" style="text-align: center; margin-bottom: 10px;">
+                        <img src="${learner.photo}" alt="Learner Photo" class="learner-photo" 
+                            style="width:70px; height:70px; object-fit:cover; border-radius:50%; border:1px solid #ccc;">
+                    </div>` : ''
                 }
 
-                <!-- Main Assessment Report Content -->
-                ${assessmentReportHtml}
+                <div>${assessmentReportHtml}</div>
 
-                <!-- Stamp Section -->
                 <div class="stamp">
-                   QUEEN OF ROSARY COMPREHENSIVE SCHOOL <br>
-                    P.O BOX 886-01000 Thika
+                   QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL <br>
+                   Po Box 886-01000 Thika
                 </div>
             </body>
         </html>
@@ -4502,8 +4847,23 @@ function printAssessmentReport() {
     printWindow.print();
 }
 
+function getPerformanceLevel(totalMarks) {
+    if (totalMarks >= 1 && totalMarks <= 200) return "Below expectations";
+    if (totalMarks >= 201 && totalMarks <= 400) return "Approaching expectations";
+    if (totalMarks >= 401 && totalMarks <= 600) return "Meeting expectations";
+    if (totalMarks >= 601 && totalMarks <= 800) return "Exceeding expectations";
+    return "";
+}
 
- function printMarksTable() { 
+function getPerformanceLevel(totalMarks) {
+    if (totalMarks >= 1 && totalMarks <= 200) return "Below expectations";
+    if (totalMarks >= 201 && totalMarks <= 400) return "Approaching expectations";
+    if (totalMarks >= 401 && totalMarks <= 600) return "Meeting expectations";
+    if (totalMarks >= 601 && totalMarks <= 800) return "Exceeding expectations";
+    return "";
+}
+
+function printMarksTable() {  
     showLoadingSpinner(); // Show spinner while processing
 
     setTimeout(() => {
@@ -4516,18 +4876,12 @@ function printAssessmentReport() {
         const averages = subjectTotals.map(total => (total / marks.length).toFixed(2));
         const overallAverage = (totalMarksSum / marks.length).toFixed(2); // Overall average of total marks
 
-        // Retrieve dynamic information from input fields
-        const schoolName = document.getElementById("schoolName").value || "School Name";
+        const schoolName = "QUEEN  OF  ROSARY JUNIOR SCHOOL";
         const gradeLevel = document.getElementById("gradeLevel").value || "Grade";
         const year = document.getElementById("year").value || "Year";
         const term = document.getElementById("term").value || "Term";
 
-        // URL or base64 string of your logo
-        const logoUrl = " https://i.imgur.com/UW65hfv.png"; // Replace with your logo's URL or base64 string
-
-        // Retrieve the content for Marks Table 
-        const reportDiv = document.getElementById("report");
-        const rankingsHtml = reportDiv.innerHTML;
+        const logoUrl = "https://i.imgur.com/UW65hfv.png";
 
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
@@ -4535,13 +4889,8 @@ function printAssessmentReport() {
                 <head>
                     <title>Marks Table</title>
                     <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                        }
-                        .report-table {
-                            width: 100%;
-                            border-collapse: collapse;
-                        }
+                        body { font-family: Arial, sans-serif; text-align: center; }
+                        .report-table { width: 100%; border-collapse: collapse; }
                         .report-table th, .report-table td {
                             border: 3px solid black;
                             padding: 10px;
@@ -4561,18 +4910,33 @@ function printAssessmentReport() {
                         }
                         .logo {
                             display: block;
-                            margin: 0 auto;
-                            width: 100px; /* Adjust logo size */
+                            position: absolute;
+                            top: 10px;
+                            left: 10px;
+                            width: 100px;
                             height: auto;
+                        }
+                        .header-container {
+                            text-align: center;
+                            margin-top: 20px;
+                        }
+                        .header-text {
+                            font-size: 22px;
+                            font-weight: bold;
+                            margin: 5px 0;
                         }
                     </style>
                 </head>
                 <body>
                     <img src="${logoUrl}" class="logo" alt="School Logo">
-                    <p>School: ${schoolName}</p>
-                    <p>Grade: ${gradeLevel}</p>
-                    <p>Year: ${year}</p>
-                    <p>Term: ${term}</p>
+                    <div class="header-container">
+                        <p class="header-text">QUEEN  OF  ROSARY JUNIOR SCHOOL MERIT LIST</p>
+                        <p class="header-text">Po Box 886-01000 THIKA KENYA</p>
+                        <p class="header-text">Phone: +254-700-123456</p>
+                        <p class="header-text">School Motto: "HARD WORK PAYS"</p>
+                        <p class="header-text">Year: ${year}</p>
+                        <p class="header-text">Grade: ${gradeLevel}</p>
+                    </div>
                     <table class="report-table">
                         <thead>
                             <tr>
@@ -4589,6 +4953,7 @@ function printAssessmentReport() {
                                 <th>Cre</th><th>Lev</th>
                                 <th>C/Art</th><th>Lev</th>
                                 <th>Total Marks</th>
+                                <th>Performance Level</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -4599,31 +4964,33 @@ function printAssessmentReport() {
                                     <td>${mark.grade}</td>
                                     ${mark.scores.map(score => `<td>${score}</td><td>${getLevel(score)}</td>`).join('')}
                                     <td style="font-weight:bold; border: 3px solid black;">${mark.totalMarks}</td>
+                                    <td style="font-weight:bold;">${getPerformanceLevel(mark.totalMarks)}</td>
                                 </tr>
                             `).join('')}
                             <tr>
                                 <td colspan="3" style="font-weight:bold;">Total</td>
                                 ${subjectTotals.map(total => `<td style="font-weight:bold;">${total}</td><td></td>`).join('')}
                                 <td style="font-weight:bold;">${totalMarksSum}</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td colspan="3" style="font-weight:bold;">Average</td>
                                 ${averages.map(avg => `<td style="font-weight:bold;">${avg}</td><td></td>`).join('')}
                                 <td style="font-weight:bold;">${overallAverage}</td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
-                    <!-- Append the stamp after printing the table -->
-                    <div class="stamp">QUEEN OF ROSARY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 Thika</div>
+                    <div class="stamp">QUEEN  OF  ROSARY JUNIOR  SCHOOL<br>Po Box 886-01000 THIKA</div>
                 </body>
             </html>
         `);
         printWindow.document.close();
         printWindow.print();
 
-        hideLoadingSpinner(); // Hide spinner after printing is complete
-    }, 2000); // Simulated delay to show spinner
-}                  
+        hideLoadingSpinner();
+    }, 2000);
+}
 
 function printGroupedTable(grade) {
     const schoolName = document.getElementById("schoolName").value || "School Name";
@@ -4688,14 +5055,14 @@ function showSubjectChampions() {
     }
 
     let championsHtml = `<h3 style="color: #4CAF50; text-align: center;">Subject Champions</h3>`;
-    championsHtml += `<table class="learners-table">
+    championsHtml += `<table class="learners-table" style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
                         <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Subject</th>
-                                <th>Champion</th>
-                                <th>Score</th>
-                                <th>Performance Level</th>
+                            <tr style="background-color: #f2f2f2;">
+                                <th style="padding: 10px;">No.</th>
+                                <th style="padding: 10px;">Subject</th>
+                                <th style="padding: 10px;">Champion</th>
+                                <th style="padding: 10px;">Score</th>
+                                <th style="padding: 10px;">Performance Level</th>
                             </tr>
                         </thead>
                         <tbody>`;
@@ -4704,13 +5071,13 @@ function showSubjectChampions() {
     for (const subject in champions) {
         let champion = champions[subject];
         let level = getPerformanceLevel(champion.score);
-        
+
         championsHtml += `<tr>
-                            <td>${number++}</td>
-                            <td>${subject}</td>
-                            <td>${champion.name}</td>
-                            <td>${champion.score}</td>
-                            <td>${level}</td>
+                            <td style="padding: 10px;">${number++}</td>
+                            <td style="padding: 10px;">${subject}</td>
+                            <td style="padding: 10px;">${champion.name}</td>
+                            <td style="padding: 10px;">${champion.score}</td>
+                            <td style="padding: 10px;">${level}</td>
                           </tr>`;
     }
 
@@ -4719,9 +5086,13 @@ function showSubjectChampions() {
     const reportDiv = document.getElementById("report");
     reportDiv.innerHTML = championsHtml;
 
-    // Start fireworks effect for champions
-    startFireworks();
+    // Trigger celebration with champions' names
+    const championNames = Object.values(champions)
+        .map(champion => champion.name)
+        .join(", ");
+    showCelebration(`Congratulations to our Champions: ${championNames}!`, 7000);
 }
+
 
   function showSubjectRanking() {
     const rankings = marks.reduce((acc, mark) => {
@@ -4841,7 +5212,7 @@ function showSubjectChampions() {
                     <p>Term: ${term}</p>
                 </div>
                 ${championsHtml}
-                <div class="stamp">QUEEN OF ROSARY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 Thika</div>
+                <div class="stamp">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL<br>Po Box 886-01000 Thika</div>
             </body>
         </html>
     `);
@@ -4907,7 +5278,7 @@ function printSubjectRanking() {
                     <p>Term: ${term}</p>
                 </div>
                 ${rankingsHtml}
-                <div class="stamp">QUEEN OF ROSARY COMPREHENSIVE SCHOOL<br>P.O BOX 886-01000 Thika</div>
+                <div class="stamp">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL<br>Po Box 886-01000 Thika</div>
             </body>
         </html>
     `);
@@ -5472,7 +5843,7 @@ function showFeedbackMessage(message, type = "success") {
         const idCardHtml = `
             <div class="id-card">
                 <div class="header">
-                    <h1> QUEEN OF ROSARY Junior School</h1>
+                    <h1> QUEEN  Of  Rosary Junior School </h1>
                     <p class="school-tagline">"Excellence and Integrity"</p>
                 </div>
                 <div class="id-card-content">
@@ -5540,7 +5911,7 @@ function showFeedbackMessage(message, type = "success") {
                 <body>
                     <div class="id-card">
                         <div class="header">
-                            <h1>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h1>
+                            <h1>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL</h1>
                             <p class="school-tagline">"Excellence and Integrity"</p>
                         </div>
                         <div class="id-card-content">
@@ -6037,7 +6408,7 @@ function displayMessage() {
                     </style>
                 </head>
                 <body>
-                    <h1>Support Staff List -QUEEN OF ROSARY Junior School </h1>
+                    <h1>Support Staff List -QUEEN  Of  Rosary Junior School  </h1>
                     <table>
                         <thead>
                             <tr>
@@ -6201,7 +6572,6 @@ document.addEventListener("DOMContentLoaded", function() {
     initializeStorage(); // Ensure storage is initialized
     loadMarks(); // Load marks from storage
 });
-
 function generateGenderPerformance() {
     const marksTableBody = document.getElementById("marksList");
     const learnersTableBody = document.getElementById("learnersList");
@@ -6220,7 +6590,7 @@ function generateGenderPerformance() {
         };
     });
 
-    // Extract marks data exactly as recorded
+    // Extract marks data
     const marks = Array.from(marksTableBody.querySelectorAll("tr")).map(row => {
         const cells = row.querySelectorAll("td");
         return {
@@ -6244,7 +6614,7 @@ function generateGenderPerformance() {
             religionLevel: cells[18]?.textContent.trim() || "-",
             art: parseInt(cells[19]?.textContent.trim()) || 0,
             artLevel: cells[20]?.textContent.trim() || "-",
-            totalMarks: parseInt(cells[cells.length - 2]?.textContent.trim()) || 0
+            totalMarks: parseInt(cells[cells.length - 2]?.textContent.trim()) || 0,
         };
     });
 
@@ -6266,6 +6636,15 @@ function generateGenderPerformance() {
     // Sort learners within each gender by total marks (Descending order)
     genderPerformance.Male.sort((a, b) => b.totalMarks - a.totalMarks);
     genderPerformance.Female.sort((a, b) => b.totalMarks - a.totalMarks);
+
+    // Determine performance level based on total marks
+    function getPerformanceLevel(totalMarks) {
+        if (totalMarks >= 1 && totalMarks <= 200) return "BE";
+        if (totalMarks >= 201 && totalMarks <= 400) return "AE";
+        if (totalMarks >= 401 && totalMarks <= 600) return "ME";
+        if (totalMarks >= 601 && totalMarks <= 800) return "EE";
+        return "";
+    }
 
     // Function to calculate correct totals and averages
     function calculateSubjectStats(data) {
@@ -6304,34 +6683,46 @@ function generateGenderPerformance() {
         return { totals, averages };
     }
 
-    // Function to generate performance tables
+    // Function to generate performance tables with numbering, print buttons, and performance level
     function createPerformanceTable(data, gender) {
         if (data.length === 0) return `<h3>No ${gender} learners with recorded marks.</h3>`;
 
         let { totals, averages } = calculateSubjectStats(data);
 
+        let tableId = `${gender.toLowerCase()}PerformanceTable`;
+
         let tableHtml = `
             <h2 style="color: ${gender === "Male" ? "blue" : "purple"}; text-align: center;">
                 ${gender} Performance Report
             </h2>
-            <table border="1" style="width:100%; border-collapse: collapse;">
+            <table id="${tableId}" border="1" style="width:100%; border-collapse: collapse; margin-bottom: 10px;">
                 <thead>
                     <tr style="background: #4CAF50; color: white;">
-                        <th>Name</th><th>Grade</th>
-                        <th>English</th><th>Level</th><th>Math</th><th>Level</th>
-                        <th>Pre-Tech</th><th>Level</th><th>Kiswahili</th><th>Level</th>
-                        <th>Science</th><th>Level</th><th>Social</th><th>Level</th>
-                        <th>Agriculture</th><th>Level</th><th>Religion</th><th>Level</th>
-                        <th>Creative Art</th><th>Level</th><th>Total Marks</th>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Grade</th>
+                        <th>Eng</th><th>Lev</th>
+                        <th>Math</th><th>Lev</th>
+                        <th>Pre-Tech</th><th>Lev</th>
+                        <th>Kisw</th><th>Lev</th>
+                        <th>Scie</th><th>Lev</th>
+                        <th>Sst</th><th>Lev</th>
+                        <th>Agric</th><th>Lev</th>
+                        <th>Cre</th><th>Lev</th>
+                        <th>C/A</th><th>Lev</th>
+                        <th>Total Marks</th>
+                        <th>Perf Lev</th>
                     </tr>
                 </thead>
-                <tbody>
-        `;
+                <tbody>`;
 
-        data.forEach(entry => {
+        // Add learners' data with numbering and performance level
+        data.forEach((entry, index) => {
             tableHtml += `
                 <tr>
-                    <td>${entry.learner}</td><td>${entry.grade}</td>
+                    <td>${index + 1}</td>
+                    <td>${entry.learner}</td>
+                    <td>${entry.grade}</td>
                     <td>${entry.english}</td><td>${entry.englishLevel}</td>
                     <td>${entry.math}</td><td>${entry.mathLevel}</td>
                     <td>${entry.preTech}</td><td>${entry.preTechLevel}</td>
@@ -6342,49 +6733,127 @@ function generateGenderPerformance() {
                     <td>${entry.religion}</td><td>${entry.religionLevel}</td>
                     <td>${entry.art}</td><td>${entry.artLevel}</td>
                     <td><strong>${entry.totalMarks}</strong></td>
-                </tr>
-            `;
+                    <td><strong>${getPerformanceLevel(entry.totalMarks)}</strong></td>
+                </tr>`;
         });
 
-       // Add totals row
-tableHtml += `
-    <tr style="background: yellow; font-weight: bold;">
-        <td colspan="2">Totals</td>
-        <td>${totals.english}</td><td>-</td>
-        <td>${totals.math}</td><td>-</td>
-        <td>${totals.preTech}</td><td>-</td>
-        <td>${totals.kiswahili}</td><td>-</td>
-        <td>${totals.science}</td><td>-</td>
-        <td>${totals.social}</td><td>-</td>
-        <td>${totals.agriculture}</td><td>-</td>
-        <td>${totals.religion}</td><td>-</td>
-        <td>${totals.art}</td><td>-</td>
-        <td><strong>${totals.totalMarks}</strong></td>
-    </tr>
-`;
+        // Add totals and averages rows
+        tableHtml += `
+            <tr style="background: yellow; font-weight: bold;">
+                <td colspan="3">Totals</td>
+                <td>${totals.english}</td><td>-</td>
+                <td>${totals.math}</td><td>-</td>
+                <td>${totals.preTech}</td><td>-</td>
+                <td>${totals.kiswahili}</td><td>-</td>
+                <td>${totals.science}</td><td>-</td>
+                <td>${totals.social}</td><td>-</td>
+                <td>${totals.agriculture}</td><td>-</td>
+                <td>${totals.religion}</td><td>-</td>
+                <td>${totals.art}</td><td>-</td>
+                <td><strong>${totals.totalMarks}</strong></td>
+                <td>-</td>
+            </tr>
+            <tr style="background: lightblue; font-weight: bold;">
+                <td colspan="3">Averages</td>
+                <td>${averages.english}</td><td>-</td>
+                <td>${averages.math}</td><td>-</td>
+                <td>${averages.preTech}</td><td>-</td>
+                <td>${averages.kiswahili}</td><td>-</td>
+                <td>${averages.science}</td><td>-</td>
+                <td>${averages.social}</td><td>-</td>
+                <td>${averages.agriculture}</td><td>-</td>
+                <td>${averages.religion}</td><td>-</td>
+                <td>${averages.art}</td><td>-</td>
+                <td><strong>${averages.totalMarks}</strong></td>
+                <td>-</td>
+            </tr>
+        </tbody>
+        </table>
+        <button onclick="printTable('${tableId}')" style="margin: 10px; padding: 10px; background-color: #FF9800; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Print ${gender} Performance
+        </button>`;
 
-// Add averages row
-tableHtml += `
-    <tr style="background: lightblue; font-weight: bold;">
-        <td colspan="2">Averages</td>
-        <td>${averages.english}</td><td>-</td>
-        <td>${averages.math}</td><td>-</td>
-        <td>${averages.preTech}</td><td>-</td>
-        <td>${averages.kiswahili}</td><td>-</td>
-        <td>${averages.science}</td><td>-</td>
-        <td>${averages.social}</td><td>-</td>
-        <td>${averages.agriculture}</td><td>-</td>
-        <td>${averages.religion}</td><td>-</td>
-        <td>${averages.art}</td><td>-</td>
-        <td><strong>${averages.totalMarks}</strong></td>
-    </tr>
-`;
-
-tableHtml += `</tbody></table><br><br>`;
-return tableHtml;
-
+        return tableHtml;
     }
 
+    // Updated printTable function with headers
+    window.printTable = function (tableId) {
+        const table = document.getElementById(tableId);
+        if (!table) {
+            alert("Table not found for printing.");
+            return;
+        }
+
+        const currentYear = new Date().getFullYear(); // Dynamically fetch the year
+        const grade = table.querySelector("tbody tr td:nth-child(3)")?.textContent.trim() || "N/A"; // Fetch the grade dynamically
+
+        const printWindow = window.open("", "_blank");
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Print Performance Report</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                            text-align: center;
+                        }
+                        .header {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        .header img {
+                            width: 80px;
+                            margin-bottom: 10px;
+                        }
+                        .header h1 {
+                            font-size: 22px;
+                            font-weight: bold;
+                            color: black;
+                            margin: 5px 0;
+                        }
+                        .header p {
+                            font-size: 16px;
+                            margin: 3px 0;
+                            font-weight: bold;
+                            color: black;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                        }
+                        th, td {
+                            border: 1px solid black;
+                            padding: 8px;
+                            text-align: center;
+                        }
+                        th {
+                            background: #4CAF50;
+                            color: white;
+                            font-weight: bold;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
+                        <h1>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL GENDER PERFORMANCE REPORT</h1>
+                        <p>Po Box 886-01000 THIKA, KENYA</p>
+                        <p>Phone: +254-700-123456</p>
+                        <p>School Motto: "HARD WORK PAYS"</p>
+                        <p>Year: ${currentYear}</p>
+                        <p>Grade: ${grade}</p>
+                    </div>
+                    ${table.outerHTML}
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+    // Display the reports
     document.getElementById("report").innerHTML = `
         ${createPerformanceTable(genderPerformance.Male, "Male")}
         ${createPerformanceTable(genderPerformance.Female, "Female")}
@@ -6451,7 +6920,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     const password = document.getElementById("password").value;
 
     // Validate credentials (replace with your logic)
-    const validUsername = "Nachu254";
+    const validUsername = "QUEEN  Of  Rosary254";
     const validPassword = "Nm643PpQ@";
 
     if (username === validUsername && password === validPassword) {
@@ -7550,7 +8019,7 @@ function printSubjectLevels() {
     let printContents = `
         <html>
         <head>
-            <title>Nachu Junior School Subject Level Summary Report</title>
+            <title>QUEEN  Of  Rosary Junior School Subject Level Summary Report</title>
             <style>
                 body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
                 h2, p { margin: 5px 0; }
@@ -7563,8 +8032,8 @@ function printSubjectLevels() {
         <body>
             <div>
                 <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" class="school-logo">
-                <h2>QUEEN OF ROSARY Junior School Subject Level Summary Report</h2>
-                <p><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+                <h2>QUEEN  Of  Rosary Junior School  Subject Level Summary Report</h2>
+                <p><strong>Po Box 886-01000 Thika KENYA</strong></p>
                 <p><strong>Phone: +254-700-123456</strong></p>
                 <p><em>School Motto: "Excellence Through Knowledge"</em></p>
                 <p><strong>Year: 2025</strong></p>
@@ -7752,8 +8221,8 @@ function printPathwayReport() {
     const reportContent = `
         <div style="text-align: center; font-family: Arial, sans-serif;">
             <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="max-width: 100px; display: block; margin: 0 auto;">
-            <h2 style="margin: 5px 0;">QUEEN OF ROSARY COMPREHENSIVE SCHOOL Pathway Report</h2>
-            <p>P.O BOX 886-01000 Thika KENYA </p>
+            <h2 style="margin: 5px 0;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL Pathway Report</h2>
+            <p>Po Box 886-01000 Thika KENYA </p>
             <p>Phone: +254-700-123456</p>
             <p style="font-style: italic; font-weight: bold;">School Motto: "Excellence Through Knowledge"</p>
             <p><strong>Year: 2025</strong></p>
@@ -7861,14 +8330,36 @@ function showCustomConfirm(message, onConfirm) {
 function generateMeritList() {
     let selectedGrade = document.getElementById("gradeSelect").value;
 
+    // Helper function to show a styled alert
+    function showAlert(message, color) {
+        const alertDiv = document.createElement("div");
+        alertDiv.textContent = message;
+        alertDiv.style.position = "fixed";
+        alertDiv.style.top = "20px";
+        alertDiv.style.left = "50%";
+        alertDiv.style.transform = "translateX(-50%)";
+        alertDiv.style.padding = "10px 20px";
+        alertDiv.style.backgroundColor = color;
+        alertDiv.style.color = "white";
+        alertDiv.style.borderRadius = "5px";
+        alertDiv.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+        alertDiv.style.fontFamily = "Arial, sans-serif";
+        alertDiv.style.zIndex = "1000";
+        document.body.appendChild(alertDiv);
+
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 3000);
+    }
+
     if (!selectedGrade) {
-        alert("Please select a grade.");
+        showAlert("Please select a grade.", "#FF9800"); // Orange for warning
         return;
     }
 
     let learnersTable = document.getElementById("learnersList");
     if (!learnersTable) {
-        alert("Registered learners table not found.");
+        showAlert("Registered learners table not found.", "#F44336"); // Red for error
         return;
     }
 
@@ -7880,7 +8371,7 @@ function generateMeritList() {
         if (cells.length > 0) {
             let grade = cells[4].innerText.trim();
             let name = cells[2].innerText.trim();
-            
+
             if (grade === selectedGrade) {
                 learners.push(name);
             }
@@ -7888,7 +8379,7 @@ function generateMeritList() {
     }
 
     if (learners.length === 0) {
-        alert("No learners found in the selected grade.");
+        showAlert("No learners found in the selected grade.", "#FF9800"); // Orange for warning
         return;
     }
 
@@ -7897,8 +8388,8 @@ function generateMeritList() {
             <div style="display: flex; align-items: center; justify-content: center;">
                 <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo" style="width: 80px; margin-right: 10px;">
             </div>
-            <h2 style="margin: 5px 0; font-size: 20px; font-weight: bold;"> QUEEN OF ROSARY COMPREHENSIVE SCHOOL MERIT  LIST</h2>
-            <p style="margin: 2px 0; font-size: 14px;"><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+            <h2 style="margin: 5px 0; font-size: 20px; font-weight: bold;">QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL MERIT LIST</h2>
+            <p style="margin: 2px 0; font-size: 14px;"><strong>Po Box 886-01000 Thika KENYA</strong></p>
             <p style="margin: 2px 0; font-size: 14px;"><strong>Phone: +254-700-123456</strong></p>
             <p style="margin: 2px 0; font-size: 14px;"><strong>School Motto: "Excellence Through Knowledge"</strong></p>
             <p style="margin: 5px 0; font-size: 16px;"><strong>Year: 2025</strong></p>
@@ -7922,8 +8413,7 @@ function generateMeritList() {
                         <th>Total Marks</th>
                     </tr>
                 </thead>
-                <tbody>
-    `;
+                <tbody>`;
 
     learners.forEach((learner, index) => {
         meritListHTML += `
@@ -7938,53 +8428,23 @@ function generateMeritList() {
                 <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
                 <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
                 <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-       <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
                 <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-                
-<td style="border: 2px solid black;"></td>
-            </tr>
-        `;
+                <td style="border: 2px solid black;"></td>
+            </tr>`;
     });
 
     meritListHTML += `
-        <tr style="font-weight: bold;">
-            <td colspan="3" style="border: 2px solid black;">Totals</td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-       <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-              <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-        <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-       
-     <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            
-<td style="border: 2px solid black;"></td>
-        </tr>
-        <tr style="font-weight: bold;">
-            <td colspan="3" style="border: 2px solid black;">Averages</td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-       <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-            <td style="border: 2px solid black;"></td><td style="border: 2px solid black;"></td>
-               
-<td style="border: 2px solid black;"></td>
-        </tr>
         </tbody>
         </table>
         </div>
-        <button onclick="printMeritList()" id="printBtn" style="display:block; margin-top:10px;">Print</button>
-    `;
+        <button onclick="printMeritList()" id="printBtn" style="display:block; margin-top:10px;">Print</button>`;
 
     document.getElementById("meritListContainer").innerHTML = meritListHTML;
     document.getElementById("meritListContainer").style.display = "block";
+
+    showAlert("Merit list generated successfully!", "#4CAF50"); // Green for success
 }
+
 
 function printMeritList() {
     let printContent = document.getElementById("meritList").innerHTML;
@@ -8308,8 +8768,8 @@ function toggleMeritList() {
       newWindow.document.write("th, td { border: 2px solid black; padding: 10px; text-align: center; }");
       newWindow.document.write("h2, h3, p { text-align: center; margin: 5px 0; }");
       newWindow.document.write("</style></head><body>");
-      newWindow.document.write("<h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>");
-      newWindow.document.write("<p>P.O BOX 886-01000 Thika Kenya</p>");
+      newWindow.document.write("<h2>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL</h2>");
+      newWindow.document.write("<p>Po Box 886-01000 Thika Kenya</p>");
       newWindow.document.write("<p>Phone: +254-700-123456</p>");
       newWindow.document.write("<p><strong>School Motto:</strong> Excellence Through Knowledge</p>");
       newWindow.document.write("<h3>Year: 2025</h3>");
@@ -8646,9 +9106,9 @@ function printArchivedFees(year) {
     <body>
       <div class="header-container">
         <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
-        <h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
+        <h2>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL</h2>
         <h3>Archived Fee Records for ${year}</h3>
-        <p><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+        <p><strong>Po Box 886-01000 Thika KENYA</strong></p>
         <p><strong>Phone: +254-700-123456</strong></p>
         <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
         <p><strong>Year:</strong> ${year}</p>
@@ -8914,9 +9374,9 @@ function printCategoryCollectionSummary() {
     <body>
       <div class="header-container">
         <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
-        <h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL</h2>
+        <h2>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL</h2>
         <h3>Category Collection Summary</h3>
-        <p><strong>P.O BOX 886-01000 Thika KENYA</strong></p>
+        <p><strong>Po Box 886-01000 Thika KENYA</strong></p>
         <p><strong>Phone: +254-700-123456</strong></p>
         <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
         <p><strong>Year:</strong> ${currentYear}</p>
@@ -9114,7 +9574,7 @@ function printDefaultersList() {
         <body>
             <div class="header-container">
                 <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
-                <h2>QUEEN OF ROSARY COMPREHENSIVE SCHOOL </h2>
+                <h2>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL </h2>
                 <h3>Defaulters List</h3>
                 <p><strong>Po Box 886-01000 Thika, KENYA</strong></p>
                 <p><strong>Phone: +254-700-123456</strong></p>
@@ -9426,8 +9886,8 @@ function printReport() {
     document.body.innerHTML = `
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="school_logo_url_here" alt="School Logo" style="width: 100px; height: auto;"><br>
-            <h2>QUEEN OF ROSARY Junior School Compiled Pathway Report</h2>
-            <p>P.O BOX 886-01000 Thika KENYA</p>
+            <h2>QUEEN  Of  Rosary Junior School  Compiled Pathway Report</h2>
+            <p>Po Box 886-01000 Thika KENYA</p>
             <p>Phone: +254-700-123456</p>
             <p><strong>School Motto:</strong> "Excellence Through Knowledge"</p>
             <p><strong>Year:</strong> 2025</p>
@@ -9470,8 +9930,778 @@ function searchDefaulter() {
         }
     }
 }
-</script>         
+const fields = [
+    { id: "learnerName", prompt: "Name", delay: 1500 },
+    { id: "learnerGender", prompt: "Gender", delay: 1500 },
+    { id: "learnerGrade", prompt: "Grade", delay: 1500 },
+    { id: "learnerAge", prompt: "Age", delay: 1500 },
+    { id: "parentName", prompt: "Parent Name", delay: 2000 },
+    { id: "learnerPhone", prompt: "Parent Phone Number", delay: 3000 },
+    { id: "birthCertificate", prompt: "Birth Certificate Number", delay: 3500, isNumber: true }, // Added Fix
+    { id: "admissionNumber", prompt: "Admission Number", delay: 3000, isNumber: true } // Ensured number input
+];
+
+let currentFieldIndex = 0;
+let recognition;
+
+// Function to start voice input for each field one by one
+function startVoiceInput() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Your browser does not support speech recognition. Please use Chrome.");
+        return;
+    }
+
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = "en-US";
+
+    recognition.onresult = function(event) {
+        let transcript = event.results[0][0].transcript.trim();
+        console.log("Captured Speech:", transcript);
+
+        // Handle number inputs (convert to proper format)
+        if (fields[currentFieldIndex].isNumber) {
+            transcript = transcript.replace(/\D/g, ""); // Remove non-numeric characters
+            transcript = parseInt(transcript, 10) || ""; // Convert to number safely
+        }
+
+        // Fill the current field
+        document.getElementById(fields[currentFieldIndex].id).value = transcript;
+
+        // Move to the next field
+        currentFieldIndex++;
+
+        // If more fields remain, prompt the user for the next one with appropriate delay
+        if (currentFieldIndex < fields.length) {
+            showVoicePrompt(fields[currentFieldIndex].prompt);
+            setTimeout(() => recognition.start(), fields[currentFieldIndex].delay);
+        } else {
+            hideVoicePrompt();
+            alert("All details recorded successfully!");
+        }
+    };
+
+    recognition.onerror = function(event) {
+        console.error("Speech recognition error:", event.error);
+    };
+
+    recognition.onend = function() {
+        console.log("Speech recognition ended.");
+    };
+
+    // Start with the first prompt
+    currentFieldIndex = 0;
+    showVoicePrompt(fields[currentFieldIndex].prompt);
+    setTimeout(() => recognition.start(), fields[currentFieldIndex].delay);
+}
+
+// Function to show custom voice input prompt
+function showVoicePrompt(text) {
+    const promptBox = document.getElementById("voicePrompt");
+    document.getElementById("promptText").innerText = `Say: ${text}`;
+    promptBox.style.display = "block";
+}
+
+// Function to hide custom prompt
+function hideVoicePrompt() {
+    document.getElementById("voicePrompt").style.display = "none";
+}
+
+// Function to preview uploaded photo
+function previewPhoto(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("photoPreview").src = e.target.result;
+            document.getElementById("photoPreview").style.display = "block";
+        };
+        reader.readAsDataURL(file);
+    }
+}   
+function filterDefaulters() {
+  const selectedGrade = document.getElementById("defaultersGradeFilter").value;
+  const table = document.getElementById("defaultersTableBody");
+  const rows = table.getElementsByTagName("tr");
+
+  for (let i = 0; i < rows.length; i++) {
+    const gradeCell = rows[i].getElementsByTagName("td")[2]; // Grade column
+    if (gradeCell) {
+      const grade = gradeCell.textContent || gradeCell.innerText;
+      rows[i].style.display = (selectedGrade === "" || grade === selectedGrade) ? "" : "none";
+    }
+  }
+}
+function toggleLearnersCount() {
+    const container = document.getElementById('learnerCountContainer');
+    const toggleButton = document.getElementById('toggleLearnersCountButton');
+    if (container.style.display === 'none' || container.style.display === '') {
+        generateLearnersCount(); // Generate counts when showing the container
+        container.style.display = 'block';
+        toggleButton.textContent = 'Hide Learners Count';
+    } else {
+        container.style.display = 'none';
+        toggleButton.textContent = 'Show Learners Count';
+    }
+}
+
+function generateLearnersCount() {
+    // Get the table body where learners' data is stored
+    const learnersTable = document.getElementById('learnersList');
+    if (!learnersTable) {
+        console.error('Learners table not found!');
+        return;
+    }
+
+    const rows = learnersTable.querySelectorAll('tr');
+    const gradeCounts = {};
+
+    // Loop through rows to process each learner's data
+    rows.forEach(row => {
+        const gradeCell = row.querySelector('td:nth-child(5)'); // Assuming 5th column is grade
+        const genderCell = row.querySelector('td:nth-child(4)'); // Assuming 4th column is gender
+
+        if (!gradeCell || !genderCell) return;
+
+        const grade = gradeCell.textContent.trim();
+        const gender = genderCell.textContent.trim().toLowerCase();
+
+        // Initialize grade object if not exists
+        if (!gradeCounts[grade]) {
+            gradeCounts[grade] = { boys: 0, girls: 0, total: 0 };
+        }
+
+        // Increment based on gender
+        if (gender === 'male' || gender === 'boy') {
+            gradeCounts[grade].boys += 1;
+        } else if (gender === 'female' || gender === 'girl') {
+            gradeCounts[grade].girls += 1;
+        }
+
+        // Update total
+        gradeCounts[grade].total = gradeCounts[grade].boys + gradeCounts[grade].girls;
+    });
+
+    // Display counts dynamically in the HTML table
+    const resultTable = document.getElementById('learnerCountTableBody');
+    resultTable.innerHTML = ''; // Clear previous content
+    let count = 1;
+    Object.keys(gradeCounts).forEach(grade => {
+        const { boys, girls, total } = gradeCounts[grade];
+        resultTable.innerHTML += `
+            <tr>
+                <td style="font-size: 50px;">${count}</td>
+                <td style="font-size: 50px;">${grade}</td>
+                <td style="font-size: 50px;">${boys}</td>
+                <td style="font-size: 50px;">${girls}</td>
+                <td style="font-size: 50px;">${total}</td>
+            </tr>
+        `;
+        count++;
+    });
+}
+
+function printLearnersCount() {
+    const container = document.getElementById('learnerCountContainer');
+    if (container) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Learners Count</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            text-align: center;
+                            margin: 20px;
+                        }
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 20px;
+                        }
+                        th, td {
+                            border: 1px solid black;
+                            padding: 10px;
+                            text-align: center;
+                        }
+                        th {
+                            background-color: #f2f2f2;
+                        }
+                        td {
+                            font-size: 20px;
+                        }
+                        .header {
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        .header img {
+                            max-width: 80px;
+                            margin-bottom: 10px;
+                        }
+                        .header h1 {
+                            font-size: 20px;
+                            margin: 0;
+                        }
+                        .header p {
+                            margin: 5px 0;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo">
+                        <h1>QUEEN  OF  ROSARY COMPREHENSIVE SCHOOL LEARNERS COUNT PER GRADE </h1>
+                        <p>ADDRESS: Po Box 886-01000 THIKA, KENYA</p>
+                        <p>Phone: +254-700-123456</p>
+                        <p>School Motto: "HARD WORK PAYS"</p>
+                        <p>Year: 2025</p>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Grade</th>
+                                <th>Boys</th>
+                                <th>Girls</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${document.getElementById('learnerCountTableBody').innerHTML}
+                        </tbody>
+                    </table>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    } else {
+        console.error('Learner count container not found!');
+    }
+}
+function showCelebration(message = "Congratulations!", duration = 5000) {
+    // Create celebration container
+    const celebrationContainer = document.createElement("div");
+    celebrationContainer.style.position = "fixed";
+    celebrationContainer.style.top = "0";
+    celebrationContainer.style.left = "0";
+    celebrationContainer.style.width = "100%";
+    celebrationContainer.style.height = "100%";
+    celebrationContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    celebrationContainer.style.zIndex = "1000";
+    celebrationContainer.style.display = "flex";
+    celebrationContainer.style.justifyContent = "center";
+    celebrationContainer.style.alignItems = "center";
+    celebrationContainer.style.flexDirection = "column";
+    celebrationContainer.style.color = "white";
+    celebrationContainer.style.fontSize = "24px";
+    celebrationContainer.style.fontFamily = "Arial, sans-serif";
+    celebrationContainer.style.textAlign = "center";
+
+    // Add message
+    const celebrationMessage = document.createElement("h1");
+    celebrationMessage.textContent = message;
+    celebrationContainer.appendChild(celebrationMessage);
+
+    // Add confetti effect
+    const confettiCanvas = document.createElement("canvas");
+    confettiCanvas.style.position = "absolute";
+    confettiCanvas.style.top = "0";
+    confettiCanvas.style.left = "0";
+    confettiCanvas.style.width = "100%";
+    confettiCanvas.style.height = "100%";
+    confettiCanvas.id = "confettiCanvas";
+    celebrationContainer.appendChild(confettiCanvas);
+
+    document.body.appendChild(celebrationContainer);
+
+    // Play confetti animation
+    const confettiSettings = { target: "confettiCanvas", max: 150, size: 1.5, clock: 25 };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
+
+    // Optional celebration sound
+    const celebrationSound = new Audio("https://www.soundjay.com/button/sounds/button-20.mp3");
+    celebrationSound.play();
+
+    // Remove celebration after duration
+    setTimeout(() => {
+        celebrationContainer.remove();
+        confetti.clear(); // Stop the confetti animation
+    }, duration);
+}
+let libraryRecords = JSON.parse(localStorage.getItem("libraryRecords")) || [];
+let bookNumbers = [];
+
+function saveRecords() {
+  localStorage.setItem("libraryRecords", JSON.stringify(libraryRecords));
+}
+
+function fetchBookNumbers() {
+  const bookNoInput = document.getElementById("bookNo").value.trim();
+  bookNumbers = bookNoInput.split(",").map((num) => num.trim());
+}
+
+function populateTable(records = libraryRecords) {
+  const tableBody = document.querySelector("#library-records table tbody");
+  tableBody.innerHTML = "";
+
+  if (records.length === 0) {
+    tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center;">No records found.</td></tr>`;
+    return;
+  }
+
+  records.forEach((record, index) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td contenteditable="true" onblur="updateRecord(${index}, 'name', this.textContent.trim())">${record.name}</td>
+      <td contenteditable="true" onblur="updateRecord(${index}, 'grade', this.textContent.trim())">${record.grade}</td>
+      <td contenteditable="true" onblur="updateRecord(${index}, 'bookNumbers', this.textContent.trim().split(','))">${record.bookNumbers.join(", ")}</td>
+      <td contenteditable="true" onblur="updateRecord(${index}, 'date', this.textContent.trim())">${record.date}</td>
+      <td contenteditable="true" onblur="updateRecord(${index}, 'issuedBooks', this.textContent.trim().split(','))">${record.issuedBooks.join(", ")}</td>
+      <td contenteditable="true" onblur="updateRecord(${index}, 'lostBooks', this.textContent.trim().split(','))">${record.lostBooks.join(", ")}</td>
+      <td>${record.status}</td>
+      <td><button onclick="deleteRecord(${index})">Delete</button></td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+}
+
+function updateRecord(index, field, value) {
+  // Update the specific field of the record
+  libraryRecords[index][field] = Array.isArray(value) ? value.map((v) => v.trim()) : value;
+
+  // Update the status dynamically based on lostBooks
+  if (field === "lostBooks") {
+    libraryRecords[index].status = value.some((book) => book.trim() !== "") ? "Pending" : "Cleared";
+  }
+
+  // Save updated records and refresh the table
+  saveRecords();
+  populateTable();
+}
+
+function deleteRecord(index) {
+  if (confirm("Are you sure you want to delete this record?")) {
+    libraryRecords.splice(index, 1);
+    saveRecords();
+    populateTable();
+    updateGradeFilter();
+  }
+}
+
+function addRecord(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const grade = document.getElementById("grade").value;
+  const date = new Date().toISOString().split("T")[0];
+
+  fetchBookNumbers();
+
+  const issuedBooksCheckboxes = Array.from(document.querySelectorAll("#issuedBooks input:checked"));
+  const lostBooksCheckboxes = Array.from(document.querySelectorAll("#lostBooks input:checked"));
+
+  const issuedBooks = issuedBooksCheckboxes.map((checkbox, index) => {
+    return `${checkbox.value} (${bookNumbers[index] || "N/A"})`;
+  });
+
+  const lostBooks = lostBooksCheckboxes.map((checkbox) => checkbox.value);
+  const status = lostBooks.length > 0 ? "Pending Clearance" : "Active";
+
+  const newRecord = { name, grade, bookNumbers, date, issuedBooks, lostBooks, status };
+
+  libraryRecords.push(newRecord);
+  saveRecords();
+  populateTable();
+  updateGradeFilter();
+  document.getElementById("record-form").reset();
+}
+
+// Toggle form & table visibility
+function toggleLibraryManager() {
+  const formSection = document.getElementById("record-form");
+  const tableSection = document.getElementById("library-records");
+
+  if (formSection.style.display === "none") {
+    formSection.style.display = "block";
+    tableSection.style.display = "block";
+  } else {
+    formSection.style.display = "none";
+    tableSection.style.display = "none";
+  }
+}
+
+function updateGradeFilter() {
+  const gradeFilter = document.getElementById("grade-filter");
+  gradeFilter.innerHTML = '<option value="All">All Grades</option>';
+
+  const grades = [...new Set(libraryRecords.map((record) => record.grade))];
+  grades.forEach((grade) => {
+    const option = document.createElement("option");
+    option.value = grade;
+    option.textContent = `Grade ${grade}`;
+    gradeFilter.appendChild(option);
+  });
+}
+
+function searchTable() {
+  const searchTerm = document.getElementById("search-bar").value.toLowerCase();
+  const selectedGrade = document.getElementById("grade-filter").value;
+
+  const filteredRecords = libraryRecords.filter((record) => {
+    const matchesName = record.name.toLowerCase().includes(searchTerm);
+    const matchesGrade = selectedGrade === "All" || record.grade === selectedGrade;
+    return matchesName && matchesGrade;
+  });
+
+  populateTable(filteredRecords);
+}
+
+window.onload = function () {
+  populateTable();
+  updateGradeFilter();
+};
+
+
+function printFilteredTable() {
+  const table = document.querySelector("#library-records table");
+  const gradeFilter = document.getElementById("grade-filter").value;
+
+  const filteredRecords = libraryRecords.filter(
+    (record) => gradeFilter === "All" || record.grade === gradeFilter
+  );
+
+  if (filteredRecords.length === 0) {
+    alert("No records to print for the selected grade.");
+    return;
+  }
+
+  // Create a new window for printing
+  const printWindow = window.open("", "_blank");
+
+  // Prepare the content for the printable version
+  let printContent = `
+    <html>
+    <head>
+      <title>Filtered Table</title>
+      <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid #000;
+          padding: 8px;
+          text-align: left;
+        }
+        .header {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        .header img {
+          max-width: 100px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo"> <!-- Replace with your logo URL -->
+        <h1>RASM LIBRARY MANAGEMENT DATA SYSTEM</h1>
+        <h2>QUEEN  Of  Rosary Junior School</h2>
+        <p>P.O BOX Po Box 886-01000, THIKA, KENYA</p>
+        <p>Phone: +254-700-123456</p>
+        <p><em>School Motto: "Excellence Through Knowledge"</em></p>
+      </div>
+      <h3>Library Records for Grade: ${gradeFilter === "All" ? "All Grades" : gradeFilter}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>NO</th>
+            <th>Name</th>
+            <th>Grade</th>
+            <th>Book Numbers</th>
+            <th>Date</th>
+            <th>Issued Books</th>
+            <th>Lost Books</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  filteredRecords.forEach((record, index) => {
+    printContent += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${record.name}</td>
+        <td>${record.grade}</td>
+        <td>${record.bookNumbers.join(", ")}</td>
+        <td>${record.date}</td>
+        <td>${record.issuedBooks.join(", ")}</td>
+        <td>${record.lostBooks.join(", ")}</td>
+        <td>${record.status}</td>
+      </tr>
+    `;
+  });
+
+  printContent += `
+        </tbody>
+      </table>
+    </body>
+    </html>
+  `;
+
+  // Write the content to the new window
+  printWindow.document.open();
+  printWindow.document.write(printContent);
+  printWindow.document.close();
+
+  // Trigger the print dialog
+  printWindow.print();
+}
+
+function generateLibraryCards() {
+  const gradeFilter = document.getElementById("grade-filter").value;
+
+  // Filter records based on the selected grade
+  const filteredRecords = libraryRecords.filter(
+    (record) => gradeFilter === "All" || record.grade === gradeFilter
+  );
+
+  if (filteredRecords.length === 0) {
+    alert("No library cards to generate for the selected grade.");
+    return;
+  }
+
+  // Create a new window for printing
+  const printWindow = window.open("", "_blank");
+
+  // Prepare printable content
+  let printContent = `
+    <html>
+    <head>
+      <title>Library Cards</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        .card-container {
+          display: grid;
+          grid-template-columns: 1fr 1fr; /* Two cards per row */
+          gap: 20px;
+          padding: 20px;
+        }
+        .library-card {
+          border: 2px solid #000;
+          padding: 15px;
+          height: 500px; /* Adjusted height */
+          width: 100%;
+          box-sizing: border-box;
+          text-align: left;
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .card-header {
+          font-weight: bold;
+          text-align: center;
+          font-size: 20px;
+          margin-bottom: 10px;
+        }
+        .school-logo {
+          text-align: center;
+          margin-bottom: 10px;
+        }
+        .school-logo img {
+          max-width: 60px;
+          max-height: 60px;
+        }
+        .school-name {
+          text-align: center;
+          font-size: 20px;
+          font-weight: bold;
+          margin-bottom: 15px;
+        }
+        .card-content {
+          flex-grow: 1; /* Ensures content adjusts to fit the space */
+        }
+        .stamp {
+          border: 2px solid blue;
+          color: blue;
+          text-align: center;
+          width: 170px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 10px auto;
+          font-weight: bold;
+        }
+        .card-footer {
+          font-style: italic;
+          font-size: 12px;
+          text-align: center;
+          margin-top: 10px;
+        }
+        @page {
+          margin: 1cm;
+        }
+        @media print {
+          .card-container {
+            page-break-inside: avoid;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="card-container">
+  `;
+
+  // Generate individual library cards
+  filteredRecords.forEach((record) => {
+    printContent += `
+      <div class="library-card">
+        <div class="school-logo">
+          <img src="https://i.imgur.com/uWrz8rt.png" alt="School Logo"> <!-- Replace with your logo URL -->
+        </div>
+        <div class="card-header">Rasm Library Card</div>
+        <div class="school-name">QUEEN  Of  Rosary Junior School</div>
+        <div class="card-content">
+          <p><strong>Name:</strong> ${record.name}</p>
+          <p><strong>Grade:</strong> ${record.grade}</p>
+          <p><strong>Issued Books:</strong> ${record.issuedBooks.join(", ") || "None"}</p>
+             <p><strong>Books Lost:</strong> ${record.lostBooks.join(", ") || "None"}</p>
+        </div>
+        <div class="stamp">
+          QUEEN  OF  ROSARY JS SCHOOL<br>
+         Po Box 886-01000 Thika
+        </div>
+        <div class="card-footer">Valid for the academic year 2025</div>
+      </div>
+    `;
+  });
+
+  printContent += `
+      </div>
+    </body>
+    </html>
+  `;
+
+  // Write the content to the new window
+  printWindow.document.open();
+  printWindow.document.write(printContent);
+  printWindow.document.close();
+
+  // Trigger the print dialog
+  printWindow.print();
+}
+function populateGradeDropdown() {
+  const gradeDropdown = document.getElementById("grade-filter");
+  gradeDropdown.innerHTML = `<option value="All">All Grades</option>`; // Reset options
+
+  const uniqueGrades = [...new Set(libraryRecords.map((record) => record.grade))];
+  uniqueGrades.forEach((grade) => {
+    const option = document.createElement("option");
+    option.value = grade;
+    option.textContent = grade;
+    gradeDropdown.appendChild(option);
+  });
+}
+
+// Call this whenever records are updated
+populateGradeDropdown();
+// Function to set today's date dynamically
+  function setCurrentDate() {
+    const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+    document.getElementById("date").value = today;
+  }
+
+  // Call the function when the page loads
+  window.onload = setCurrentDate;
+function updateStatus() {
+  const lostBooksCheckboxes = document.querySelectorAll("#lostBooks input[type='checkbox']");
+  const lostBooks = Array.from(lostBooksCheckboxes).filter((checkbox) => checkbox.checked);
+
+  const statusField = document.getElementById("status");
+  if (lostBooks.length > 0) {
+    statusField.value = "Pending Clearance";
+  } else {
+    statusField.value = "Active";
+  }
+}
+
+// Add an event listener to update the status dynamically when checkboxes are changed
+document.querySelectorAll("#lostBooks input[type='checkbox']").forEach((checkbox) => {
+  checkbox.addEventListener("change", updateStatus);
+});
+
+// Ensure status is updated when the form loads or if lost books are pre-filled
+window.onload = () => {
+  updateStatus();
+  setCurrentDate(); // Call to set the current date
+};
+function toggleFormVisibility() {
+  const form = document.getElementById("record-form");
+  const toggleButton = document.getElementById("manage-library-btn");
+
+  if (form.style.display === "none" || form.style.display === "") {
+    form.style.display = "block";
+    toggleButton.textContent = "Hide Form";
+  } else {
+    form.style.display = "none";
+    toggleButton.textContent = "Show Form";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("record-form");
+  form.style.display = "none"; // Ensure the form is hidden initially
+});
+
+function toggleLibraryManagement() {
+    var libraryManagement = document.getElementById("library-management");
+    if (libraryManagement.style.display === "none") {
+        libraryManagement.style.display = "block";
+    } else {
+        libraryManagement.style.display = "none";
+    }
+}
+  function toggleFormVisibility() {
+    const form = document.getElementById("record-form");
+    const button = document.getElementById("manage-library-btn");
+
+    if (form.style.display === "none") {
+      form.style.display = "block";
+      button.textContent = "Hide Form";
+    } else {
+      form.style.display = "none";
+      button.textContent = "Register Learner";
+    }
+  }
+
+// Function to toggle all checkboxes in a group based on the "Select All" checkbox state
+function toggleCheckboxes(groupName, masterCheckbox) {
+    // Get all checkboxes within the specified group
+    const checkboxes = document.querySelectorAll(`#${groupName} input[type='checkbox']`);
+    // Set each checkbox's checked property to match the master checkbox's state
+    checkboxes.forEach(checkbox => checkbox.checked = masterCheckbox.checked);
+}
+
+     
+ </script>         
                 
                 
             </body>
-            </html>
+            </html>               
+            
+
